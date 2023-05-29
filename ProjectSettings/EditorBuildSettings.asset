@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LaunchScene.unity
+    guid: bd372f7ffbbdd4582b7a7f118f691f76
+  - enabled: 1
+    path: Assets/Scenes/PhotonLoadingScene.unity
+    guid: aa94af50f1c4c49148cf91d46734baf2
+  - enabled: 1
+    path: Assets/Scenes/UsernameScene.unity
+    guid: 8736d4854450542d6b8c261ed3dae951
+  - enabled: 1
+    path: Assets/Scenes/ModeSelectScene.unity
+    guid: 42dc05e34bec642368e6c6cb31dc2ec9
+  - enabled: 1
+    path: Assets/Scenes/AccountScene.unity
+    guid: 404bc7af12e7b4b8288430f9b6cac423
+  - enabled: 1
+    path: Assets/Scenes/CasualMenuScene.unity
+    guid: 9a1712795db2f4f809773c27b45a2554
+  - enabled: 1
+    path: Assets/Scenes/RankedMenuScreen.unity
+    guid: 5b59b1f1cb9d34809b858f80e12b0888
+  - enabled: 1
+    path: Assets/Scenes/MatchmakingScene.unity
+    guid: 01493dd1dec684454b0b1c66baee714f
+  - enabled: 1
+    path: Assets/Scenes/GameplayScene.unity
+    guid: a439487a3f3934a0a90b71efcd8eb5a2
+  m_configObjects: {}

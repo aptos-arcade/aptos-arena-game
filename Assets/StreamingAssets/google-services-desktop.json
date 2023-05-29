@@ -1,0 +1,36 @@
+{
+  "project_info": {
+    "project_number": "866025105303",
+    "project_id": "aptos-arcade",
+    "storage_bucket": "aptos-arcade.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866025105303:ios:7ba1f6e3380cf43bafc6d2",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.aptos-arena"
+        }
+      },
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCcQCrK3a-lOMD_GUTAAmLXwf10z_HSvE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866025105303-nha9od1s4obbeiedjvj9uh5kjak4v9ap.apps.googleusercontent.com"
+        }
+      ]
+    }
+  ],
+  "configuration_version": "1"
+}
