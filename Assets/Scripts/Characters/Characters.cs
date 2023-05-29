@@ -6,7 +6,7 @@ namespace Characters
     {
         public static readonly Dictionary<CharactersEnum, Character> AvailableCharacters = new(){
             {CharactersEnum.PontemPirates, new Character(
-                "Pontem Pirate", 
+                "Pontem Pirates", 
                 "Pontem Pirate",
                 "0xc46dd298b89d38314b486b2182a6163c4c955dce3509bf30751c307f5ecc2f36", 
                 "Pontem Space Pirates", 
@@ -14,7 +14,7 @@ namespace Characters
                 )
             },
             {CharactersEnum.AptosMonkeys, new Character(
-                    "Aptos Monkey", 
+                    "Aptos Monkeys", 
                     "Aptos Monkey",
                     "0xf932dcb9835e681b21d2f411ef99f4f5e577e6ac299eebee2272a39fb348f702", 
                     "Aptos Monkeys", 
@@ -22,7 +22,7 @@ namespace Characters
                 )
             },
             {CharactersEnum.Aptomingos, new Character(
-                    "Aptomingo", 
+                    "Aptomingos", 
                     "Aptomingo",
                     "0xf932dcb9835e681b21d2f411ef99f4f5e577e6ac299eebee2272a39fb348f702", 
                     "Aptomingos",
@@ -46,7 +46,7 @@ namespace Characters
                 )
             },
             {CharactersEnum.Mavriks, new Character(
-                    "Mavrik", 
+                    "MAVRIK", 
                     "Mavrik",
                     "0xf932dcb9835e681b21d2f411ef99f4f5e577e6ac299eebee2272a39fb348f702", 
                     "Mavriks",
@@ -54,7 +54,7 @@ namespace Characters
                 )
             },
             {CharactersEnum.Spooks, new Character(
-                    "Spook", 
+                    "Spooks", 
                     "Spook",
                     "0xf932dcb9835e681b21d2f411ef99f4f5e577e6ac299eebee2272a39fb348f702", 
                     "Spook",

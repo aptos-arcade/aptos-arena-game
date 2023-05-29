@@ -24,6 +24,9 @@ namespace Player
 
         [SerializeField] private TMP_Text nameTag;
         public TMP_Text NameTag { get => nameTag; set => nameTag = value; }
+        
+        [SerializeField] private TMP_Text collectionTag;
+        public TMP_Text CollectionTag { get => collectionTag; set => collectionTag = value; }
 
         [SerializeField] private TMP_Text damageDisplay;
         public TMP_Text DamageDisplay { get => damageDisplay; set => damageDisplay = value; }

@@ -49,6 +49,9 @@ namespace Player
                     : Color.red;
                 playerReferences.NameTag.text = photonView.Owner.NickName;
             }
+
+            playerReferences.CollectionTag.text = Characters.Characters
+                .AvailableCharacters[(CharactersEnum)photonView.Owner.CustomProperties[CharacterKey]].DisplayName;
         }
 
 

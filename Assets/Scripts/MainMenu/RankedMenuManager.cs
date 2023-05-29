@@ -18,8 +18,8 @@ namespace MainMenu
     
         private void Start()
         {
-            walletConnectScreen.SetActive(true);
-            characterSelectScreen.SetActive(false);
+            walletConnectScreen.SetActive(false);
+            characterSelectScreen.SetActive(true);
             roomSelectScreen.SetActive(false);
         
             walletContinueButton.onClick.AddListener(ContinueToCharacterSelect);
@@ -48,6 +48,7 @@ namespace MainMenu
         {
             characterSelectScreen.SetActive(false);
             roomSelectScreen.SetActive(true);
+            backToGameModeSelectButton.gameObject.SetActive(false);
             SetBackButtonHandler(BackToCharacterSelect);
         }
     
@@ -55,7 +56,9 @@ namespace MainMenu
         {
             roomSelectScreen.SetActive(false);
             characterSelectScreen.SetActive(true);
-            SetBackButtonHandler(BackToWalletConnect);
+            backToGameModeSelectButton.gameObject.SetActive(true);
+            backButton.gameObject.SetActive(false);
+            
         }
 
         private void SetBackButtonHandler(UnityAction handler)
