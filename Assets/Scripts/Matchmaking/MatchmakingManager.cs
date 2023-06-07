@@ -13,6 +13,7 @@ namespace Matchmaking
     public class MatchmakingManager : MonoBehaviourPunCallbacks
     {
         [SerializeField] private TMP_Text roomName;
+        [SerializeField] private TMP_Text waitingText;
         [SerializeField] private CharacterImages characterImages;
         [SerializeField] private GameObject playersList;
         [SerializeField] private RoomPlayer roomPlayerPrefab;
@@ -52,6 +53,8 @@ namespace Matchmaking
             {
                 OnPlayerEnteredRoom(player);
             }
+            
+            SetWaitingText();
         }
 
         public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)
@@ -64,7 +67,7 @@ namespace Matchmaking
             {
                 StartGame();
             }
-            CheckRoomFull();
+            SetWaitingText();
         }
 
         private static bool CheckRoomFull()
@@ -79,7 +82,8 @@ namespace Matchmaking
             for (var i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 var playerProperties = PhotonNetwork.PlayerList[i].CustomProperties;
-                if(!playerProperties.TryAdd(TeamKey, i)) playerProperties[TeamKey] = i;
+                var team = i % 2;
+                if(!playerProperties.TryAdd(TeamKey, team)) playerProperties[TeamKey] = team;
                 PhotonNetwork.PlayerList[i].SetCustomProperties(playerProperties);
             }
             PhotonNetwork.LoadLevel("GameplayScene");
@@ -93,6 +97,14 @@ namespace Matchmaking
         public override void OnLeftRoom()
         {
             SceneManager.LoadScene("ModeSelectScene");
+        }
+
+        private void SetWaitingText()
+        {
+            var remainingPlayers = PhotonNetwork.CurrentRoom.MaxPlayers - PhotonNetwork.CurrentRoom.PlayerCount;
+            var suffix = remainingPlayers == 1 ? "" : "s";
+            waitingText.text =
+                $"Waiting for {remainingPlayers} player{suffix}...";
         }
     }
 }

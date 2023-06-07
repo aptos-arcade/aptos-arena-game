@@ -43,10 +43,13 @@ namespace Player
             }
             else
             {
-                playerReferences.NameTag.color = (CharactersEnum)photonView.Owner.CustomProperties[TeamKey] == 
-                                                 (CharactersEnum)PhotonNetwork.LocalPlayer.CustomProperties[TeamKey] 
-                    ? new Color(0.6588235f, 0.8078431f, 1f) 
-                    : Color.red;
+                var tagColor =
+                    (CharactersEnum)photonView.Owner.CustomProperties[TeamKey] ==
+                    (CharactersEnum)PhotonNetwork.LocalPlayer.CustomProperties[TeamKey]
+                        ? new Color(0.6588235f, 0.8078431f, 1f)
+                        : Color.red;
+                playerReferences.NameTag.color = tagColor;
+                playerReferences.CollectionTag.color = tagColor;
                 playerReferences.NameTag.text = photonView.Owner.NickName;
             }
 
@@ -65,29 +68,33 @@ namespace Player
             PlayerState.Character = (CharactersEnum)PhotonNetwork.LocalPlayer.CustomProperties[CharacterKey];
 
             AnyStateAnimation[] animations = {
-                new(Rig.Body, "Body_Idle", "Body_Attack"),
+                new(Rig.Body, "Body_Idle", "Body_Attack", "Body_Jump"),
                 new(Rig.Body, "Body_Walk", "Body_Attack", "Body_Jump"),
-                new(Rig.Body, "Body_Jump"),
-                new(Rig.Body, "Body_Fall", "Body_Attack"),
+                new(Rig.Body, "Body_Jump", "Body_Attack"),
+                new(Rig.Body, "Body_Double_Jump"),
+                new(Rig.Body, "Body_Fall", "Body_Attack", "Body_Double_Jump"),
                 new(Rig.Body, "Body_Attack"),
 
                 new(Rig.Legs, "Legs_Idle", "Legs_Attack"),
-                new(Rig.Legs, "Legs_Walk", "Legs_Jump"),
-                new(Rig.Legs, "Legs_Jump"),
-                new(Rig.Legs, "Legs_Fall"),
+                new(Rig.Legs, "Legs_Walk", "Legs_Attack"),
+                new(Rig.Legs, "Legs_Jump", "Legs_Double_Jump"),
+                new(Rig.Legs, "Legs_Double_Jump"),
+                new(Rig.Legs, "Legs_Fall", "Legs_Attack", "Legs_Double_Jump"),
                 new(Rig.Legs, "Legs_Attack")
             };
 
-            playerComponent.Animator.AnimationTriggerEvent += PlayerActions.Shoot;
-            playerComponent.Animator.AnimationTriggerEvent += PlayerActions.Melee;
-            
+            playerComponent.Animator.AnimationTriggerEvent += PlayerUtilities.HandleAnimation;
+
             playerComponent.Animator.AddAnimations(animations);
 
             PlayerUtilities.GetSpriteRenderers();
 
             playerReferences.DamageDisplay.text = ((PlayerState.DamageMultiplier - 1) * 100) + "%";
 
-            StartCoroutine(PlayerUtilities.SpawnCoroutine(transform.position));
+            if (photonView.IsMine)
+            {
+                StartCoroutine(PlayerUtilities.SpawnCoroutine(transform.position));
+            }
         }
 
         // Update is called once per frame

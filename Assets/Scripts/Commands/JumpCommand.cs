@@ -15,7 +15,7 @@ namespace Commands
 
         public override void GetKeyDown()
         {
-            player.PlayerActions.Jump();
+            player.PlayerActions.TryJump();
         }
     }
 }

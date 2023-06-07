@@ -13,7 +13,12 @@ namespace MainMenu
         // Start is called before the first frame update
         private void Start()
         {
-            var playerProperties = new Hashtable() { { CharacterKey, GetRandomCharacter()} };
+            var playerProperties = new Hashtable()
+            {
+                { CharacterKey, GetRandomCharacter()},
+                { SwordKey, Random.Range(0, 5)},
+                { GunKey, Random.Range(0, 5)}
+            };
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
         }
     

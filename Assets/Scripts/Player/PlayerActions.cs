@@ -34,7 +34,7 @@ namespace Player
                     player.PlayerComponents.RunAudioSource.Play();
                 }
             }
-            else if(player.PlayerComponents.RigidBody.velocity.magnitude < 0.1f)
+            else if(player.PlayerComponents.RigidBody.velocity.magnitude < 0.1f && player.PlayerUtilities.IsGrounded)
             {
                 player.PlayerComponents.Animator.TryPlayAnimation("Body_Idle");
                 player.PlayerComponents.Animator.TryPlayAnimation("Legs_Idle");
@@ -42,26 +42,18 @@ namespace Player
             }
         }
 
-        public void Jump()
+        public void TryJump()
         {
             if (player.PlayerUtilities.IsGrounded)
             {
-                JumpImpl(player.PlayerStats.JumpForce);
+                player.PlayerComponents.Animator.TryPlayAnimation("Legs_Jump");
+                player.PlayerComponents.Animator.TryPlayAnimation("Body_Jump");
             }
             else if(player.PlayerState.CanDoubleJump)
             {
-                player.PlayerState.CanDoubleJump = false;
-                JumpImpl(player.PlayerStats.DoubleJumpForce);
+                player.PlayerComponents.Animator.TryPlayAnimation("Legs_Double_Jump");
+                player.PlayerComponents.Animator.TryPlayAnimation("Body_Double_Jump");
             }
-        }
-
-        private void JumpImpl(float jumpForce)
-        {
-            player.PlayerComponents.RigidBody.velocity = new Vector2(player.PlayerComponents.RigidBody.velocity.x, 0);
-            player.PlayerComponents.RigidBody.AddForce(new Vector2(0, jumpForce));
-            player.PlayerComponents.Animator.TryPlayAnimation("Legs_Jump");
-            player.PlayerComponents.Animator.TryPlayAnimation("Body_Jump");
-            player.PlayerComponents.JumpAudioSource.Play();
         }
 
         public void Attack()
@@ -85,13 +77,14 @@ namespace Player
                 if(weapon.activeSelf) weapon.GetComponent<PhotonView>().RPC("UnEquip", RpcTarget.AllBuffered);
             }
 
-            player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].GetComponent<PhotonView>().RPC("Equip", RpcTarget.AllBuffered);
+            player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].GetComponent<PhotonView>()
+                .RPC("Equip", RpcTarget.AllBuffered);
         }
 
-        private void PlayWeaponSound()
+        private void PlayWeaponSound(AudioClip clip)
         {
-            
-            player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].GetComponent<Weapons.Weapon>().PlaySound();
+            player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].GetComponent<Weapons.Weapon>()
+                .PlaySound(clip);
         }
 
         public void Drop()
@@ -106,23 +99,43 @@ namespace Player
             player.PlayerComponents.FootCollider.enabled = true;
         }
 
-        public void Shoot(string animation)
+        public void Shoot()
         {
-            if (animation != "Shoot" || !player.photonView.IsMine) return;
-            
             var projectile = PhotonNetwork.Instantiate(player.PlayerReferences.ProjectilePrefab.name,
                 player.PlayerReferences.GunBarrel.position, Quaternion.identity);
             var direction = new Vector2(player.transform.localScale.x, 0);
             projectile.GetComponent<PhotonView>().RPC("SetDirection", RpcTarget.All, direction);
-            PlayWeaponSound();
+            PlayWeaponSound(player.PlayerReferences.ShootAudioClip);
             player.PlayerState.RangedEnergy -= player.PlayerStats.RangedAttackEnergyCost;
         }
 
-        public void Melee(string animation)
+        public void SideMelee()
         {
-            if (animation != "Melee" || !player.photonView.IsMine) return;
-            PlayWeaponSound();
-            player.PlayerState.MeleeEnergy -= player.PlayerStats.MeleeAttackEnergyCost;
+            PlayWeaponSound(player.PlayerReferences.SideMeleeAudioClip);
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.SideMeleeAttackEnergyCost;
+        }
+        
+        public void UpMelee()
+        {
+            PlayWeaponSound(player.PlayerReferences.UpMeleeAudioClip);
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.UpMeleeAttackEnergyCost;
+        }
+        
+        public void JabMelee()
+        {
+            PlayWeaponSound(player.PlayerReferences.JabMeleeAudioClip);
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.JabMeleeAttackEnergyCost;
+        }
+
+        public void Jump()
+        {
+            player.PlayerUtilities.JumpImpl(player.PlayerStats.JumpForce);
+        }
+        
+        public void DoubleJump()
+        {
+            player.PlayerState.CanDoubleJump = false;
+            player.PlayerUtilities.JumpImpl(player.PlayerStats.DoubleJumpForce);
         }
     }
 }

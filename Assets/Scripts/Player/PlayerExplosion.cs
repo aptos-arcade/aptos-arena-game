@@ -8,7 +8,10 @@ namespace Player
     {
         private void Start()
         {
-            StartCoroutine(DestroyCoroutine());
+            if (photonView.IsMine)
+            {
+                StartCoroutine(DestroyCoroutine());
+            }
         }
 
         private IEnumerator DestroyCoroutine()

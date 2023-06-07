@@ -28,11 +28,6 @@ namespace UGS
             try
             {
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
-                Debug.Log("Sign in anonymously succeeded!");
-
-                // Shows how to get the playerID
-                Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-
             }
             catch (AuthenticationException ex)
             {
@@ -58,27 +53,19 @@ namespace UGS
 
         private static void OnSignedIn()
         {
-            Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
-
-            // Shows how to get an access token
-            Debug.Log($"Access Token: {AuthenticationService.Instance.AccessToken}");
-
             SceneManager.LoadScene("PhotonLoadingScene");
         }
 
         private static void OnSignInFailed(RequestFailedException err)
         {
-            Debug.LogError(err);
         }
         
         private static void OnSignedOut()
         {
-            Debug.Log("Player signed out.");
         }
         
         private static void OnExpired()
         {
-            Debug.Log("Player session could not be refreshed and expired.");
         }
     }
 }

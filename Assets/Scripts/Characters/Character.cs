@@ -21,12 +21,15 @@ namespace Characters
         public string CollectionName { get; }
         public string TokenName { get; }
         
+        public string CharacterIdHash { get;  }
+        
         public Character(
             string displayName, 
             string prefabName,
             string creatorAddress,
             string collectionName,
-            string tokenName
+            string tokenName,
+            string characterIdHash
         )
         {
             DisplayName = displayName;
@@ -34,6 +37,7 @@ namespace Characters
             CreatorAddress = creatorAddress;
             CollectionName = collectionName;
             TokenName = tokenName;
+            CharacterIdHash = characterIdHash;
         }
     }
 }

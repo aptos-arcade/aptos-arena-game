@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/RankedMenuScreen.unity
     guid: 5b59b1f1cb9d34809b858f80e12b0888
   - enabled: 1
+    path: Assets/Scenes/TrainingMenuScene.unity
+    guid: 620a90d09891c4699afcbd0859cf6d45
+  - enabled: 1
     path: Assets/Scenes/MatchmakingScene.unity
     guid: 01493dd1dec684454b0b1c66baee714f
   - enabled: 1

@@ -9,6 +9,7 @@ namespace Global
         AccountScene,
         CasualMenuScene,
         RankedMenuScene,
+        TrainingMenuScene,
         MatchmakingScene,
         GameplayScene,
     }

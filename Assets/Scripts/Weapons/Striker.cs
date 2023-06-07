@@ -28,6 +28,7 @@ namespace Weapons
 
         private void OnTriggerEnter2D(Collider2D col)
         {
+            Debug.Log("Col");
             var colPlayer = col.gameObject.GetComponent<PlayerScript>();
             if (!photonView.IsMine || colPlayer.photonView.IsMine || IsSameTeam(colPlayer)) return;
             PhotonNetwork.Instantiate(hitEffect.name, col.transform.position, Quaternion.identity);

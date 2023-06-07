@@ -6,17 +6,14 @@ namespace Weapons
 {
     public class Weapon: MonoBehaviourPun
     {
-        
         private AudioSource audioSource;
         
-        [SerializeField] private AudioClip audioClip;
-
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
         }
 
-        public void PlaySound()
+        public void PlaySound(AudioClip audioClip)
         {
             audioSource.Stop();
             audioSource.PlayOneShot(audioClip);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Player
 {
@@ -26,8 +27,14 @@ namespace Player
         [SerializeField] private float knockBackPower;
         public float KnockBackPower => knockBackPower;
 
-        [SerializeField] private float meleeAttackEnergyCost;
-        public float MeleeAttackEnergyCost => meleeAttackEnergyCost;
+        [SerializeField] private float sideMeleeAttackEnergyCost;
+        public float SideMeleeAttackEnergyCost => sideMeleeAttackEnergyCost;
+        
+        [SerializeField] private float jabMeleeAttackEnergyCost;
+        public float JabMeleeAttackEnergyCost => jabMeleeAttackEnergyCost;
+        
+        [SerializeField] private float upMeleeAttackEnergyCost;
+        public float UpMeleeAttackEnergyCost => upMeleeAttackEnergyCost;
         
         [SerializeField] private float meleeEnergyRegenTime;
         public float MeleeEnergyRegenTime => meleeEnergyRegenTime;

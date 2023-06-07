@@ -22,10 +22,13 @@ namespace Player
         public PlayerUtilities(PlayerScript player)
         {
             this.player = player;
-            commands.Add(new JumpCommand(player, KeyCode.W));
-            commands.Add(new DropCommand(player, KeyCode.S));
+            commands.Add(new JumpCommand(player, KeyCode.UpArrow));
+            commands.Add(new DropCommand(player, KeyCode.DownArrow));
             commands.Add(new ShootCommand(player, KeyCode.Space));
-            commands.Add(new MeleeCommand(player, KeyCode.Mouse0));
+            commands.Add(new JabMeleeCommand(player, KeyCode.S));
+            commands.Add(new UpMeleeCommand(player, KeyCode.W));
+            commands.Add(new SideMeleeCommand(player, KeyCode.A, -1));
+            commands.Add(new SideMeleeCommand(player, KeyCode.D, 1));
         }
 
         public void HandleInput()
@@ -90,8 +93,7 @@ namespace Player
             PhotonNetwork.Instantiate(player.PlayerReferences.ExplosionPrefab.name, player.transform.position, Quaternion.identity);
             player.photonView.RPC("OnDeath", RpcTarget.AllBuffered);
             MatchManager.Instance.SetEnergyUIActive(false);
-            if(player.PlayerState.Lives == 0) MatchManager.Instance.OnPlayerOutOfLives(); 
-            else MatchManager.Instance.OnPlayerDeath();
+            MatchManager.PlayerDeathSend(player.photonView.Owner.ActorNumber);
         }
 
         public void StrikerCollision(Striker striker)
@@ -135,7 +137,7 @@ namespace Player
             );
             yield return new WaitForSeconds(2.5f);
             PhotonNetwork.Destroy(portal);
-            MatchManager.Instance.SetEnergyUIActive(true);
+            if(player.photonView.IsMine) MatchManager.Instance.SetEnergyUIActive(true);
             player.photonView.RPC("OnRevive", RpcTarget.AllBuffered);
         }
 
@@ -167,6 +169,39 @@ namespace Player
             player.PlayerState.CanMove = isRevive;
             player.PlayerState.MeleeEnergy = isRevive ? 1 : 0;
             player.PlayerState.RangedEnergy = isRevive ? 1 : 0;
+        }
+
+        public void JumpImpl(float jumpForce)
+        {
+            player.PlayerComponents.RigidBody.velocity = new Vector2(player.PlayerComponents.RigidBody.velocity.x, 0);
+            player.PlayerComponents.RigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
+            player.PlayerComponents.JumpAudioSource.Play();
+        }
+
+        public void HandleAnimation(string animation)
+        {
+            if (!player.photonView.IsMine) return;
+            switch (animation)
+            {
+                case "Shoot":
+                    player.PlayerActions.Shoot();
+                    break;
+                case "Side_Melee":
+                    player.PlayerActions.SideMelee();
+                    break;
+                case "Up_Melee":
+                    player.PlayerActions.UpMelee();
+                    break;
+                case "Jab_Melee":
+                    player.PlayerActions.JabMelee();
+                    break;
+                case "Jump":
+                    player.PlayerActions.Jump();
+                    break;
+                case "Double_Jump":
+                    player.PlayerActions.DoubleJump();
+                    break;
+            }
         }
 
     }

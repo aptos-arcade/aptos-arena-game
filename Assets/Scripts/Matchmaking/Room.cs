@@ -6,14 +6,16 @@ using UnityEngine.UI;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField] private Button joinButton;
     [SerializeField] private byte numberOfPlayers;
     [SerializeField] private Global.GameModes gameMode;
+
+    private Button joinButton;
 
     private const string ModePropKey = "m";
     
     private void Start()
     {
+        joinButton = GetComponent<Button>();
         joinButton.onClick.AddListener(JoinRoom);
     }
 

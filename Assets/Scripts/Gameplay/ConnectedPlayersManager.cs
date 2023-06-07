@@ -1,6 +1,8 @@
 using System;
 using Characters;
+using ExitGames.Client.Photon;
 using Photon.Pun;
+using Photon.Realtime;
 using ScriptableObjects;
 using UnityEngine;
 using static Photon.PlayerPropertyKeys;

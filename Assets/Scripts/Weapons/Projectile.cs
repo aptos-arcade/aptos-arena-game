@@ -13,10 +13,11 @@ namespace Weapons
         [SerializeField]
         private float destroyTime;
 
-        private Vector2 _direction;
+        private Vector2 direction;
         
         private void Start()
         {
+            if (!photonView.IsMine) return;
             StartCoroutine(DestroyBullet());
         }
 
@@ -24,13 +25,13 @@ namespace Weapons
         // Update is called once per frame
         private void Update()
         {
-            transform.Translate(speed * Time.deltaTime * _direction);
+            transform.Translate(speed * Time.deltaTime * direction);
         }
 
         [PunRPC]
         public void SetDirection(Vector2 direction)
         {
-            _direction = direction;
+            this.direction = direction;
             KnockBackSignedDirection = new Vector2(
                 direction.x > 0 ? KnockBackDirection.x : -KnockBackDirection.x,
                 KnockBackDirection.y

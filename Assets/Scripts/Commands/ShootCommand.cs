@@ -1,6 +1,6 @@
+using Gameplay;
 using Player;
 using UnityEngine;
-using Weapons;
 
 namespace Commands
 {
@@ -16,9 +16,16 @@ namespace Commands
 
         public override void GetKeyDown()
         {
-            if(player.PlayerState.RangedEnergy <= player.PlayerStats.RangedAttackEnergyCost) return;
-            player.PlayerActions.TrySwapWeapon(Global.Weapons.Gun);
-            player.PlayerActions.Attack();
+            if (player.PlayerState.RangedEnergy >= player.PlayerStats.RangedAttackEnergyCost)
+            {
+                player.PlayerActions.TrySwapWeapon(Global.Weapons.Gun);
+                player.PlayerActions.Attack();
+            }
+            else
+            {
+                MatchManager.Instance.NoEnergy(Global.Weapons.Gun);
+            }
+            
         }
     }
 }
