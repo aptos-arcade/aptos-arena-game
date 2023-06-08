@@ -1,6 +1,7 @@
 using Characters;
 using Photon.Pun;
 using Photon.Realtime;
+using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Photon.PlayerPropertyKeys;
@@ -15,6 +16,7 @@ namespace MainMenu
     
         private void Start()
         {
+            PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName;
             CharacterCard.OnSelect += JoinTrainingRoom;
         }
 

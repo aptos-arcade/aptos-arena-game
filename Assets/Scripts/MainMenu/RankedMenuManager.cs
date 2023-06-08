@@ -1,4 +1,6 @@
+using AptosIntegration;
 using Characters;
+using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -46,6 +48,13 @@ namespace MainMenu
         {
             walletContinueButton.interactable = true;
             walletAddressText.text = WalletManager.Instance.AddressEllipsized;
+            StartCoroutine(AnsResolver.ResolveAns(ResolveAnsHandler, WalletManager.Instance.Address));
+        }
+
+        private static void ResolveAnsHandler(string name)
+        {
+            if (name == string.Empty) return;
+            PhotonNetwork.NickName = $"{name}.apt";
         }
 
         private void ContinueToCustomPlayer()

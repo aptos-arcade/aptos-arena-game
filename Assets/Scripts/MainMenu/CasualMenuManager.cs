@@ -1,6 +1,7 @@
 using System;
 using Characters;
 using Photon.Pun;
+using Unity.Services.Authentication;
 using UnityEngine;
 using static Photon.PlayerPropertyKeys;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -20,6 +21,7 @@ namespace MainMenu
                 { GunKey, Random.Range(0, 5)}
             };
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+            PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName;
         }
     
         private static CharactersEnum GetRandomCharacter()
