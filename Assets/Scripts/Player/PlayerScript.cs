@@ -3,6 +3,7 @@ using Characters;
 using Gameplay;
 using Photon.Pun;
 using UnityEngine;
+using Weapons;
 using static Photon.PlayerPropertyKeys;
 
 namespace Player
@@ -100,6 +101,7 @@ namespace Player
         // Update is called once per frame
         private void Update()
         {
+            if(PlayerState.IsDead) return;
             PlayerUtilities.HandleInput();
             PlayerUtilities.HandleAir();
             PlayerUtilities.HandleDeath();

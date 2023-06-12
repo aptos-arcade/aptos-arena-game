@@ -35,15 +35,12 @@ namespace Player
         [PunRPC]
         public void OnStrike(Vector2 direction, float knockBack, float damage)
         {
-            player.PlayerUtilities.HandleStrike(direction, knockBack, damage);
-            StartCoroutine(HurtCoroutine());
-        }
-
-        private IEnumerator HurtCoroutine()
-        {
-            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, true);
-            yield return new WaitForSeconds(0.25f);
-            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, false);
+            player.StartCoroutine(player.PlayerComponents.PlayerCamera.Shake(0.2f, 0.1f));
+            player.PlayerState.DamageMultiplier += damage;
+            player.PlayerReferences.DamageDisplay.text = ((player.PlayerState.DamageMultiplier - 1) * 100).ToString("F0") + "%";
+            player.PlayerComponents.HitAudioSource.Play();
+            player.PlayerComponents.RigidBody.velocity =
+                direction.normalized * knockBack * player.PlayerState.DamageMultiplier;
         }
 
         [PunRPC]

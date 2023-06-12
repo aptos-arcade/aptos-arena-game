@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Characters;
 using Commands;
 using Gameplay;
 using Photon.Pun;
 using UnityEngine;
 using Weapons;
+using static Photon.PlayerPropertyKeys;
 
 namespace Player
 {
@@ -33,8 +35,17 @@ namespace Player
 
         public void HandleInput()
         {
-            if (!player.PlayerComponents.PhotonView.IsMine || !player.PlayerState.CanMove) return;
-            player.PlayerState.Direction = new Vector2(Input.GetAxisRaw("Horizontal"), 0);
+            if (!player.PlayerComponents.PhotonView.IsMine) return;
+
+            if (player.PlayerState.CanMove)
+            {
+                var x = Input.GetAxisRaw("Horizontal");
+                player.PlayerState.Direction = new Vector2(x, 0);
+                if(x != 0)
+                {
+                    player.PlayerState.IsStunned = false;
+                }
+            }
 
             foreach (var command in commands)
             {
@@ -70,7 +81,7 @@ namespace Player
 
         public void HandleDeath()
         {
-            if (player.photonView.IsMine && player.PlayerState.CanMove && (Mathf.Abs(player.transform.position.x) > 30 || Mathf.Abs(player.transform.position.y) > 16))
+            if (player.photonView.IsMine && !player.PlayerState.IsDead && (Mathf.Abs(player.transform.position.x) > 30 || Mathf.Abs(player.transform.position.y) > 16))
             {
                 OnDeath();
             }
@@ -98,6 +109,7 @@ namespace Player
 
         public void StrikerCollision(Striker striker)
         {
+            player.StartCoroutine(HurtCoroutine());
             player.photonView.RPC(
                 "OnStrike",
                 RpcTarget.AllBuffered,
@@ -107,24 +119,25 @@ namespace Player
             );
         }
 
-        public void HandleStrike(Vector2 direction, float knockBack, float damage)
-        {
-            player.PlayerComponents.RigidBody.AddForce(direction.normalized *
-                                                       (knockBack * Mathf.Pow(player.PlayerState.DamageMultiplier,
-                                                           player.PlayerStats.KnockBackPower)));
-            player.PlayerState.DamageMultiplier += damage;
-            player.PlayerReferences.DamageDisplay.text = ((player.PlayerState.DamageMultiplier - 1) * 100).ToString("F0") + "%";
-            player.StartCoroutine(player.PlayerComponents.PlayerCamera.Shake(0.2f, 0.1f));
-            player.PlayerComponents.HitAudioSource.Play();
-        }
-
         public void HurtEffect(bool hurt)
         {
+            if (hurt)
+            {
+                player.PlayerState.IsStunned = true;
+            }
+            player.PlayerState.CanMove = !hurt;
             player.PlayerComponents.BodyCollider.enabled = !hurt;
             foreach (var renderer in player.PlayerComponents.PlayerSprites)
             {
                 renderer.color = hurt ? Color.red : Color.white;
             }
+        }
+        
+        private IEnumerator HurtCoroutine()
+        {
+            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, true);
+            yield return new WaitForSeconds(0.5f);
+            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, false);
         }
 
         public IEnumerator SpawnCoroutine(Vector3 spawnPosition)
@@ -166,7 +179,9 @@ namespace Player
             player.PlayerComponents.FootCollider.enabled = isRevive;
             player.PlayerComponents.BodyCollider.enabled = isRevive;
 
+            player.PlayerState.IsDead = !isRevive;
             player.PlayerState.CanMove = isRevive;
+            player.PlayerState.IsStunned = !isRevive;
             player.PlayerState.MeleeEnergy = isRevive ? 1 : 0;
             player.PlayerState.RangedEnergy = isRevive ? 1 : 0;
         }
@@ -202,6 +217,12 @@ namespace Player
                     player.PlayerActions.DoubleJump();
                     break;
             }
+        }
+        
+        public bool IsSameTeam(PhotonView other)
+        {
+            return (CharactersEnum)other.Owner.CustomProperties[TeamKey] ==
+                   (CharactersEnum)player.photonView.Owner.CustomProperties[TeamKey];
         }
 
     }

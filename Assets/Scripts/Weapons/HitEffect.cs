@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Weapons
 {
-    public class HitEffect : MonoBehaviour
+    public class HitEffect : MonoBehaviourPun
     {
 
         [SerializeField] private float destroyTime;
@@ -14,6 +14,7 @@ namespace Weapons
         private void Start()
         {
             audioSource.Play();
+            if(!photonView.IsMine) return;
             StartCoroutine(DestroyEffect());
         }
 

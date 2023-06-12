@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using Weapons;
 
 namespace Player
 {
@@ -22,10 +23,7 @@ namespace Player
 
         [SerializeField] private GameObject explosionPrefab;
         public GameObject ExplosionPrefab => explosionPrefab;
-        
-        [SerializeField] private GameObject projectilePrefab;
-        public GameObject ProjectilePrefab => projectilePrefab;
-        
+
         [SerializeField] private GameObject portal;
         public GameObject Portal => portal;
         
@@ -42,6 +40,10 @@ namespace Player
         
         [SerializeField] private GameObject[] weaponObjects;
         public GameObject[] WeaponObjects => weaponObjects;
+        
+        public Sword Sword => weaponObjects[(int)Global.Weapons.Sword].GetComponent<Sword>();
+        
+        public Gun Gun => weaponObjects[(int)Global.Weapons.Gun].GetComponent<Gun>();
         
         [Header("Transforms")]
 

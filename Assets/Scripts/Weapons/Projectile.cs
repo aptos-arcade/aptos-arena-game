@@ -7,11 +7,9 @@ namespace Weapons
 {
     public class Projectile: Striker
     {
-        [SerializeReference]
-        private float speed;
+        [SerializeReference] private float speed;
         
-        [SerializeField]
-        private float destroyTime;
+        [SerializeField] private float destroyTime;
 
         private Vector2 direction;
         
@@ -29,17 +27,18 @@ namespace Weapons
         }
 
         [PunRPC]
-        public void SetDirection(Vector2 direction)
+        public void Initialize(Vector2 direction, Vector2 knockBackDirection, float damage, float knockBack)
         {
             this.direction = direction;
             KnockBackSignedDirection = new Vector2(
-                direction.x > 0 ? KnockBackDirection.x : -KnockBackDirection.x,
-                KnockBackDirection.y
+                direction.x > 0 ? knockBackDirection.x : -knockBackDirection.x,
+                knockBackDirection.y
             );
+            Damage = damage;
+            KnockBackForce = knockBack;
         }
 
-        [PunRPC]
-        public void Destroy()
+        private void Destroy()
         {
             PhotonNetwork.Destroy(gameObject);
         }
@@ -47,12 +46,13 @@ namespace Weapons
         private IEnumerator DestroyBullet()
         {
             yield return new WaitForSeconds(destroyTime);
-            photonView.RPC("Destroy", RpcTarget.AllBuffered);
+            Destroy();
         }
-        
-        protected override void OnStrike()
+
+        protected override void OnStrike(Vector2 position)
         {
-            photonView.RPC("Destroy", RpcTarget.AllBuffered);
+            base.OnStrike(position);
+            Destroy();
         }
     }
 }

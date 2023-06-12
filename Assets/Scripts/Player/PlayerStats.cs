@@ -1,11 +1,13 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+using Weapons;
 
 namespace Player
 {
     [System.Serializable]
     public class PlayerStats
     {
+        [Header("Movement")]
+        
         [SerializeField] private float jumpForce;
         public float JumpForce => jumpForce;
 
@@ -23,25 +25,26 @@ namespace Player
 
         [SerializeField] private float velPower;
         public float VelPower => velPower;
-
-        [SerializeField] private float knockBackPower;
-        public float KnockBackPower => knockBackPower;
-
-        [SerializeField] private float sideMeleeAttackEnergyCost;
-        public float SideMeleeAttackEnergyCost => sideMeleeAttackEnergyCost;
         
-        [SerializeField] private float jabMeleeAttackEnergyCost;
-        public float JabMeleeAttackEnergyCost => jabMeleeAttackEnergyCost;
+        [Header("Attacks")]
         
-        [SerializeField] private float upMeleeAttackEnergyCost;
-        public float UpMeleeAttackEnergyCost => upMeleeAttackEnergyCost;
+        [SerializeField] private StrikerData sideMeleeAttack;
+        public StrikerData SideMeleeAttack => sideMeleeAttack;
+        
+        [SerializeField] private StrikerData jabMeleeAttack;
+        public StrikerData JabMeleeAttack => jabMeleeAttack;
+        
+        [SerializeField] private StrikerData upMeleeAttack;
+        public StrikerData UpMeleeAttack => upMeleeAttack;
+
+        [SerializeField] private StrikerData rangedAttack;
+        public StrikerData RangedAttack => rangedAttack;
+
+        [Header("Energy Regen")]
         
         [SerializeField] private float meleeEnergyRegenTime;
         public float MeleeEnergyRegenTime => meleeEnergyRegenTime;
 
-        [SerializeField] private float rangedAttackEnergyCost;
-        public float RangedAttackEnergyCost => rangedAttackEnergyCost;
-        
         [SerializeField] private float rangedEnergyRegenTime;
         public float RangedEnergyRegenTime => rangedEnergyRegenTime;
     }

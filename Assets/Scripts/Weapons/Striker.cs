@@ -1,23 +1,20 @@
-using Characters;
 using Photon.Pun;
 using Player;
 using UnityEngine;
-using static Photon.PlayerPropertyKeys;
 
 namespace Weapons
 {
     public class Striker: MonoBehaviourPun
     {
         [SerializeField] private float damage;
-        public float Damage => damage;
+        public float Damage { get => damage; set => damage = value; }
         
         [SerializeField] private float knockBackForce;
-        public float KnockBackForce => knockBackForce;
+        public float KnockBackForce { get => knockBackForce; set => knockBackForce = value; }
         
-        [SerializeField] private Vector2 knockBackDirection;
-        protected Vector2 KnockBackDirection => knockBackDirection;
+        public Vector2 KnockBackDirection { get; set; }
 
-        public Vector2 KnockBackSignedDirection { get; set; }
+        public Vector2 KnockBackSignedDirection { get; protected set; }
         
         [SerializeField] private GameObject hitEffect;
 
@@ -26,22 +23,18 @@ namespace Weapons
             KnockBackSignedDirection = KnockBackDirection;
         }
 
+        protected virtual void OnStrike(Vector2 position)
+        {
+            PhotonNetwork.Instantiate(hitEffect.name, position, Quaternion.identity);
+        }
+
         private void OnTriggerEnter2D(Collider2D col)
         {
-            Debug.Log("Col");
-            var colPlayer = col.gameObject.GetComponent<PlayerScript>();
-            if (!photonView.IsMine || colPlayer.photonView.IsMine || IsSameTeam(colPlayer)) return;
-            PhotonNetwork.Instantiate(hitEffect.name, col.transform.position, Quaternion.identity);
-            colPlayer.PlayerUtilities.StrikerCollision(this);
-            OnStrike();
+            var player = col.GetComponent<PlayerScript>();
+            if (player == null || !photonView.IsMine || player.photonView.IsMine ||
+                player.PlayerUtilities.IsSameTeam(photonView) || col.GetType() != typeof(PolygonCollider2D)) return;
+            OnStrike(col.transform.position);
+            player.PlayerUtilities.StrikerCollision(this);
         }
-
-        private bool IsSameTeam(MonoBehaviourPun colPlayer)
-        {
-            return (CharactersEnum)colPlayer.photonView.Owner.CustomProperties[TeamKey] ==
-                (CharactersEnum)photonView.Owner.CustomProperties[TeamKey];
-        }
-
-        protected virtual void OnStrike() {}
     }
 }

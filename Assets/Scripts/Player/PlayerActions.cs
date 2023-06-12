@@ -16,6 +16,7 @@ namespace Player
 
         public void Move(Transform transform)
         {
+            if (player.PlayerState.IsStunned) return;
             var targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
             var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
             var accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? player.PlayerStats.Acceleration : player.PlayerStats.Deceleration;
@@ -101,30 +102,27 @@ namespace Player
 
         public void Shoot()
         {
-            var projectile = PhotonNetwork.Instantiate(player.PlayerReferences.ProjectilePrefab.name,
-                player.PlayerReferences.GunBarrel.position, Quaternion.identity);
-            var direction = new Vector2(player.transform.localScale.x, 0);
-            projectile.GetComponent<PhotonView>().RPC("SetDirection", RpcTarget.All, direction);
+            player.PlayerReferences.Gun.Shoot(player);
             PlayWeaponSound(player.PlayerReferences.ShootAudioClip);
-            player.PlayerState.RangedEnergy -= player.PlayerStats.RangedAttackEnergyCost;
+            player.PlayerState.RangedEnergy -= player.PlayerStats.RangedAttack.Energy;
         }
 
         public void SideMelee()
         {
             PlayWeaponSound(player.PlayerReferences.SideMeleeAudioClip);
-            player.PlayerState.MeleeEnergy -= player.PlayerStats.SideMeleeAttackEnergyCost;
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.SideMeleeAttack.Energy;
         }
         
         public void UpMelee()
         {
             PlayWeaponSound(player.PlayerReferences.UpMeleeAudioClip);
-            player.PlayerState.MeleeEnergy -= player.PlayerStats.UpMeleeAttackEnergyCost;
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.UpMeleeAttack.Energy;
         }
         
         public void JabMelee()
         {
             PlayWeaponSound(player.PlayerReferences.JabMeleeAudioClip);
-            player.PlayerState.MeleeEnergy -= player.PlayerStats.JabMeleeAttackEnergyCost;
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.JabMeleeAttack.Energy;
         }
 
         public void Jump()

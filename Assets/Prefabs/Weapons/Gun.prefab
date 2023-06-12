@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -404796207432602814}
   - component: {fileID: 6211855900483434782}
   - component: {fileID: 1079321014845688148}
+  - component: {fileID: 8634520368743395208}
   m_Layer: 9
   m_Name: Gun
   m_TagString: Untagged
@@ -252,6 +253,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 3956553508393825656}
   gunImages: {fileID: 11400000, guid: e555ed030663d482f89e705de34e462e, type: 2}
+--- !u!114 &8634520368743395208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461343599833970261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cc08ae5c7cf4b75b929418665f26d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 3899788427669600956, guid: e895a481766fe4e7d80b8060425cfe23, type: 3}
+  barrelTransform: {fileID: 2461343599833969984}
 --- !u!1 &2461343599833970366
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,7 +291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2461343599833970366}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.494, y: 0.127, z: 0}
+  m_LocalPosition: {x: 0.736, y: 0.329, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,6 +1,7 @@
 using Gameplay;
 using Player;
 using UnityEngine;
+using Weapons;
 
 namespace Commands
 {
@@ -8,7 +9,7 @@ namespace Commands
     {
 
         private readonly PlayerScript player;
-
+        
         public ShootCommand(PlayerScript player, KeyCode key) : base(key)
         {
             this.player = player;
@@ -16,7 +17,7 @@ namespace Commands
 
         public override void GetKeyDown()
         {
-            if (player.PlayerState.RangedEnergy >= player.PlayerStats.RangedAttackEnergyCost)
+            if (player.PlayerState.RangedEnergy >= player.PlayerStats.RangedAttack.Energy)
             {
                 player.PlayerActions.TrySwapWeapon(Global.Weapons.Gun);
                 player.PlayerActions.Attack();

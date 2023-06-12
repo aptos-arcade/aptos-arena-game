@@ -100,8 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0.3
-  knockBackForce: 200
-  knockBackDirection: {x: 1, y: 1}
+  knockBackForce: 5
   hitEffect: {fileID: 8135828751740396634, guid: 85585584782b446a6a65607e195ff543, type: 3}
   speed: 30
   destroyTime: 3

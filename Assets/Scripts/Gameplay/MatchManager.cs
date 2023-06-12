@@ -68,12 +68,7 @@ namespace Gameplay
             energyUIController = energyUI.GetComponent<EnergyUIController>();
             SpawnPosition = spawnPositions[(int)PhotonNetwork.LocalPlayer.CustomProperties[TeamKey]].position;
             var playerLayer = LayerMask.NameToLayer("Player");
-            var weaponLayer = LayerMask.NameToLayer("Weapon");
-            var groundLayer = LayerMask.NameToLayer("Ground");
-            var platformLayer = LayerMask.NameToLayer("Platform");
             Physics2D.IgnoreLayerCollision(playerLayer, playerLayer);
-            Physics2D.IgnoreLayerCollision(weaponLayer, groundLayer);
-            Physics2D.IgnoreLayerCollision(weaponLayer, platformLayer);
             spawnManager.ShowSpawnPanel();
             gameState = GameState.Playing;
             NewPlayerSend();

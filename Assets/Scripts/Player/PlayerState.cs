@@ -11,6 +11,10 @@ namespace Player
         
         public bool CanMove { get; set; }
         
+        public bool IsDead { get; set; }
+        
+        public bool IsStunned { get; set; }
+        
         public Global.Weapons Weapon { get; set; }
         
         public float DamageMultiplier { get; set; } = 1;
