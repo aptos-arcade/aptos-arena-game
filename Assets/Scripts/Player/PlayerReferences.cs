@@ -24,14 +24,8 @@ namespace Player
         [SerializeField] private GameObject explosionPrefab;
         public GameObject ExplosionPrefab => explosionPrefab;
 
-        [SerializeField] private GameObject portal;
-        public GameObject Portal => portal;
-        
         [Header("Game Objects")]
-        
-        [SerializeField] private GameObject playerMesh;
-        public GameObject PlayerMesh => playerMesh;
-        
+
         [SerializeField] private GameObject playerCanvas;
         public GameObject PlayerCanvas { get => playerCanvas; set => playerCanvas = value; }
 
@@ -66,5 +60,13 @@ namespace Player
         
         [SerializeField] private AudioClip upMeleeAudioClip;
         public AudioClip UpMeleeAudioClip => upMeleeAudioClip;
+        
+        [Header("Character Specific")]
+        
+        [SerializeField] private GameObject portal;
+        public GameObject Portal => portal;
+        
+        [SerializeField] private GameObject playerMesh;
+        public GameObject PlayerMesh => playerMesh;
     }
 }

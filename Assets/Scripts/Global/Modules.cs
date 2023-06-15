@@ -4,14 +4,25 @@ namespace Global
 {
     public class Modules
     {
-        private const string ModuleAddress = "0xd0d068848da0d8b1eec5755c048142c8efecf8a2ac9e319d6f502358535f2590";
-        private static readonly string PlayerModule = $"{ModuleAddress}::player";
+        private const string ModuleAddress = "0xd71b4784f28cd0b0f6d629a0042b88e9e2faad13abc8e85389c48f9445745983";
+        private static readonly string PlayerModule = $"{ModuleAddress}::brawler";
+        private static readonly string AptosArenaModule = $"{ModuleAddress}::aptos_arena";
         
-        public static ViewRequest ViewPayload(string functionName, string[] arguments, string[] typeArguments)
+        public static ViewRequest PlayerViewPayload(string functionName, string[] arguments, string[] typeArguments)
         {
             return new ViewRequest()
             {
                 Function = $"{PlayerModule}::{functionName}",
+                Arguments = arguments,
+                TypeArguments = typeArguments
+            };
+        }
+        
+        public static ViewRequest AptosArenaViewPayload(string functionName, string[] arguments, string[] typeArguments)
+        {
+            return new ViewRequest()
+            {
+                Function = $"{AptosArenaModule}::{functionName}",
                 Arguments = arguments,
                 TypeArguments = typeArguments
             };

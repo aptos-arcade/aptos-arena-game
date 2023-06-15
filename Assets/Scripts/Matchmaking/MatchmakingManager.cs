@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AptosIntegration;
 using Characters;
 using Photon.Pun;
 using ScriptableObjects;
@@ -75,17 +76,45 @@ namespace Matchmaking
             return PhotonNetwork.IsMasterClient && PhotonNetwork.PlayerList.Length == PhotonNetwork.CurrentRoom.MaxPlayers;
         }
 
-        private static void StartGame()
+        private void StartGame()
         {
             if (!PhotonNetwork.IsMasterClient) return;
             PhotonNetwork.CurrentRoom.IsOpen = false;
+            List<List<string>> teams = new();
+            var isRanked = (Global.GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey] ==
+                          Global.GameModes.Ranked;
             for (var i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 var playerProperties = PhotonNetwork.PlayerList[i].CustomProperties;
                 var team = i % 2;
                 if(!playerProperties.TryAdd(TeamKey, team)) playerProperties[TeamKey] = team;
                 PhotonNetwork.PlayerList[i].SetCustomProperties(playerProperties);
+                if (!isRanked) continue;
+                if (teams.Count <= team) teams.Add(new List<string>());
+                teams[team].Add(playerProperties[AccountAddressKey].ToString());
             }
+
+            if (isRanked)
+            {
+                StartCoroutine(MatchEntryFunctions.CreateMatch(teams, OnMatchCreated));
+            }
+            else
+            {
+                LoadGame();
+            }
+        }
+
+        private static void OnMatchCreated(bool success, string message)
+        {
+            if (!success) return;
+            var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+            roomProperties[Room.MatchAddressPropKey] = message;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+            LoadGame();
+        }
+
+        private static void LoadGame()
+        {
             PhotonNetwork.LoadLevel("GameplayScene");
         }
     
@@ -102,9 +131,17 @@ namespace Matchmaking
         private void SetWaitingText()
         {
             var remainingPlayers = PhotonNetwork.CurrentRoom.MaxPlayers - PhotonNetwork.CurrentRoom.PlayerCount;
-            var suffix = remainingPlayers == 1 ? "" : "s";
-            waitingText.text =
-                $"Waiting for {remainingPlayers} player{suffix}...";
+            if (remainingPlayers == 0)
+            {
+                waitingText.text = "Loading the game...";
+                backButton.interactable = false;
+            }
+            else
+            {
+                var suffix = remainingPlayers == 1 ? "" : "s";
+                waitingText.text =
+                    $"Waiting for {remainingPlayers} player{suffix}...";
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Aptos.Unity.Rest.Model;
 using UnityEngine;
 using UnityEngine.Networking;
 

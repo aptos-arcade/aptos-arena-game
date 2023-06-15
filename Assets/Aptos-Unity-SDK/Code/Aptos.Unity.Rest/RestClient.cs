@@ -862,39 +862,39 @@ namespace Aptos.Unity.Rest
             }
         }
         
-        public IEnumerator View(Action<String[], ResponseInfo> callback, ViewRequest request)
+        public IEnumerator View(Action<string[], ResponseInfo> callback, ViewRequest viewPayload)
         {
-            string viewURL = Endpoint + "/view";
-            Uri viewURI = new Uri(viewURL);
-            var newRequest = new UnityWebRequest(viewURI, "POST");
-            byte[] jsonToSend = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(request));
-            newRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
-            newRequest.downloadHandler = new DownloadHandlerBuffer();
-            newRequest.SetRequestHeader("Content-Type", "application/json");
+            var viewURL = Endpoint + "/view";
+            var viewURI = new Uri(viewURL);
+            var viewWebRequest = new UnityWebRequest(viewURI, "POST");
+            var jsonToSend = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(viewPayload));
+            viewWebRequest.uploadHandler = new UploadHandlerRaw(jsonToSend);
+            viewWebRequest.downloadHandler = new DownloadHandlerBuffer();
+            viewWebRequest.SetRequestHeader("Content-Type", "application/json");
 
-            newRequest.SendWebRequest();
-            while (!newRequest.isDone)
+            viewWebRequest.SendWebRequest();
+            while (!viewWebRequest.isDone)
             {
                 yield return null;
             }
 
             var responseInfo = new ResponseInfo();
-            if (newRequest.result != UnityWebRequest.Result.Success)
+            if (viewWebRequest.result != UnityWebRequest.Result.Success)
             {
                 responseInfo.status = ResponseInfo.Status.Failed;
-                responseInfo.message = "Error while submitting view function request. " + newRequest.error;
+                responseInfo.message = "Error while submitting view function request. " + viewWebRequest.error;
                 callback(null, responseInfo);
             }
             else // Either 200, or 202
             {
-                string response = newRequest.downloadHandler.text;
-                String[] values = JsonConvert.DeserializeObject<String[]>(response);
+                var response = viewWebRequest.downloadHandler.text;
+                var values = JsonConvert.DeserializeObject<String[]>(response);
                 responseInfo.status = ResponseInfo.Status.Success;
                 responseInfo.message = response;
                 callback(values, responseInfo);
             }
 
-            newRequest.Dispose();
+            viewWebRequest.Dispose();
         }
 
         #endregion

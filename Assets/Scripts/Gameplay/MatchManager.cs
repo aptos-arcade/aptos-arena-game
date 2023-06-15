@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AptosIntegration;
 using Characters;
 using ExitGames.Client.Photon;
+using Global;
 using Photon.Pun;
 using Photon.Realtime;
 using Player;
@@ -239,9 +241,23 @@ namespace Gameplay
                 break;
             }
             if (!winnerFound) return;
+            OnWinnerFound(curWinningTeam);
+        }
+        
+        private void OnWinnerFound(int winnerIndex)
+        {
             gameState = GameState.MatchOver;
-            winningTeam = curWinningTeam;
+            winningTeam = winnerIndex;
             ListPlayersSend();
+            // check if room is ranked room
+            if ((GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey] != GameModes.Ranked) return;
+            var matchAddress = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchAddressPropKey];
+            StartCoroutine(MatchEntryFunctions.SetMatchResult(matchAddress, winnerIndex, OnMatchResultReported));
+        }
+
+        private static void OnMatchResultReported(bool success, string message)
+        {
+            Debug.Log(message);
         }
         
         private void StateCheck()

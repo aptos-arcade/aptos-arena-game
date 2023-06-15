@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Aptos.Unity.Rest;
+using AptosIntegration;
 using Characters;
 using Global;
 using Photon;
@@ -91,7 +92,7 @@ namespace MainMenu
                 var playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
                 playerProperties[PlayerPropertyKeys.SwordKey] = swordIndex - 1;
                 PhotonNetwork.SetPlayerCustomProperties(playerProperties);
-            }, Modules.ViewPayload(
+            }, Modules.PlayerViewPayload(
                 "get_player_melee_weapon",
                 new[] { WalletManager.Instance.Address },
                 Array.Empty<string>()
@@ -114,7 +115,7 @@ namespace MainMenu
                 var playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
                 playerProperties[PlayerPropertyKeys.GunKey] = rangedIndex - 1;
                 PhotonNetwork.SetPlayerCustomProperties(playerProperties);
-            }, Modules.ViewPayload(
+            }, Modules.PlayerViewPayload(
                 "get_player_ranged_weapon",
                 new[] { WalletManager.Instance.Address },
                 Array.Empty<string>()
@@ -125,14 +126,14 @@ namespace MainMenu
         {
             return RestClient.Instance.View((vals, responseInfo) =>
             {
-                if (vals == null || vals.Length < 3 || vals[1] == string.Empty) return;
+                if (vals == null || vals.Length < 2 || vals[1] == string.Empty) return;
                 var characterCollectionName = vals[1];
                 var playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
                 playerProperties[PlayerPropertyKeys.CharacterKey] = Characters.Characters.GetCharacterEnum(characterCollectionName);
                 PhotonNetwork.SetPlayerCustomProperties(playerProperties);
                 continueToRoomSelectButton.interactable = true;
                 loadSuccessful = true;
-            }, Modules.ViewPayload(
+            }, Modules.PlayerViewPayload(
                 "get_player_character",
                 new[] { WalletManager.Instance.Address },
                 Array.Empty<string>()

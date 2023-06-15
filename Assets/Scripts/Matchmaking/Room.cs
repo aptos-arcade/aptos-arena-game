@@ -11,7 +11,8 @@ public class Room : MonoBehaviour
 
     private Button joinButton;
 
-    private const string ModePropKey = "m";
+    public const string ModePropKey = "m";
+    public const string MatchAddressPropKey = "ma";
     
     private void Start()
     {

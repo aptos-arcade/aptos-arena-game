@@ -115,6 +115,7 @@ namespace MainMenu
         private void OnDestroy()
         {
             CharacterCard.OnSelect -= ContinueToRoomSelect;
+            WalletManager.OnConnect -= OnWalletConnected;
         }
     }
 }

@@ -1,49 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37273cba-c971-4955-a8b6-0a7c31e5b0fb" name="Changes" comment="init">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/StrikerData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/StrikerData.cs.meta" afterDir="false" />
+    <list default="true" id="37273cba-c971-4955-a8b6-0a7c31e5b0fb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/MatchEntryFunctions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/MatchEntryFunctions.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/PlayerEloRatingManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/PlayerEloRatingManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.aptos-arena/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.aptos-arena/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Attack_Up.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Attack_Up.anim" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Jab.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Jab.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/PirateMonkeyController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PirateMonkeyController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/20.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/20.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/30.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/30.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/8.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/8.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/9.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Guns/9.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_1.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_2.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_3.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_4.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_5.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Weapons/Swords/Sword_5.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/RestClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/RestClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameModes/GameMode.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameModes/GameMode.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterDisplay.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterDisplay.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterRig.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterRig.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Rooms/RoomsList.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Rooms/RoomsList.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Weapons/Gun.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Weapons/Gun.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Weapons/Sword.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Weapons/Sword.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Laser_Projectile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Laser_Projectile.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/JabMeleeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/JabMeleeCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/ShootCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/ShootCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/SideMeleeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/SideMeleeCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/UpMeleeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/UpMeleeCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/CasualMenuScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/CasualMenuScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LaunchScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LaunchScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ModeSelectScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ModeSelectScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/RankedMenuScreen.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/RankedMenuScreen.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/AnsResolver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/AnsResolver.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/WalletManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/WalletManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/CharacterCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Characters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Characters.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRPCs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRPCs.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Global/Modules.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Global/Modules.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/CasualMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/CasualMenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/CustomPlayerManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/CustomPlayerManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/RankedMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/RankedMenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Matchmaking/MatchmakingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Matchmaking/MatchmakingManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Matchmaking/Room.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Matchmaking/Room.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Photon/PhotonLauncher.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Photon/PhotonLauncher.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Photon/PlayerPropertyKeys.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Photon/PlayerPropertyKeys.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerReferences.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerReferences.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUtilities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUtilities.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/HitEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/HitEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Striker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Striker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +41,6 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Users/jason/Documents/games/aptos-arena/Assets/Graphics/Weapons/Guns/1.png.meta" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/ConnectedPlayer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/ConnectedPlayersManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -74,6 +63,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation@7.0.10/IK/Editor/Inspectors/LimbSolver2DEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation@7.0.10/IK/Runtime/Solvers/FABRIK2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation@7.0.10/IK/Runtime/Solvers/Limb.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.common@6.0.6/Runtime/UTess2D/ArraySlice.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter@6.0.7/Editor/PSDPlugin/PhotoShopFileType/BlendModeMapping.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter@6.0.7/Editor/PSDPlugin/PhotoShopFileType/DocumentLoadContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter@6.0.7/Editor/Tasks/ExtractLayerTask.cs" root0="SKIP_HIGHLIGHTING" />
@@ -95,6 +85,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.Flow/Framework/Nesting/GraphOutputWidget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.Flow/Options/UnitOptionTree.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.Flow/Plugin/Changelogs/Changelog_1_4_0.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.State/Flow/StateUnitWidget.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.State/Graph/StateCanvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Cloning/Cloners/DictionaryCloner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Events/EventHooks.cs" root0="SKIP_HIGHLIGHTING" />
@@ -135,22 +126,26 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Variables/VariableDeclarations.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Variables/VariableDeclarationsCloner.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../aptos-arena_clone_1/Assets/Photon/PhotonUnityNetworking/Code/PhotonNetworkPart.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../aptos-arena_clone_1/Assets/Scripts/AptosIntegration/MatchEntryFunctions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../aptos-arena_clone_1/Assets/Scripts/Weapons/Projectile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/06de1a199c3349e08cc2451db0acfed119e00/1c/25060094/FirebaseUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/5a41d6b7189842eca409fd0b1c3e3dcf17bf78/ae/1ea8ee56/Action.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/65a1e0840c48486cae789f6b5d6fb172159e00/16/35ea9320/Resources.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/65a1e0840c48486cae789f6b5d6fb172159e00/f4/5a2414c2/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/732900b5c39546dca3bf0957557e5bdfbe00/23/7b04ffa8/UnityWebRequest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/732900b5c39546dca3bf0957557e5bdfbe00/be/212429fa/UploadHandlerRaw.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/732900b5c39546dca3bf0957557e5bdfbe00/e5/a4846e5f/UploadHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/78a9f04c0fc14c7fa63a6d99188aa0c01f800/43/42f5f814/Physics2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/78a9f04c0fc14c7fa63a6d99188aa0c01f800/b0/8d96bc1e/Rigidbody2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c7d549bc7be64852b8dc16431effd9fc39a00/06/cb5768d5/Hashtable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d97e74faa69f36f3128e84dc52334a189c26641628bc79c17ee66f81f557/System.Text.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="Toolset" />
+    <option name="selectedTabId" value="SWEA" />
   </component>
   <component name="ProjectId" id="2Pn27zF5wIi0jh2jHXQqeAJxWjy" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -231,7 +226,10 @@
       <workItem from="1685986493825" duration="29282000" />
       <workItem from="1686230396332" duration="3810000" />
       <workItem from="1686366915717" duration="12949000" />
-      <workItem from="1686544662438" duration="7087000" />
+      <workItem from="1686544662438" duration="10327000" />
+      <workItem from="1686716605030" duration="6488000" />
+      <workItem from="1686754208871" duration="2212000" />
+      <workItem from="1686799220321" duration="15191000" />
     </task>
     <servers />
   </component>
