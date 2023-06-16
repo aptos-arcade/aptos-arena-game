@@ -34,11 +34,11 @@ namespace Player
         
         [SerializeField] private GameObject[] weaponObjects;
         public GameObject[] WeaponObjects => weaponObjects;
-        
+
         public Sword Sword => weaponObjects[(int)Global.Weapons.Sword].GetComponent<Sword>();
         
         public Gun Gun => weaponObjects[(int)Global.Weapons.Gun].GetComponent<Gun>();
-        
+
         [Header("Transforms")]
 
         [SerializeField] private Transform playerLives;

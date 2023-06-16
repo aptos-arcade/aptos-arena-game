@@ -10,9 +10,9 @@ namespace Player
         public bool CanDoubleJump { get; set; } = true;
         
         public bool CanMove { get; set; }
-        
-        public bool IsDead { get; set; }
-        
+
+        public bool IsDead { get; set; } = true;
+
         public bool IsStunned { get; set; }
         
         public Global.Weapons Weapon { get; set; }

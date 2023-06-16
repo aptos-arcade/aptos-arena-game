@@ -1,3 +1,4 @@
+using System;
 using Animations;
 using Characters;
 using Gameplay;
@@ -67,7 +68,6 @@ namespace Player
 
             PlayerState.PlayerName = PhotonNetwork.NickName;
             PlayerState.Character = (CharactersEnum)PhotonNetwork.LocalPlayer.CustomProperties[CharacterKey];
-
             AnyStateAnimation[] animations = {
                 new(Rig.Body, "Body_Idle", "Body_Attack", "Body_Jump"),
                 new(Rig.Body, "Body_Walk", "Body_Attack", "Body_Jump"),
@@ -85,9 +85,8 @@ namespace Player
             };
 
             playerComponent.Animator.AnimationTriggerEvent += PlayerUtilities.HandleAnimation;
-
             playerComponent.Animator.AddAnimations(animations);
-
+            
             PlayerUtilities.GetSpriteRenderers();
 
             playerReferences.DamageDisplay.text = ((PlayerState.DamageMultiplier - 1) * 100) + "%";

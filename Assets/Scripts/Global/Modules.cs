@@ -4,7 +4,7 @@ namespace Global
 {
     public class Modules
     {
-        private const string ModuleAddress = "0xd71b4784f28cd0b0f6d629a0042b88e9e2faad13abc8e85389c48f9445745983";
+        private const string ModuleAddress = "0x5d74b9dfc5e930db7fd9530675e06a0bb52800cb5bf7c038a6f886aa3c00381d";
         private static readonly string PlayerModule = $"{ModuleAddress}::brawler";
         private static readonly string AptosArenaModule = $"{ModuleAddress}::aptos_arena";
         

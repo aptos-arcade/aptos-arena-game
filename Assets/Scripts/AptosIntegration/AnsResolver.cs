@@ -16,7 +16,7 @@ namespace AptosIntegration
         
         public static IEnumerator ResolveAns(Action<string> callback, string walletAddress)
         {
-            var request = UnityWebRequest.Get($"https://www.aptosnames.com/api/mainnet/v1/name/{walletAddress}");
+            var request = UnityWebRequest.Get($"https://www.aptosnames.com/api/mainnet/v1/primary-name/{walletAddress}");
             yield return request.SendWebRequest();
             if (request.result is UnityWebRequest.Result.ConnectionError or UnityWebRequest.Result.ProtocolError)
             {

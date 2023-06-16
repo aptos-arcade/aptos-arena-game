@@ -126,7 +126,7 @@ namespace Player
                 player.PlayerState.IsStunned = true;
             }
             player.PlayerState.CanMove = !hurt;
-            player.PlayerComponents.BodyCollider.enabled = !hurt;
+            // player.PlayerComponents.BodyCollider.enabled = !hurt;
             foreach (var renderer in player.PlayerComponents.PlayerSprites)
             {
                 renderer.color = hurt ? Color.red : Color.white;

@@ -96,7 +96,7 @@ namespace Player
         private IEnumerator DropCoroutine()
         {
             player.PlayerComponents.FootCollider.enabled = false;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.25f);
             player.PlayerComponents.FootCollider.enabled = true;
         }
 

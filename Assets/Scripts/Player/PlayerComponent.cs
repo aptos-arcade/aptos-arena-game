@@ -15,8 +15,8 @@ namespace Player
         public Collider2D FootCollider => footCollider;
 
 
-        [SerializeField] private PolygonCollider2D bodyCollider;
-        public PolygonCollider2D BodyCollider { get => bodyCollider; set => bodyCollider = value; }
+        [SerializeField] private CapsuleCollider2D bodyCollider;
+        public CapsuleCollider2D BodyCollider { get => bodyCollider; set => bodyCollider = value; }
 
 
         [SerializeField] private AnyStateAnimator animator;

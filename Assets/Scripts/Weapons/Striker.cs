@@ -31,8 +31,8 @@ namespace Weapons
         private void OnTriggerEnter2D(Collider2D col)
         {
             var player = col.GetComponent<PlayerScript>();
-            if (player == null || !photonView.IsMine || player.photonView.IsMine ||
-                player.PlayerUtilities.IsSameTeam(photonView) || col.GetType() != typeof(PolygonCollider2D)) return;
+            if (player == null || !photonView.IsMine || player.photonView.IsMine 
+                || player.PlayerUtilities.IsSameTeam(photonView) || !player.PlayerState.CanMove) return;
             OnStrike(col.transform.position);
             player.PlayerUtilities.StrikerCollision(this);
         }
