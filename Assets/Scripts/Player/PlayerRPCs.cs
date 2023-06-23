@@ -42,6 +42,12 @@ namespace Player
             player.PlayerComponents.RigidBody.velocity =
                 direction.normalized * knockBack * player.PlayerState.DamageMultiplier;
         }
+        
+        [PunRPC]
+        public void OnShieldStrike(float damage)
+        {
+            player.PlayerState.ShieldEnergy -= damage;
+        }
 
         [PunRPC]
         public void HurtEffect(bool hurt)

@@ -44,9 +44,9 @@ namespace Player
         [SerializeField] private Transform playerLives;
         public Transform PlayerLives { get => playerLives; set => playerLives = value; }
         
-        [SerializeField] private Transform gunBarrel;
-        public Transform GunBarrel => gunBarrel;
-        
+        [SerializeField] private PlayerShield playerShield;
+        public PlayerShield PlayerShield { get => playerShield; set => playerShield = value; }
+
         [Header("Audio Clips")]
         
         [SerializeField] private AudioClip shootAudioClip;

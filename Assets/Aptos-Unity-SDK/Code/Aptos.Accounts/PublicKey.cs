@@ -1,4 +1,5 @@
 using Aptos.HdWallet.Utils;
+using Aptos.BCS;
 using Chaos.NaCl;
 using System;
 
@@ -56,7 +57,7 @@ namespace Aptos.Accounts
                 {
                     string key = _key;
                     if (_key[0..2].Equals("0x")) { key = _key[2..]; }
-                    _keyBytes = key.HexStringToByteArray();
+                    _keyBytes = key.ByteArrayFromHexString();
                 }
                 return _keyBytes;
             }
@@ -113,9 +114,27 @@ namespace Aptos.Accounts
         /// <param name="message">Message that was signed.</param>
         /// <param name="signature">The signature from the message.</param>
         /// <returns></returns>
-        public bool Verify(byte[] message, byte[] signature)
+        public bool Verify(byte[] message, Signature signature)
         {
-            return Ed25519.Verify(signature, message, KeyBytes);
+            return Ed25519.Verify(signature.Data(), message, KeyBytes);
+        }
+
+        /// <summary>
+        /// Serialize public key
+        /// </summary>
+        /// <param name="serializer">Serializer object</param>
+        public void Serialize(Serialization serializer)
+        {
+            serializer.SerializeBytes(this.KeyBytes);
+        }
+
+        public static PublicKey Deserialize(Deserialization deserializer)
+        {
+            byte[] keyBytes = deserializer.ToBytes();
+            if (keyBytes.Length != PublicKey.KeyLength)
+                throw new Exception("Length mismatch. Expected: " + PublicKey.KeyLength + ", Actual: "  + keyBytes.Length);
+
+            return new PublicKey(keyBytes);
         }
 
         /// <summary>

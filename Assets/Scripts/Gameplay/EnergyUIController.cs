@@ -18,6 +18,9 @@ namespace Gameplay
         [SerializeField] private Image swordEnergyFill;
         [SerializeField] private Color swordEnergyColor;
         
+        [Header("Shield Energy")]
+        [SerializeField] private Slider shieldEnergySlider;
+        
         [Header("Audio Clips")]
         [SerializeField] private AudioClip noEnergyAudioClip;
         
@@ -33,18 +36,22 @@ namespace Gameplay
         {
             SetRangedEnergy();
             SetSwordEnergy();
+            SetShieldEnergy();
         }
 
         private void SetRangedEnergy()
         {
-            var energy = MatchManager.Instance.Player.PlayerState.RangedEnergy;
-            gunEnergySlider.value = energy;
+            gunEnergySlider.value = MatchManager.Instance.Player.PlayerState.RangedEnergy;
         }
 
         private void SetSwordEnergy()
         {
-            var energy = MatchManager.Instance.Player.PlayerState.MeleeEnergy;
-            swordEnergySlider.value = energy;
+            swordEnergySlider.value = MatchManager.Instance.Player.PlayerState.MeleeEnergy;
+        }
+        
+        public void SetShieldEnergy()
+        {
+            shieldEnergySlider.value = MatchManager.Instance.Player.PlayerState.ShieldEnergy;
         }
         
         public void NoEnergy(Global.Weapons weapon)

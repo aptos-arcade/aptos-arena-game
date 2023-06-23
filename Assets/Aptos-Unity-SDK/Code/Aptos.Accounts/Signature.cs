@@ -23,11 +23,6 @@ namespace Aptos.Accounts
         /// Hex-string representation of the signature
         /// </summary>
         private string _signature;
-        
-        // implicit cast to bytes
-        public static implicit operator byte[](Signature signature) => signature._signatureBytes;
-        // implicit cast from bytes
-        public static implicit operator Signature(byte[] signature) => new (signature);
 
         public Signature(byte[] signature)
         {

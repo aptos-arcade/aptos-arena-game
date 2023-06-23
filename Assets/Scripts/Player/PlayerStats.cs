@@ -47,5 +47,8 @@ namespace Player
 
         [SerializeField] private float rangedEnergyRegenTime;
         public float RangedEnergyRegenTime => rangedEnergyRegenTime;
+        
+        [SerializeField] private float shieldEnergyRegenTime;
+        public float ShieldEnergyRegenTime => shieldEnergyRegenTime;
     }
 }

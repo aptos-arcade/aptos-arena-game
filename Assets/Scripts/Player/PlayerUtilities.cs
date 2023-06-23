@@ -31,20 +31,23 @@ namespace Player
             commands.Add(new UpMeleeCommand(player, KeyCode.W));
             commands.Add(new SideMeleeCommand(player, KeyCode.A, -1));
             commands.Add(new SideMeleeCommand(player, KeyCode.D, 1));
+            commands.Add(new ShieldCommand(player, KeyCode.LeftShift));
         }
 
         public void HandleInput()
         {
             if (!player.PlayerComponents.PhotonView.IsMine) return;
+            
+            if(Input.anyKeyDown) player.PlayerState.IsStunned = false;
 
             if (player.PlayerState.CanMove)
             {
                 var x = Input.GetAxisRaw("Horizontal");
                 player.PlayerState.Direction = new Vector2(x, 0);
-                if(x != 0)
-                {
-                    player.PlayerState.IsStunned = false;
-                }
+            } 
+            else
+            {
+                player.PlayerState.Direction = Vector2.zero;
             }
 
             foreach (var command in commands)
@@ -97,6 +100,10 @@ namespace Player
             {
                 player.PlayerState.RangedEnergy += Time.deltaTime / player.PlayerStats.RangedEnergyRegenTime;
             }
+            if(player.PlayerState.ShieldEnergy < 1 && !player.PlayerReferences.PlayerShield.gameObject.activeSelf)
+            {
+                player.PlayerState.ShieldEnergy += Time.deltaTime / player.PlayerStats.ShieldEnergyRegenTime;
+            }
         }
         
         private void OnDeath()
@@ -117,6 +124,11 @@ namespace Player
                 striker.KnockBackForce,
                 striker.Damage
             );
+        }
+
+        public void ShieldCollision(Striker striker)
+        {
+            player.photonView.RPC("OnShieldStrike", RpcTarget.AllBuffered, striker.Damage);
         }
 
         public void HurtEffect(bool hurt)
@@ -172,9 +184,7 @@ namespace Player
             SetPlayerEnabled(isRevive);
             
             player.PlayerReferences.PlayerCanvas.SetActive(isRevive);
-            player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].GetPhotonView()
-                .RPC(isRevive ? "Equip" : "UnEquip", RpcTarget.AllBuffered);
-            
+
             player.PlayerComponents.RigidBody.gravityScale = isRevive ? 5 : 0;
             player.PlayerComponents.FootCollider.enabled = isRevive;
             player.PlayerComponents.BodyCollider.enabled = isRevive;
@@ -184,6 +194,8 @@ namespace Player
             player.PlayerState.IsStunned = !isRevive;
             player.PlayerState.MeleeEnergy = isRevive ? 1 : 0;
             player.PlayerState.RangedEnergy = isRevive ? 1 : 0;
+            
+            player.PlayerActions.TrySwapWeapon(player.PlayerState.Weapon);
         }
 
         public void JumpImpl(float jumpForce)
@@ -215,6 +227,9 @@ namespace Player
                     break;
                 case "Double_Jump":
                     player.PlayerActions.DoubleJump();
+                    break;
+                case "Shield":
+                    player.PlayerActions.TriggerShield(true);
                     break;
             }
         }

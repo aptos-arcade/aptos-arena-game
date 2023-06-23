@@ -135,5 +135,16 @@ namespace Player
             player.PlayerState.CanDoubleJump = false;
             player.PlayerUtilities.JumpImpl(player.PlayerStats.DoubleJumpForce);
         }
+
+        public void TryShield()
+        {
+            player.PlayerComponents.Animator.TryPlayAnimation("Body_Shield");
+            player.PlayerComponents.Animator.TryPlayAnimation("Legs_Shield");
+        }
+
+        public void TriggerShield(bool active)
+        {
+            player.PlayerReferences.PlayerShield.photonView.RPC("TriggerShield", RpcTarget.AllBuffered, active);
+        }
     }
 }

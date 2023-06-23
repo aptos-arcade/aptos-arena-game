@@ -1,7 +1,7 @@
 using Chaos.NaCl;
 using System;
 using Aptos.HdWallet.Utils;
-using Aptos.Utilities.BCS;
+using Aptos.BCS;
 
 namespace Aptos.Accounts
 {
@@ -9,7 +9,7 @@ namespace Aptos.Accounts
     /// Represents an Aptos account address.
     /// More details can her found <see cref="https://aptos.dev/concepts/accounts">here</see>.
     /// </summary>
-    public class AccountAddress
+    public class AccountAddress: ISerializableTag
     {
         private static readonly int Length = 32;
         private readonly byte[] AddressBytes;
@@ -54,6 +54,9 @@ namespace Aptos.Accounts
         /// <returns>An account address object</returns>
         public static AccountAddress FromHex(string address)
         {
+            if (string.IsNullOrWhiteSpace(address))
+                throw new ArgumentException("Address string is empty.");
+
             string addr = address;
             if (address[0..2].Equals("0x")) { addr = address[2..]; }
 
@@ -63,7 +66,7 @@ namespace Aptos.Accounts
                 addr = pad + addr;
             }
 
-            return new AccountAddress(addr.HexStringToByteArray());
+            return new AccountAddress(addr.ByteArrayFromHexString());
         }
 
         /// <summary>
@@ -99,6 +102,36 @@ namespace Aptos.Accounts
         public void Serialize(Serialization serializer)
         {
             serializer.SerializeFixedBytes(this.AddressBytes);
+        }
+
+        public static AccountAddress Deserialize(Deserialization deserializer)
+        {
+            return new AccountAddress(deserializer.FixedBytes(AccountAddress.Length));
+        }
+
+        public TypeTag Variant()
+        {
+            return TypeTag.ACCOUNT_ADDRESS;
+        }
+
+        public object GetValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is not AccountAddress)
+                throw new NotImplementedException("::: " + other.GetType());
+
+            AccountAddress otherAcctAddr = (AccountAddress)other;
+
+            return this.ToString().Equals(otherAcctAddr.ToString());
+        }
+
+        public override int GetHashCode()
+        {
+            return this.AddressBytes.GetHashCode();
         }
     }
 }

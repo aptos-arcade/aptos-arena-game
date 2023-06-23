@@ -20,6 +20,7 @@ namespace Animations
         private string currentAnimationLegs = string.Empty;
 
         private string currentAnimationBody = string.Empty;
+        public string CurrentAnimationBody => currentAnimationBody;
     
         private static readonly int Weapon = Animator.StringToHash("Weapon");
         private static readonly int AttackDirection = Animator.StringToHash("AttackDirection");

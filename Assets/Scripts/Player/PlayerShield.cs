@@ -10,6 +10,8 @@ namespace Player
         [SerializeField] private ParticleSystem ps;
         
         public PlayerScript Player { get; private set; }
+        
+        private const float endScale = 0.1f;
 
         private void Awake()
         {
@@ -25,11 +27,8 @@ namespace Player
                 Player.PlayerComponents.Animator.OnAnimationDone("Body_Shield");
                 Player.PlayerComponents.Animator.OnAnimationDone("Legs_Shield");
             }
-            if (Player.PlayerState.ShieldEnergy <= 0.05)
-            {
-                ps.Stop();
-            }
-            transform.localScale = new Vector3(Player.PlayerState.ShieldEnergy, Player.PlayerState.ShieldEnergy, 1);
+            var scale = 0.1f + 0.9f * Player.PlayerState.ShieldEnergy;
+            transform.localScale = new Vector3(scale, scale, 1);
             Player.PlayerState.ShieldEnergy -= Time.deltaTime / shieldEnergyDuration;
         }
 

@@ -74,14 +74,16 @@ namespace Player
                 new(Rig.Body, "Body_Jump", "Body_Attack"),
                 new(Rig.Body, "Body_Double_Jump"),
                 new(Rig.Body, "Body_Fall", "Body_Attack", "Body_Double_Jump"),
-                new(Rig.Body, "Body_Attack"),
+                new(Rig.Body, "Body_Attack", "Body_Shield"),
+                new(Rig.Body, "Body_Shield", "Body_Attack", "Body_Jump", "Body_Double_Jump", "Body_Fall"),
 
                 new(Rig.Legs, "Legs_Idle", "Legs_Attack"),
                 new(Rig.Legs, "Legs_Walk", "Legs_Attack"),
                 new(Rig.Legs, "Legs_Jump", "Legs_Double_Jump"),
                 new(Rig.Legs, "Legs_Double_Jump"),
                 new(Rig.Legs, "Legs_Fall", "Legs_Attack", "Legs_Double_Jump"),
-                new(Rig.Legs, "Legs_Attack")
+                new(Rig.Legs, "Legs_Attack", "Legs_Shield"),
+                new(Rig.Legs, "Legs_Shield", "Legs_Attack", "Legs_Jump", "Legs_Double_Jump", "Legs_Fall"),
             };
 
             playerComponent.Animator.AnimationTriggerEvent += PlayerUtilities.HandleAnimation;

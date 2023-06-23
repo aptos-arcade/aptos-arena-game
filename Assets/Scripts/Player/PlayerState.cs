@@ -28,5 +28,7 @@ namespace Player
         public float RangedEnergy { get; set; } = 1;
         
         public float MeleeEnergy { get; set; } = 1;
+        
+        public float ShieldEnergy { get; set; } = 1;
     }
 }

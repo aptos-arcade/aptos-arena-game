@@ -29,7 +29,7 @@ namespace Aptos.Accounts
             byte[] seed = new byte[Ed25519.PrivateKeySeedSizeInBytes];
             RandomUtils.GetBytes(seed);
 
-            PrivateKey = new PrivateKey(Ed25519.ExpandedPrivateKeyFromSeed(seed));
+            PrivateKey = new PrivateKey(seed);
             PublicKey = new PublicKey(Ed25519.PublicKeyFromSeed(seed));
             AccountAddress = AccountAddress.FromKey(PublicKey);
             PrivateKeyShort = new byte[32];
@@ -60,10 +60,22 @@ namespace Aptos.Accounts
         /// Utility function to be in par with the other SDKS
         /// , otherwise use the default constructor Account().
         /// </summary>
-        /// <returns>A new account</returns>
+        /// <returns>A new account.</returns>
         public static Account Generate()
         {
             return new Account();
+        }
+
+        /// <summary>
+        /// Creates an account from private key in string format.
+        /// </summary>
+        /// <param name="privateKeyHex">The private key.</param>
+        /// <returns>A new account.</returns>
+        public static Account LoadKey(string privateKeyHex)
+        {
+            PrivateKey privateKey = new PrivateKey(privateKeyHex);
+            PublicKey publicKey = privateKey.PublicKey();
+            return new Account(privateKey, publicKey);
         }
 
         /// <summary>
@@ -83,7 +95,7 @@ namespace Aptos.Accounts
         /// <param name="message">The signed message.</param>
         /// <param name="signature">The signature of the message.</param>
         /// <returns>True is the signature is valid, False otherwise</returns>
-        public bool Verify(byte[] message, byte[] signature)
+        public bool Verify(byte[] message, Signature signature)
         {
             return PublicKey.Verify(message, signature);
         }
@@ -92,8 +104,8 @@ namespace Aptos.Accounts
         /// Sign a given byte array (data) with the current account's private key
         /// </summary>
         /// <param name="message"></param> The signature of the data.
-        /// <returns>The singed messaged in byte form</returns>
-        public byte[] Sign(byte[] message)
+        /// <returns>The signature as an object</returns>
+        public Signature Sign(byte[] message)
         {
             return PrivateKey.Sign(message);
         }

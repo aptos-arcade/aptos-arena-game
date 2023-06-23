@@ -30,11 +30,25 @@ namespace Weapons
 
         private void OnTriggerEnter2D(Collider2D col)
         {
+            if(!photonView.IsMine) return;
+            
             var player = col.GetComponent<PlayerScript>();
-            if (player == null || !photonView.IsMine || player.photonView.IsMine 
-                || player.PlayerUtilities.IsSameTeam(photonView) || !player.PlayerState.CanMove) return;
-            OnStrike(col.transform.position);
-            player.PlayerUtilities.StrikerCollision(this);
+            if (player != null && !player.photonView.IsMine
+                               && !player.PlayerUtilities.IsSameTeam(photonView) && player.PlayerState.CanMove)
+            {
+                OnStrike(col.transform.position);
+                player.PlayerUtilities.StrikerCollision(this);
+                return;
+            }
+            
+            var shield = col.GetComponent<PlayerShield>();
+            if (shield != null && !shield.photonView.IsMine
+                               && !shield.Player.PlayerUtilities.IsSameTeam(photonView))
+            {
+                OnStrike(col.transform.position);
+                shield.Player.PlayerUtilities.ShieldCollision(this);
+            }
+            
         }
     }
 }
