@@ -31,7 +31,7 @@ namespace Gameplay
             PlayerDeath
         }
 
-        public enum GameState
+        private enum GameState
         {
             Waiting,
             Playing,
@@ -40,10 +40,14 @@ namespace Gameplay
         
         public PlayerScript Player { get; set; }
         
+        [Header("Game Objects")]
+        [SerializeField] private Camera sceneCamera;
+        
         [Header("Managers")]
-        [SerializeField] private SpawnManager spawnManager;
         [SerializeField] private RespawnManager respawnManager;
         [SerializeField] private OutOfLivesManager outOfLivesManager;
+        [SerializeField] private FeedManager feedManager;
+        [SerializeField] private KillTextManager killTextManager;
         
         [Header("UI")]
         [SerializeField] private GameObject energyUI;
@@ -61,19 +65,22 @@ namespace Gameplay
         private int winningTeam;
         
         private readonly List<PlayerInfo> playerInfos = new();
-        private int localPlayerIndex;
         
         private EnergyUIController energyUIController;
 
         private void Start()
         {
             energyUIController = energyUI.GetComponent<EnergyUIController>();
+            sceneCamera.gameObject.SetActive(false);
             SpawnPosition = spawnPositions[(int)PhotonNetwork.LocalPlayer.CustomProperties[TeamKey]].position;
-            spawnManager.ShowSpawnPanel();
+            var characterPrefabName = Characters.Characters.AvailableCharacters[(CharactersEnum)PhotonNetwork.LocalPlayer
+                .CustomProperties[CharacterKey]].PrefabName;
+            PhotonNetwork.Instantiate(characterPrefabName, SpawnPosition, Quaternion.identity);
             gameState = GameState.Playing;
             NewPlayerSend();
+            respawnManager.StartRespawn();
         }
-        
+
         public void OnEvent(EventData photonEvent)
         {
             if (photonEvent.Code >= 200) return;
@@ -116,7 +123,8 @@ namespace Gameplay
                 PhotonNetwork.LocalPlayer.ActorNumber, 
                 3,
                 PhotonNetwork.LocalPlayer.CustomProperties[TeamKey],
-                PhotonNetwork.LocalPlayer.CustomProperties[CharacterKey]
+                PhotonNetwork.LocalPlayer.CustomProperties[CharacterKey],
+                0
             };
             PhotonNetwork.RaiseEvent((byte)EventCodes.NewPlayer, package,
                 new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient }, SendOptions.SendReliable);
@@ -129,9 +137,10 @@ namespace Gameplay
             var lives = (int)data[2];
             var team = (int)data[3];
             var character = (CharactersEnum)data[4];
+            var kills = (int)data[5];
             
             
-            var playerInfo = new PlayerInfo(username, actorNumber, lives, team, character);
+            var playerInfo = new PlayerInfo(username, actorNumber, lives, team, character, kills);
             playerInfos.Add(playerInfo);
             ListPlayersSend();
         }
@@ -149,7 +158,8 @@ namespace Gameplay
                     playerInfos[i].ActorNumber,
                     playerInfos[i].Lives,
                     playerInfos[i].Team,
-                    playerInfos[i].Character
+                    playerInfos[i].Character,
+                    playerInfos[i].Kills
                 };
             }
 
@@ -169,18 +179,17 @@ namespace Gameplay
                     (int)playerInfoData[1],
                     (int)playerInfoData[2],
                     (int)playerInfoData[3],
-                    (CharactersEnum)playerInfoData[4]
+                    (CharactersEnum)playerInfoData[4],
+                    (int)playerInfoData[5]
                 );
                 playerInfos.Add(playerInfo);
-                if (playerInfo.ActorNumber == PhotonNetwork.LocalPlayer.ActorNumber)
-                    localPlayerIndex = playerInfos.Count - 2;
             }
             StateCheck();
         }
 
-        public static void PlayerDeathSend(int actorDeath)
+        public static void PlayerDeathSend(int actorDeath, int actorKill)
         {
-            object[] data = {actorDeath};
+            object[] data = {actorDeath, actorKill};
             PhotonNetwork.RaiseEvent((byte)EventCodes.PlayerDeath, data,
                 new RaiseEventOptions { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
         }
@@ -188,6 +197,14 @@ namespace Gameplay
         private void PlayerDeathReceive(IReadOnlyList<object> data)
         {
             var actorDeath = (int)data[0];
+            var actorKill = (int)data[1];
+            
+            DeathFeedMessage(actorDeath, actorKill);
+            if (actorKill == PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                killTextManager.OnKill();
+            }
+            
             var deathPlayerIndex = playerInfos.FindIndex(x => x.ActorNumber == actorDeath);
             playerInfos[deathPlayerIndex].Lives--;
             if (actorDeath == PhotonNetwork.LocalPlayer.ActorNumber)
@@ -200,6 +217,20 @@ namespace Gameplay
             ScoreCheck();
         }
 
+        private void DeathFeedMessage(int actorDeath, int actorKill)
+        {
+            var deathPlayerName = PhotonNetwork.CurrentRoom.Players[actorDeath].NickName;
+            if (actorKill == 0)
+            {
+                feedManager.WriteMessage(deathPlayerName + " died!", 5f);
+            }
+            else
+            {
+                var killPlayerName = PhotonNetwork.CurrentRoom.Players[actorKill].NickName;
+                feedManager.WriteMessage(deathPlayerName + " was killed by " + killPlayerName + "!", 5f);
+            }
+        }
+
         private void OnPlayerDeath()
         {
             respawnManager.StartRespawn();
@@ -207,6 +238,7 @@ namespace Gameplay
 
         private void OnPlayerOutOfLives()
         {
+            if(gameState == GameState.MatchOver) return;
             outOfLivesUI.SetActive(true);
         }
         
@@ -311,13 +343,15 @@ public class PlayerInfo
     public int Team { get; set; }
     public CharactersEnum Character { get; set; }
     public int Lives { get; set; }
+    public int Kills { get; set; }
     
-    public PlayerInfo(string name, int actorNumber, int lives, int team, CharactersEnum character)
+    public PlayerInfo(string name, int actorNumber, int lives, int team, CharactersEnum character, int kills)
     {
         Name = name;
         ActorNumber = actorNumber;
         Lives = lives;
         Team = team;
         Character = character;
+        Kills = kills;
     }
 }

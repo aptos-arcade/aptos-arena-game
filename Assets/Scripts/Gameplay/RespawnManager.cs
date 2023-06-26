@@ -32,7 +32,7 @@ namespace Gameplay
         private void UpdateRespawn()
         {
             respawnTime -= Time.deltaTime;
-            respawnTimer.text = "Respawn in: " + respawnTime.ToString("F0");
+            respawnTimer.text = "Spawn in: " + respawnTime.ToString("F0");
             if (respawnTime > 0) return;
             Respawn();
         }

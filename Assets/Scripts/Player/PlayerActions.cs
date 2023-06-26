@@ -16,7 +16,7 @@ namespace Player
 
         public void Move(Transform transform)
         {
-            if (player.PlayerState.IsStunned) return;
+            if (player.PlayerState.IsStunned || player.PlayerState.IsDodging || player.PlayerState.IsDashing) return;
             var targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
             var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
             var accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? player.PlayerStats.Acceleration : player.PlayerStats.Deceleration;
@@ -59,6 +59,10 @@ namespace Player
 
         public void Attack()
         {
+            if (player.PlayerState.IsInvincible)
+            {
+                player.photonView.RPC("TriggerInvincibility", RpcTarget.AllBuffered, false);
+            }
             player.PlayerComponents.Animator.TryPlayAnimation("Legs_Attack");
             player.PlayerComponents.Animator.TryPlayAnimation("Body_Attack");
         }
@@ -71,13 +75,18 @@ namespace Player
             SwapWeapon();
         }
 
-        private void SwapWeapon()
+        public void UnEquipWeapons()
         {
             foreach (var weapon in player.PlayerReferences.WeaponObjects)
             {
-                if(weapon.activeSelf) weapon.GetComponent<PhotonView>().RPC("UnEquip", RpcTarget.AllBuffered);
+                if(weapon.gameObject.activeSelf) 
+                    weapon.photonView.RPC("UnEquip", RpcTarget.AllBuffered);
             }
+        }
 
+        private void SwapWeapon()
+        {
+            UnEquipWeapons();
             player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].GetComponent<PhotonView>()
                 .RPC("Equip", RpcTarget.AllBuffered);
         }
@@ -145,6 +154,39 @@ namespace Player
         public void TriggerShield(bool active)
         {
             player.PlayerReferences.PlayerShield.photonView.RPC("TriggerShield", RpcTarget.AllBuffered, active);
+        }
+
+        public void TryDodge()
+        {
+            player.PlayerComponents.Animator.TryPlayAnimation("Body_Dodge");
+            player.PlayerComponents.Animator.TryPlayAnimation("Legs_Dodge");
+        }
+
+        public IEnumerator DodgeCoroutine()
+        {
+            player.PlayerState.CanDodge = false;
+            player.PlayerComponents.RigidBody.velocity = Vector2.zero;
+            player.PlayerComponents.RigidBody.AddForce(new Vector2(
+                    player.PlayerStats.DodgeForce * player.transform.localScale.x, 0));
+            player.photonView.RPC("DodgeEffect", RpcTarget.AllBuffered, true);
+            yield return new WaitForSeconds(0.35f);
+            player.photonView.RPC("DodgeEffect", RpcTarget.AllBuffered, false);
+        }
+        
+        public void TryDash()
+        {
+            player.PlayerComponents.Animator.TryPlayAnimation("Body_Dash");
+            player.PlayerComponents.Animator.TryPlayAnimation("Legs_Dash");
+        }
+
+        public IEnumerator DashCoroutine()
+        {
+            player.PlayerComponents.RigidBody.velocity = Vector2.zero;
+            player.PlayerComponents.RigidBody.AddForce(new Vector2(
+                player.PlayerStats.DashForce * player.transform.localScale.x, 0));
+            player.photonView.RPC("DashEffect", RpcTarget.AllBuffered, true);
+            yield return new WaitForSeconds(0.5f);
+            player.photonView.RPC("DashEffect", RpcTarget.AllBuffered, false);
         }
     }
 }

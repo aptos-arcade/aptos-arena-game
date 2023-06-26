@@ -69,21 +69,25 @@ namespace Player
             PlayerState.PlayerName = PhotonNetwork.NickName;
             PlayerState.Character = (CharactersEnum)PhotonNetwork.LocalPlayer.CustomProperties[CharacterKey];
             AnyStateAnimation[] animations = {
-                new(Rig.Body, "Body_Idle", "Body_Attack", "Body_Jump"),
-                new(Rig.Body, "Body_Walk", "Body_Attack", "Body_Jump"),
-                new(Rig.Body, "Body_Jump", "Body_Attack"),
-                new(Rig.Body, "Body_Double_Jump"),
-                new(Rig.Body, "Body_Fall", "Body_Attack", "Body_Double_Jump"),
-                new(Rig.Body, "Body_Attack", "Body_Shield"),
-                new(Rig.Body, "Body_Shield", "Body_Attack", "Body_Jump", "Body_Double_Jump", "Body_Fall"),
+                new(Rig.Body, "Body_Idle", "Body_Attack", "Body_Jump", "Body_Shield", "Body_Dodge", "Body_Dash"),
+                new(Rig.Body, "Body_Walk", "Body_Attack", "Body_Jump", "Body_Shield", "Body_Dodge", "Body_Dash"),
+                new(Rig.Body, "Body_Jump", "Body_Attack", "Body_Dodge"),
+                new(Rig.Body, "Body_Double_Jump", "Body_Dodge"),
+                new(Rig.Body, "Body_Fall", "Body_Attack", "Body_Double_Jump", "Body_Shield", "Body_Dodge", "Body_Dash"),
+                new(Rig.Body, "Body_Attack", "Body_Shield", "Body_Dodge"),
+                new(Rig.Body, "Body_Shield", "Body_Attack", "Body_Jump", "Body_Double_Jump", "Body_Dodge", "Body_Dash"),
+                new(Rig.Body, "Body_Dodge", "Body_Attack", "Body_Dash"),
+                new(Rig.Body, "Body_Dash", "Body_Attack", "Body_Shield", "Body_Dodge", "Body_Dash"),
 
-                new(Rig.Legs, "Legs_Idle", "Legs_Attack"),
-                new(Rig.Legs, "Legs_Walk", "Legs_Attack"),
-                new(Rig.Legs, "Legs_Jump", "Legs_Double_Jump"),
-                new(Rig.Legs, "Legs_Double_Jump"),
-                new(Rig.Legs, "Legs_Fall", "Legs_Attack", "Legs_Double_Jump"),
-                new(Rig.Legs, "Legs_Attack", "Legs_Shield"),
-                new(Rig.Legs, "Legs_Shield", "Legs_Attack", "Legs_Jump", "Legs_Double_Jump", "Legs_Fall"),
+                new(Rig.Legs, "Legs_Idle", "Legs_Attack", "Legs_Shield", "Legs_Dodge"),
+                new(Rig.Legs, "Legs_Walk", "Legs_Shield", "Legs_Dodge"),
+                new(Rig.Legs, "Legs_Jump", "Legs_Double_Jump", "Legs_Dodge"),
+                new(Rig.Legs, "Legs_Double_Jump", "Legs_Dodge"),
+                new(Rig.Legs, "Legs_Fall", "Legs_Attack", "Legs_Double_Jump", "Legs_Shield", "Legs_Dodge"),
+                new(Rig.Legs, "Legs_Attack", "Legs_Shield", "Legs_Dodge"),
+                new(Rig.Legs, "Legs_Shield", "Legs_Attack", "Legs_Jump", "Legs_Double_Jump"),
+                new(Rig.Legs, "Legs_Dodge", "Legs_Attack"),
+                new(Rig.Legs, "Legs_Dash", "Legs_Attack", "Legs_Shield", "Legs_Dodge"),
             };
 
             playerComponent.Animator.AnimationTriggerEvent += PlayerUtilities.HandleAnimation;
@@ -92,11 +96,6 @@ namespace Player
             PlayerUtilities.GetSpriteRenderers();
 
             playerReferences.DamageDisplay.text = ((PlayerState.DamageMultiplier - 1) * 100) + "%";
-
-            if (photonView.IsMine)
-            {
-                StartCoroutine(PlayerUtilities.SpawnCoroutine(transform.position));
-            }
         }
 
         // Update is called once per frame

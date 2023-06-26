@@ -32,6 +32,8 @@ namespace Player
             commands.Add(new SideMeleeCommand(player, KeyCode.A, -1));
             commands.Add(new SideMeleeCommand(player, KeyCode.D, 1));
             commands.Add(new ShieldCommand(player, KeyCode.LeftShift));
+            commands.Add(new DashCommand(player, KeyCode.LeftArrow));
+            commands.Add(new DashCommand(player, KeyCode.RightArrow));
         }
 
         public void HandleInput()
@@ -79,6 +81,7 @@ namespace Player
             if(IsGrounded)
             {
                 player.PlayerState.CanDoubleJump = true;
+                player.PlayerState.CanDodge = true;
             }
         }
 
@@ -111,7 +114,8 @@ namespace Player
             PhotonNetwork.Instantiate(player.PlayerReferences.ExplosionPrefab.name, player.transform.position, Quaternion.identity);
             player.photonView.RPC("OnDeath", RpcTarget.AllBuffered);
             MatchManager.Instance.SetEnergyUIActive(false);
-            MatchManager.PlayerDeathSend(player.photonView.Owner.ActorNumber);
+            MatchManager.PlayerDeathSend(player.photonView.OwnerActorNr, player.PlayerState.StrikerActorNumber);
+            player.PlayerState.StrikerActorNumber = 0;
         }
 
         public void StrikerCollision(Striker striker)
@@ -122,7 +126,8 @@ namespace Player
                 RpcTarget.AllBuffered,
                 striker.KnockBackSignedDirection,
                 striker.KnockBackForce,
-                striker.Damage
+                striker.Damage,
+                striker.photonView.OwnerActorNr
             );
         }
 
@@ -138,7 +143,7 @@ namespace Player
                 player.PlayerState.IsStunned = true;
             }
             player.PlayerState.CanMove = !hurt;
-            // player.PlayerComponents.BodyCollider.enabled = !hurt;
+            player.PlayerState.IsInvincible = hurt;
             foreach (var renderer in player.PlayerComponents.PlayerSprites)
             {
                 renderer.color = hurt ? Color.red : Color.white;
@@ -150,6 +155,26 @@ namespace Player
             player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, true);
             yield return new WaitForSeconds(0.5f);
             player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, false);
+        }
+
+        public void DodgeEffect(bool dodging)
+        {
+            player.PlayerState.CanMove = !dodging;
+            player.PlayerState.IsDodging = dodging;
+            player.PlayerComponents.BodyCollider.enabled = !dodging;
+            player.PlayerComponents.RigidBody.gravityScale = dodging ? 0 : 5;
+            foreach (var renderer in player.PlayerComponents.PlayerSprites)
+            {
+                var dodgeColor = Color.white;
+                dodgeColor.a = 0.5f;
+                renderer.color = dodging ? dodgeColor : Color.white;
+            }
+        }
+        
+        public void DashEffect(bool dashing)
+        {
+            player.PlayerState.CanMove = !dashing;
+            player.PlayerState.IsDashing = dashing;
         }
 
         public IEnumerator SpawnCoroutine(Vector3 spawnPosition)
@@ -164,6 +189,12 @@ namespace Player
             PhotonNetwork.Destroy(portal);
             if(player.photonView.IsMine) MatchManager.Instance.SetEnergyUIActive(true);
             player.photonView.RPC("OnRevive", RpcTarget.AllBuffered);
+            player.photonView.RPC("TriggerInvincibility", RpcTarget.AllBuffered, true);
+            yield return new WaitForSeconds(5f);
+            if (player.PlayerState.IsInvincible)
+            {
+                player.photonView.RPC("TriggerInvincibility", RpcTarget.AllBuffered, false);
+            }
         }
 
         public void GetSpriteRenderers()
@@ -194,8 +225,15 @@ namespace Player
             player.PlayerState.IsStunned = !isRevive;
             player.PlayerState.MeleeEnergy = isRevive ? 1 : 0;
             player.PlayerState.RangedEnergy = isRevive ? 1 : 0;
-            
-            player.PlayerActions.TrySwapWeapon(player.PlayerState.Weapon);
+
+            if (isRevive)
+            {
+                player.PlayerReferences.WeaponObjects[(int)player.PlayerState.Weapon].Equip();
+            }
+            else
+            {
+                player.PlayerActions.UnEquipWeapons();
+            }
         }
 
         public void JumpImpl(float jumpForce)
@@ -231,6 +269,12 @@ namespace Player
                 case "Shield":
                     player.PlayerActions.TriggerShield(true);
                     break;
+                case "Dodge":
+                    player.StartCoroutine(player.PlayerActions.DodgeCoroutine());
+                    break;
+                case "Dash":
+                    player.StartCoroutine(player.PlayerActions.DashCoroutine());
+                    break;
             }
         }
         
@@ -238,6 +282,18 @@ namespace Player
         {
             return (CharactersEnum)other.Owner.CustomProperties[TeamKey] ==
                    (CharactersEnum)player.photonView.Owner.CustomProperties[TeamKey];
+        }
+        
+        public void TriggerInvincibility(bool isInvincible)
+        {
+            if(player.PlayerState.IsInvincible == isInvincible) return;
+            player.PlayerState.IsInvincible = isInvincible;
+            foreach (var renderer in player.PlayerComponents.PlayerSprites)
+            {
+                var color = renderer.color;
+                color.a = isInvincible ? 0.5f : 1;
+                renderer.color = color;
+            }
         }
 
     }

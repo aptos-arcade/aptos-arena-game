@@ -7,15 +7,23 @@ namespace Player
     {
         public Vector2 Direction { get; set; }
         
-        public bool CanDoubleJump { get; set; } = true;
-        
         public bool CanMove { get; set; }
+        
+        public bool CanDoubleJump { get; set; } = true;
+
+        public bool CanDodge { get; set; } = true;
 
         public bool IsDead { get; set; } = true;
 
+        public bool IsDodging { get; set; }
+        
+        public bool IsDashing { get; set; }
+
         public bool IsStunned { get; set; }
         
-        public Global.Weapons Weapon { get; set; }
+        public bool IsInvincible { get; set; }
+
+        public Global.Weapons Weapon { get; set; } = Global.Weapons.Gun;
         
         public float DamageMultiplier { get; set; } = 1;
 
@@ -30,5 +38,7 @@ namespace Player
         public float MeleeEnergy { get; set; } = 1;
         
         public float ShieldEnergy { get; set; } = 1;
+
+        public int StrikerActorNumber { get; set; }
     }
 }

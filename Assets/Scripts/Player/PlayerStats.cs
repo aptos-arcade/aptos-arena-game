@@ -13,6 +13,12 @@ namespace Player
 
         [SerializeField] private float doubleJumpForce;
         public float DoubleJumpForce => doubleJumpForce;
+        
+        [SerializeField] private float dodgeForce;
+        public float DodgeForce => dodgeForce;
+        
+        [SerializeField] private float dashForce;
+        public float DashForce => dashForce;
 
         [SerializeField] private float speed;
         public float Speed => speed;
@@ -25,6 +31,7 @@ namespace Player
 
         [SerializeField] private float velPower;
         public float VelPower => velPower;
+
         
         [Header("Attacks")]
         

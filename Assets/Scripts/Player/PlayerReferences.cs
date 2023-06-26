@@ -32,8 +32,8 @@ namespace Player
         [SerializeField] private GameObject playerCamera;
         public GameObject PlayerCamera { get => playerCamera; set => playerCamera = value; }
         
-        [SerializeField] private GameObject[] weaponObjects;
-        public GameObject[] WeaponObjects => weaponObjects;
+        [SerializeField] private Weapon[] weaponObjects;
+        public Weapon[] WeaponObjects => weaponObjects;
 
         public Sword Sword => weaponObjects[(int)Global.Weapons.Sword].GetComponent<Sword>();
         

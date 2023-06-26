@@ -9,15 +9,18 @@ public class FeedManager : MonoBehaviourPunCallbacks
     
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)
     {
-        var playerText = Instantiate(feedTextPrefab, transform);
-        playerText.text = player.NickName + " has joined the game";
-        Destroy(playerText.gameObject, 3f);
+        WriteMessage(player.NickName + " has joined the game", 3f);
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player player)
     {
+        WriteMessage(player.NickName + " has left the game", 3f);
+    }
+    
+    public void WriteMessage(string message, float destroyTime)
+    {
         var playerText = Instantiate(feedTextPrefab, transform);
-        playerText.text = player.NickName + " has left the game";
-        Destroy(playerText.gameObject, 3f);
+        playerText.text = message;
+        Destroy(playerText.gameObject, destroyTime);
     }
 }

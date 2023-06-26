@@ -18,6 +18,7 @@ namespace Player
         public void OnDeath()
         {
             player.PlayerUtilities.DeathRevive(false);
+            player.PlayerComponents.Animator.OnDeath();
             player.PlayerComponents.RigidBody.velocity = Vector2.zero;
             player.PlayerState.Direction = Vector2.zero;
             player.PlayerState.Lives--;
@@ -33,9 +34,10 @@ namespace Player
         }
 
         [PunRPC]
-        public void OnStrike(Vector2 direction, float knockBack, float damage)
+        public void OnStrike(Vector2 direction, float knockBack, float damage, int strikerActorNumber)
         {
             player.StartCoroutine(player.PlayerComponents.PlayerCamera.Shake(0.2f, 0.1f));
+            player.PlayerState.StrikerActorNumber = strikerActorNumber;
             player.PlayerState.DamageMultiplier += damage;
             player.PlayerReferences.DamageDisplay.text = ((player.PlayerState.DamageMultiplier - 1) * 100).ToString("F0") + "%";
             player.PlayerComponents.HitAudioSource.Play();
@@ -53,6 +55,24 @@ namespace Player
         public void HurtEffect(bool hurt)
         {
             player.PlayerUtilities.HurtEffect(hurt);
+        }
+
+        [PunRPC]
+        public void DodgeEffect(bool dodging)
+        {
+            player.PlayerUtilities.DodgeEffect(dodging);
+        }
+        
+        [PunRPC]
+        public void DashEffect(bool dashing)
+        {
+            player.PlayerUtilities.DashEffect(dashing);
+        }
+        
+        [PunRPC]
+        public void TriggerInvincibility(bool invincible)
+        {
+            player.PlayerUtilities.TriggerInvincibility(invincible);
         }
     }
 }

@@ -2,7 +2,6 @@ using Gameplay;
 using Global;
 using Player;
 using UnityEngine;
-using Weapons;
 
 namespace Commands
 {
@@ -19,6 +18,7 @@ namespace Commands
         {
             if (player.PlayerState.MeleeEnergy >= player.PlayerStats.JabMeleeAttack.Energy)
             {
+                if (player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
                 player.PlayerReferences.Sword.KnockBackDirection = player.PlayerStats.JabMeleeAttack.KnockBackDirection;
                 player.PlayerReferences.Sword.KnockBackForce = player.PlayerStats.JabMeleeAttack.KnockBack;
                 player.PlayerReferences.Sword.Damage = player.PlayerStats.JabMeleeAttack.Damage;

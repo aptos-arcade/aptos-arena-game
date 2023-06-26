@@ -20,11 +20,13 @@ namespace Gameplay
                 .CustomProperties[CharacterKey]].PrefabName;
             spawnButton.onClick.AddListener(SpawnPlayer);
         }
-    
+
         private void SpawnPlayer()
         {
             gameObject.SetActive(false);
             sceneCamera.gameObject.SetActive(false);
+            characterPrefabName = Characters.Characters.AvailableCharacters[(CharactersEnum)PhotonNetwork.LocalPlayer
+                .CustomProperties[CharacterKey]].PrefabName;
             PhotonNetwork.Instantiate(characterPrefabName, MatchManager.Instance.SpawnPosition, Quaternion.identity);
         }
     

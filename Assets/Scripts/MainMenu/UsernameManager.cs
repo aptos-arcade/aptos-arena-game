@@ -21,7 +21,7 @@ namespace MainMenu
             if (AuthenticationService.Instance.PlayerName == null)
             {
                 var username = await AuthenticationService.Instance.GetPlayerNameAsync();
-                if(username != null) OnSetUsername(username);
+                if(username != null) usernameInputField.text = username;
                 else setUsernameButton.onClick.AddListener(SetUsername);
             }
             else

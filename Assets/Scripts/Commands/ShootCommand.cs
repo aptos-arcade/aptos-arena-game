@@ -19,6 +19,7 @@ namespace Commands
         {
             if (player.PlayerState.RangedEnergy >= player.PlayerStats.RangedAttack.Energy)
             {
+                if(player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
                 player.PlayerActions.TrySwapWeapon(Global.Weapons.Gun);
                 player.PlayerActions.Attack();
             }

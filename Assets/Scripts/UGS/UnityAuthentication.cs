@@ -1,14 +1,17 @@
 using System;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace UGS
 {
     public class UnityAuthentication : MonoBehaviour
     {
+
         private async void Awake()
         {
             try

@@ -37,6 +37,7 @@ namespace Player
         {
             gameObject.SetActive(trigger);
             Player.PlayerState.CanMove = !trigger;
+            Player.PlayerState.IsInvincible = trigger;
             if (trigger) ps.Play();
             else ps.Stop();
         }

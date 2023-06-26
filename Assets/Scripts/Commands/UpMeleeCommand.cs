@@ -20,6 +20,7 @@ namespace Commands
         {
             if (player.PlayerState.MeleeEnergy >= player.PlayerStats.UpMeleeAttack.Energy)
             {
+                if (player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
                 player.PlayerReferences.Sword.KnockBackDirection = player.PlayerStats.UpMeleeAttack.KnockBackDirection;
                 player.PlayerReferences.Sword.KnockBackForce = player.PlayerStats.UpMeleeAttack.KnockBack;
                 player.PlayerReferences.Sword.Damage = player.PlayerStats.UpMeleeAttack.Damage;

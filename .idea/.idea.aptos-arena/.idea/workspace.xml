@@ -2,104 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="37273cba-c971-4955-a8b6-0a7c31e5b0fb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/DashCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/DashCommand.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.aptos-arena/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.aptos-arena/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/Account.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/Account.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/AccountAddress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/AccountAddress.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/PrivateKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/PrivateKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/PublicKey.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/PublicKey.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/Signature.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/Signature.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS/BCSTransaction.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS/BCSTransaction.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS/BCSTypes.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS/BCSTypes.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS/Serialization.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.BCS/Serialization.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.HDWallet/Utils/Utils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.HDWallet/Utils/Utils.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.HDWallet/Wallet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.HDWallet/Wallet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/FaucetClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/FaucetClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/Model/ViewRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/Model/ViewRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/Model/ViewRequest.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/Model/ViewRequest.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/RestClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/RestClient.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Prefabs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Prefabs/Web3Controller.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Prefabs/Web3Controller.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scenes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scenes/SimpleNftExample.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scenes/SimpleNftExample.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scenes/TransferCoinExample.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scenes/TransferCoinExample.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scripts.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scripts/SimpleNftExample.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scripts/SimpleNftExample.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scripts/TransferCoinExample.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/SDK Demo/Scripts/TransferCoinExample.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs/AptosDemoUI.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs/AptosDemoUI.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs/NFT Item.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs/NFT Item.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs/Notification.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Prefabs/Notification.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scenes.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scenes/SampleWallet.unity" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scenes/SampleWallet.unity.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/AptosUILink.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/AptosUILink.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/DynamicGridLayout.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/DynamicGridLayout.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/NotificationPanel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/NotificationPanel.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/PanelTab.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/PanelTab.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/UIController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Scripts/UI/UIController.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/APtos Logo 2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/APtos Logo 2.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Aptos Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Aptos Logo.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Copy Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Copy Icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Error Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Error Icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Lock Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Lock Icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Refresh Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Refresh Icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Round Rectangle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Round Rectangle.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/SampleNFT.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/SampleNFT.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Square 125Pixel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Square 125Pixel.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Success.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Success.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Wallpaper.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Wallpaper.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Warning Icon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/SDK-Examples/UI Demo/Textures/Warning Icon.png.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/AccountTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/AccountTest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/SerializationTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/SerializationTest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/Tests.asmdef" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/Tests.asmdef.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/TransactionSerializationTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/TransactionSerializationTest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/UtilsTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/UtilsTest.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/WalletTest.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Tests/WalletTest.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Body/Body_Shoot.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Body/Body_Shoot.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Attack_Side.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Attack_Side.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Attack_Up.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Attack_Up.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Jab.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Body/Body_Sword_Jab.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Complete/Winner.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Complete/Winner.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/PirateMonkeyController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/PirateMonkeyController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterRig.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterRig.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Force Field.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Force Field.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Background.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Background.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Panel.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Panel.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Pontem Pirate.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Pontem Pirate.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LaunchScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LaunchScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Animations/AnyStateAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Animations/AnyStateAnimator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/AptosArenaFunctions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AptosIntegration/AptosArenaFunctions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/JabMeleeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/JabMeleeCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/ShieldCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/ShieldCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/ShootCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/ShootCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/SideMeleeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/SideMeleeCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Commands/UpMeleeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Commands/UpMeleeCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/FeedManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/FeedManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/RespawnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/RespawnManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/SpawnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/SpawnManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MainMenu/UsernameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MainMenu/UsernameManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRPCs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRPCs.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerReferences.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerReferences.cs" afterDir="false" />
@@ -108,6 +39,9 @@
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUtilities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUtilities.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UGS/UnityAuthentication.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UGS/UnityAuthentication.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Striker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Striker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GvhProjectSettings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +57,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/../Aptos-Unity-SDK/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/RestClient.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/jason/Documents/games/aptos-arena/Assets/Aptos-Unity-SDK/Code/Aptos.Accounts/Account.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Aptos-Unity-SDK/Code/Aptos.Unity.Rest/RestClient.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Commands/ShieldCommand.cs" root0="FORCE_HIGHLIGHTING" />
@@ -154,6 +87,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter@6.0.7/Editor/PSDPlugin/PhotoShopFileType/BlendModeMapping.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter@6.0.7/Editor/PSDPlugin/PhotoShopFileType/DocumentLoadContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter@6.0.7/Editor/Tasks/ExtractLayerTask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.sprite@1.0.0/Editor/SpriteEditorModule/SpriteFrameModule/SpriteFrameModuleView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@7.0.7/Runtime/External/LibTessDotNet/Tess.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@7.0.7/Runtime/SpriteShapeController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape@7.0.7/Samples~/Extras/Scripts/Clipper.cs" root0="SKIP_HIGHLIGHTING" />
@@ -232,6 +166,7 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Variables/VariableDeclarationCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Variables/VariableDeclarations.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Core/Variables/VariableDeclarationsCloner.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Framework/Control/For.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../aptos-arena_clone_1/Assets/Photon/PhotonUnityNetworking/Code/PhotonNetworkPart.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../aptos-arena_clone_1/Assets/Scripts/AptosIntegration/MatchEntryFunctions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../aptos-arena_clone_1/Assets/Scripts/Weapons/Projectile.cs" root0="SKIP_HIGHLIGHTING" />
@@ -269,6 +204,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -344,7 +280,17 @@
       <workItem from="1686837506635" duration="1655000" />
       <workItem from="1686887864197" duration="11000" />
       <workItem from="1686894304548" duration="1240000" />
+      <workItem from="1687621713483" duration="7172000" />
+      <workItem from="1687794293898" duration="8423000" />
     </task>
+    <task id="LOCAL-00001" summary="shield and new Unity SDK">
+      <created>1687546436071</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1687546436071</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -379,6 +325,7 @@
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Re-add shield and update Unity SDK" />
-    <option name="LAST_COMMIT_MESSAGE" value="Re-add shield and update Unity SDK" />
+    <MESSAGE value="shield and new Unity SDK" />
+    <option name="LAST_COMMIT_MESSAGE" value="shield and new Unity SDK" />
   </component>
 </project>

@@ -36,6 +36,12 @@ namespace Animations
             Animate();
         }
 
+        public void OnDeath()
+        {
+            animator.Play("Body_Idle", 0);
+            animator.Play("Legs_Idle", 1);
+        }
+
         public void AddAnimations(params AnyStateAnimation[] newAnimations)
         {
             foreach (var t in newAnimations)
@@ -46,7 +52,8 @@ namespace Animations
 
         public void TryPlayAnimation(string newAnimation)
         {
-            switch (animations[newAnimation].AnimationRig)
+            var rig = animations[newAnimation].AnimationRig;
+            switch (rig)
             {
                 case Rig.Body:
                     PlayAnimation(ref currentAnimationBody);
@@ -69,6 +76,8 @@ namespace Animations
                     (currentAnimation != newAnimation 
                      && !animations[newAnimation].HigherPriority.Contains(currentAnimation))
                     || !animations[currentAnimation].Active
+                    || (currentAnimation == "Body_Attack"
+                        && animator.GetCurrentAnimatorStateInfo((int)rig).normalizedTime >= 1)
                 )
                 {
                     animations[currentAnimation].Active = false;
@@ -98,6 +107,7 @@ namespace Animations
 
         public void OnAnimationDone(string doneAnimation)
         {
+            if (!photonView.IsMine) return;
             animations[doneAnimation].Active = false;
         }
 

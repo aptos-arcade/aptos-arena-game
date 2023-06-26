@@ -34,7 +34,7 @@ namespace Weapons
             
             var player = col.GetComponent<PlayerScript>();
             if (player != null && !player.photonView.IsMine
-                               && !player.PlayerUtilities.IsSameTeam(photonView) && player.PlayerState.CanMove)
+                               && !player.PlayerUtilities.IsSameTeam(photonView) && !player.PlayerState.IsInvincible)
             {
                 OnStrike(col.transform.position);
                 player.PlayerUtilities.StrikerCollision(this);

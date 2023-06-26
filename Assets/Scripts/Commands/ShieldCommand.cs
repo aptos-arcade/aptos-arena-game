@@ -12,9 +12,22 @@ namespace Commands
             this.player = player;
         }
 
-        public override void GetKey()
+        public override void GetKeyDown()
         {
-            player.PlayerActions.TryShield();
+            if (Input.GetAxisRaw("Horizontal") != 0)
+            {
+                if(player.PlayerState.CanDodge) player.PlayerActions.TryDodge();
+            }
+            else
+            {
+                player.PlayerActions.TryShield();
+            }
+        }
+        
+        public override void GetKeyUp()
+        {
+            player.PlayerComponents.Animator.OnAnimationDone("Body_Shield");
+            player.PlayerComponents.Animator.OnAnimationDone("Legs_Shield");
         }
     }
 }
