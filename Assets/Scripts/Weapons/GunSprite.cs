@@ -9,13 +9,16 @@ namespace Weapons
     {
         
         [SerializeField] private PhotonView photonView;
-        [SerializeField] private GunImages gunImages;
-        
-        private SpriteRenderer spriteRenderer;
+        [SerializeField] private GunImages gunImages; 
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
         private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            UpdateGunSprite();
+        }
+
+        public void UpdateGunSprite()
+        {
             if (photonView.Owner == null)
             {
                 spriteRenderer.sprite = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(PlayerPropertyKeys.GunKey,
@@ -26,7 +29,6 @@ namespace Weapons
                 spriteRenderer.sprite = photonView.Owner.CustomProperties.TryGetValue(PlayerPropertyKeys.GunKey,
                     out var swordIndex) ? gunImages.GetGunImage((int)swordIndex) : gunImages.GetGunImage(0);
             }
-            
         }
     }
 }

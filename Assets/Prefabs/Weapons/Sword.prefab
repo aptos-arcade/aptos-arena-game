@@ -327,6 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 3156484145120513000}
   swordImages: {fileID: 11400000, guid: e835a38b94e14417dadacd400e17c2cb, type: 2}
+  spriteRenderer: {fileID: 8178335435517269611}
 --- !u!1 &3703751824427815179
 GameObject:
   m_ObjectHideFlags: 0

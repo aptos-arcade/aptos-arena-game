@@ -206,7 +206,11 @@ namespace Gameplay
             }
             
             var deathPlayerIndex = playerInfos.FindIndex(x => x.ActorNumber == actorDeath);
-            playerInfos[deathPlayerIndex].Lives--;
+            // HACK SOLUTION, FIX THIS
+            if (deathPlayerIndex >= 0 && deathPlayerIndex < playerInfos.Count)
+            {
+                playerInfos[deathPlayerIndex].Lives--;
+            }
             if (actorDeath == PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 if(playerInfos[deathPlayerIndex].Lives > 0)

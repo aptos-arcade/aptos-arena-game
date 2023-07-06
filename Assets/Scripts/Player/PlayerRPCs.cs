@@ -40,7 +40,7 @@ namespace Player
             player.PlayerState.StrikerActorNumber = strikerActorNumber;
             player.PlayerState.DamageMultiplier += damage;
             player.PlayerReferences.DamageDisplay.text = ((player.PlayerState.DamageMultiplier - 1) * 100).ToString("F0") + "%";
-            player.PlayerComponents.HitAudioSource.Play();
+            player.PlayerUtilities.PlayOneShotAudio(player.PlayerReferences.DamageAudioClip);
             player.PlayerComponents.RigidBody.velocity =
                 direction.normalized * knockBack * player.PlayerState.DamageMultiplier;
         }

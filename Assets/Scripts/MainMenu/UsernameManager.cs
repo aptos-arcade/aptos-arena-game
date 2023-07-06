@@ -22,7 +22,7 @@ namespace MainMenu
             {
                 var username = await AuthenticationService.Instance.GetPlayerNameAsync();
                 if(username != null) usernameInputField.text = username;
-                else setUsernameButton.onClick.AddListener(SetUsername);
+                setUsernameButton.onClick.AddListener(SetUsername);
             }
             else
             {

@@ -240,7 +240,7 @@ namespace Player
         {
             player.PlayerComponents.RigidBody.velocity = new Vector2(player.PlayerComponents.RigidBody.velocity.x, 0);
             player.PlayerComponents.RigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Force);
-            player.PlayerComponents.JumpAudioSource.Play();
+            PlayOneShotAudio(player.PlayerReferences.JumpAudioClip);
         }
 
         public void HandleAnimation(string animation)
@@ -294,6 +294,12 @@ namespace Player
                 color.a = isInvincible ? 0.5f : 1;
                 renderer.color = color;
             }
+        }
+
+        public void PlayOneShotAudio(AudioClip clip)
+        {
+            player.PlayerComponents.OneShotAudioSource.Stop();
+            player.PlayerComponents.OneShotAudioSource.PlayOneShot(clip);
         }
 
     }

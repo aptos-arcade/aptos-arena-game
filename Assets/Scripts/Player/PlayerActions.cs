@@ -16,7 +16,11 @@ namespace Player
 
         public void Move(Transform transform)
         {
-            if (player.PlayerState.IsStunned || player.PlayerState.IsDodging || player.PlayerState.IsDashing) return;
+            if (player.PlayerState.IsStunned || player.PlayerState.IsDodging || player.PlayerState.IsDashing)
+            {
+                player.PlayerComponents.RunAudioSource.Stop();
+                return;
+            }
             var targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
             var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
             var accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? player.PlayerStats.Acceleration : player.PlayerStats.Deceleration;
@@ -39,6 +43,10 @@ namespace Player
             {
                 player.PlayerComponents.Animator.TryPlayAnimation("Body_Idle");
                 player.PlayerComponents.Animator.TryPlayAnimation("Legs_Idle");
+            }
+            
+            if(!player.PlayerUtilities.IsGrounded || player.PlayerComponents.RigidBody.velocity.magnitude < 0.1f)
+            {
                 player.PlayerComponents.RunAudioSource.Stop();
             }
         }
@@ -164,6 +172,7 @@ namespace Player
 
         public IEnumerator DodgeCoroutine()
         {
+            player.PlayerUtilities.PlayOneShotAudio(player.PlayerReferences.DodgeAudioClip);
             player.PlayerState.CanDodge = false;
             player.PlayerComponents.RigidBody.velocity = Vector2.zero;
             player.PlayerComponents.RigidBody.AddForce(new Vector2(
@@ -181,6 +190,7 @@ namespace Player
 
         public IEnumerator DashCoroutine()
         {
+            player.PlayerUtilities.PlayOneShotAudio(player.PlayerReferences.DashAudioClip);
             player.PlayerComponents.RigidBody.velocity = Vector2.zero;
             player.PlayerComponents.RigidBody.AddForce(new Vector2(
                 player.PlayerStats.DashForce * player.transform.localScale.x, 0));

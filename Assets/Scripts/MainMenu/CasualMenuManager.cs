@@ -17,6 +17,9 @@ namespace MainMenu
         [SerializeField] private GameObject characterSelect;
         [SerializeField] private GameObject roomSelect;
         
+        [SerializeField] private CharacterDisplay characterDisplay;
+        
+        [SerializeField] private Button continueToRoomsButton;
         [SerializeField] private Button backToModeSelectButton;
         [SerializeField] private Button backButton;
         
@@ -24,22 +27,34 @@ namespace MainMenu
         private void Start()
         {
             characterSelect.SetActive(true);
+            characterDisplay.gameObject.SetActive(true);
             roomSelect.SetActive(false);
+            
             var playerProperties = new Hashtable()
             {
-                // { CharacterKey, GetRandomCharacter() },
-                { SwordKey, Random.Range(0, 5)},
-                { GunKey, Random.Range(0, 5)}
-                
+                { CharacterKey, Characters.Characters.GetRandomCharacter() },
+                { SwordKey, Random.Range(0, 5) },
+                { GunKey, Random.Range(0, 5) }
             };
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+            characterDisplay.UpdateCharacter();
+            
             PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName;
             CharacterCard.OnSelect += OnCharacterSelect;
+            continueToRoomsButton.onClick.AddListener(OnContinueToRooms);
         }
 
         private void OnCharacterSelect()
         {
+            characterDisplay.UpdateCharacter();
+            
+        }
+
+        private void OnContinueToRooms()
+        {
             characterSelect.SetActive(false);
+            characterDisplay.gameObject.SetActive(false);
+            continueToRoomsButton.gameObject.SetActive(false);
             roomSelect.SetActive(true);
             backToModeSelectButton.gameObject.SetActive(false);
             SetBackButtonHandler(OnBackToCharacterSelect);
@@ -48,17 +63,13 @@ namespace MainMenu
         private void OnBackToCharacterSelect()
         {
             characterSelect.SetActive(true);
+            characterDisplay.gameObject.SetActive(true);
+            continueToRoomsButton.gameObject.SetActive(true);
             roomSelect.SetActive(false);
             backToModeSelectButton.gameObject.SetActive(true);
             backButton.gameObject.SetActive(false);
         }
 
-        private static CharactersEnum GetRandomCharacter()
-        {
-            var values = Enum.GetValues(typeof(CharactersEnum));
-            return (CharactersEnum)values.GetValue(Random.Range(0, values.Length));
-        }
-        
         private void SetBackButtonHandler(UnityAction handler)
         {
             backButton.gameObject.SetActive(true);

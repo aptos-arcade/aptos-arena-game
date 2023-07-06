@@ -9,7 +9,7 @@ namespace Animations
         public string[] HigherPriority { get; }
 
         public string Name { get; }
-
+        
         public bool Active { get; set; }
 
         public AnyStateAnimation(Rig rig, string name, params string[] higherPriority)

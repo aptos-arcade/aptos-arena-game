@@ -76,7 +76,7 @@ namespace Animations
                     (currentAnimation != newAnimation 
                      && !animations[newAnimation].HigherPriority.Contains(currentAnimation))
                     || !animations[currentAnimation].Active
-                    || (currentAnimation == "Body_Attack"
+                    || (animator.GetCurrentAnimatorStateInfo((int)rig).IsName("Body_Attack")
                         && animator.GetCurrentAnimatorStateInfo((int)rig).normalizedTime >= 1)
                 )
                 {

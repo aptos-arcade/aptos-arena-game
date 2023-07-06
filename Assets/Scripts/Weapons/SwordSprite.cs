@@ -7,15 +7,17 @@ namespace Weapons
 {
     public class SwordSprite : MonoBehaviour
     {
-        
         [SerializeField] private PhotonView photonView;
         [SerializeField] private SwordImages swordImages;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         
-        private SpriteRenderer spriteRenderer;
-
         private void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            UpdateSwordSprite();
+        }
+
+        public void UpdateSwordSprite()
+        {
             if (photonView.Owner == null)
             {
                 spriteRenderer.sprite = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(PlayerPropertyKeys.SwordKey,
@@ -26,7 +28,6 @@ namespace Weapons
                 spriteRenderer.sprite = photonView.Owner.CustomProperties.TryGetValue(PlayerPropertyKeys.SwordKey,
                     out var swordIndex) ? swordImages.GetSwordImage((int)swordIndex) : swordImages.GetSwordImage(0);
             }
-            
         }
     }
 }

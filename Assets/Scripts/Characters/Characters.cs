@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 namespace Characters
 {
@@ -33,6 +35,12 @@ namespace Characters
         public static CharactersEnum GetCharacterEnum(string collectionName)
         {
             return CollectionNameToEnum[collectionName];
+        }
+        
+        public static CharactersEnum GetRandomCharacter()
+        {
+            var values = Enum.GetValues(typeof(CharactersEnum));
+            return (CharactersEnum)values.GetValue(Random.Range(0, values.Length));
         }
     }
 }

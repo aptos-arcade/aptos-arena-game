@@ -253,6 +253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 3956553508393825656}
   gunImages: {fileID: 11400000, guid: e555ed030663d482f89e705de34e462e, type: 2}
+  spriteRenderer: {fileID: 2461343599833969754}
 --- !u!114 &8634520368743395208
 MonoBehaviour:
   m_ObjectHideFlags: 0

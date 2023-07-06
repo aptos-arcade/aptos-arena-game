@@ -1,8 +1,8 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using static Photon.PlayerPropertyKeys;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Characters
 {
@@ -23,7 +23,8 @@ namespace Characters
 
         private void SelectCharacter()
         {
-            var playerProperties = new Hashtable() { { CharacterKey, characterEnum} };
+            var playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
+            if(!playerProperties.TryAdd(CharacterKey, characterEnum)) playerProperties[CharacterKey] = characterEnum;
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
             OnSelect?.Invoke();
         }

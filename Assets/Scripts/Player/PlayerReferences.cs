@@ -61,6 +61,19 @@ namespace Player
         [SerializeField] private AudioClip upMeleeAudioClip;
         public AudioClip UpMeleeAudioClip => upMeleeAudioClip;
         
+        [SerializeField] private AudioClip jumpAudioClip;
+        public AudioClip JumpAudioClip => jumpAudioClip;
+        
+        [SerializeField] private AudioClip damageAudioClip;
+        public AudioClip DamageAudioClip => damageAudioClip;
+        
+        [SerializeField] private AudioClip dashAudioClip;
+        public AudioClip DashAudioClip => dashAudioClip;
+        
+        [SerializeField] private AudioClip dodgeAudioClip;
+        public AudioClip DodgeAudioClip => dodgeAudioClip;
+        
+        
         [Header("Character Specific")]
         
         [SerializeField] private GameObject portal;
@@ -68,5 +81,7 @@ namespace Player
         
         [SerializeField] private GameObject playerMesh;
         public GameObject PlayerMesh => playerMesh;
+        
+        
     }
 }
