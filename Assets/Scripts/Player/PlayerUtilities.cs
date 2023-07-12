@@ -21,10 +21,8 @@ namespace Player
         public bool IsGrounded => IsOnGround || IsOnPlatform;
         private bool IsFalling => player.PlayerComponents.RigidBody.velocity.y < 0 && !IsGrounded;
         
-        public bool IsDashing => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dash" ||
-                                 player.PlayerComponents.Animator.CurrentAnimationLegs == "Legs_Dash";
-        public bool IsDodging => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dodge" ||
-                                 player.PlayerComponents.Animator.CurrentAnimationLegs == "Legs_Dodge";
+        public bool IsDashing => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dash";
+        public bool IsDodging => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dodge";
 
         private Coroutine hurtCoroutine;
         private Coroutine shieldStunCoroutine;

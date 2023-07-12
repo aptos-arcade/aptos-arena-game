@@ -111,7 +111,7 @@ AudioSource:
   m_GameObject: {fileID: 2727926110774799528}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7035590888840167572, guid: 5592f3e318ba24b4aa6c6b0578f9fcf9, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -222,8 +222,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66120a01bd5a45a589809313834b7693, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.4
-  knockBackForce: 10
+  strikerData:
+    energy: 0
+    knockBack: 0
+    knockBackDirection: {x: 0, y: 0}
+    damage: 0
+    stunTime: 0
   hitEffect: {fileID: 9217778773954796174, guid: 9667e7d0501c64bb98b4f7de62f0133b, type: 3}
   ownerTransform: {fileID: 0}
 --- !u!1 &3417098044405165757

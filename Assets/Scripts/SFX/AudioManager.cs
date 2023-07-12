@@ -7,12 +7,19 @@ namespace SFX
     public class AudioManager : MonoBehaviour
     {
 
+        [Header("Audio Mixer")]
         [SerializeField] private AudioMixer mixer;
         
+        [Header("Volume Sliders")]
         [SerializeField] private Slider masterVolumeSlider;
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider gameSfxVolumeSlider;
         [SerializeField] private Slider menuSfxVolumeSlider;
+        
+        [Header("Modal Controller")]
+        [SerializeField] private Button openAudioModalButton;
+        [SerializeField] private Button closeAudioModalButton;
+        [SerializeField] private GameObject audioModal;
         
         private const string MasterVolumeKey = "MasterVolume";
         private const string MusicVolumeKey = "MusicVolume";
@@ -23,13 +30,14 @@ namespace SFX
 
         private void Start()
         {
+            openAudioModalButton.onClick.AddListener(() => audioModal.SetActive(true));
+            closeAudioModalButton.onClick.AddListener(() => audioModal.SetActive(false));
 
             // add listeners to each slider
             masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
             musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
             gameSfxVolumeSlider.onValueChanged.AddListener(SetGameSfxVolume);
             menuSfxVolumeSlider.onValueChanged.AddListener(SetMenuSfxVolume);
-            
             
             // set slider values to player prefs values
             masterVolumeSlider.value = PlayerPrefs.GetFloat(MasterVolumeKey, DefaultValue);
