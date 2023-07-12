@@ -434,7 +434,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.6666667
     functionName: OnAnimationDone
     data: Body_Double_Jump
     objectReferenceParameter: {fileID: 0}

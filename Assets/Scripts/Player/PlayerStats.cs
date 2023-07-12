@@ -13,12 +13,12 @@ namespace Player
 
         [SerializeField] private float doubleJumpForce;
         public float DoubleJumpForce => doubleJumpForce;
-        
-        [SerializeField] private float dodgeForce;
-        public float DodgeForce => dodgeForce;
-        
-        [SerializeField] private float dashForce;
-        public float DashForce => dashForce;
+
+        [SerializeField] private float dodgeVelocity;
+        public float DodgeVelocity => dodgeVelocity;
+
+        [SerializeField] private float dashVelocity;
+        public float DashVelocity => dashVelocity;
 
         [SerializeField] private float speed;
         public float Speed => speed;
@@ -31,8 +31,10 @@ namespace Player
 
         [SerializeField] private float velPower;
         public float VelPower => velPower;
-
         
+        [SerializeField] private float fastFallForce;
+        public float FastFallForce => fastFallForce;
+
         [Header("Attacks")]
         
         [SerializeField] private StrikerData sideMeleeAttack;
@@ -43,9 +45,10 @@ namespace Player
         
         [SerializeField] private StrikerData upMeleeAttack;
         public StrikerData UpMeleeAttack => upMeleeAttack;
+        
+        [SerializeField] private StrikerData downMeleeAttack;
+        public StrikerData DownMeleeAttack => downMeleeAttack;
 
-        [SerializeField] private StrikerData rangedAttack;
-        public StrikerData RangedAttack => rangedAttack;
 
         [Header("Energy Regen")]
         

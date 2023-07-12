@@ -27,7 +27,7 @@ namespace MainMenu.RankedMenu
             walletConnectButton.onClick.AddListener(WalletManager.OpenConnectWalletModal);
 
             #if UNITY_EDITOR
-                WalletManager.Instance.SetAccountAddress("0xa063aa74aeb7aac297161df445de42d99e2e9ac0d560af9500b2db29f2b8c4d6");
+                WalletManager.Instance.SetAccountAddress("0xc09622c20bdd49b2b83b7e05c264a62cfedeb45eaf5c629d0f0174917d801aef");
             #endif
         }
         

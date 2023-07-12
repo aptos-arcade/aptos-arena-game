@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static Photon.PlayerPropertyKeys;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using Room = Matchmaking.Room;
 
 namespace MainMenu
 {
@@ -17,8 +18,6 @@ namespace MainMenu
         
         [SerializeField] private Button continueButton;
 
-        private const string ModePropKey = "m";
-    
         private void Start()
         {
             var playerProperties = new Hashtable()
@@ -41,17 +40,21 @@ namespace MainMenu
 
         private static void JoinTrainingRoom()
         {
+            var roomProperties = new Hashtable()
+            {
+                { Room.ModePropKey, Global.GameModes.Training }, 
+                { Room.NumTeamsPropKey, 1 }
+            };
             var roomOptions = new RoomOptions
             {
                 MaxPlayers = 1,
-                CustomRoomPropertiesForLobby = new []{ ModePropKey },
-                CustomRoomProperties = new Hashtable() { { ModePropKey, Global.GameModes.Training } }
+                CustomRoomPropertiesForLobby = new []{ Room.ModePropKey, Room.NumTeamsPropKey },
+                CustomRoomProperties = roomProperties
             };
-            var expectedCustomRoomProperties = new Hashtable() { { ModePropKey, Global.GameModes.Training } };
             PhotonNetwork.JoinRandomOrCreateRoom(
                 roomOptions: roomOptions,
                 expectedMaxPlayers: 1,
-                expectedCustomRoomProperties: expectedCustomRoomProperties
+                expectedCustomRoomProperties: roomProperties
             );
         }
         

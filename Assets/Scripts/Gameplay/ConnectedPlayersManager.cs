@@ -9,24 +9,19 @@ using static Photon.PlayerPropertyKeys;
 
 namespace Gameplay
 {
-    public class ConnectedPlayersManager : MonoBehaviourPunCallbacks
+    public class ConnectedPlayersManager : MonoBehaviour
     {
         [SerializeField] private GameObject connectedPlayersPanel;
         [SerializeField] private GameObject connectedPlayersView;
         [SerializeField] private ConnectedPlayer connectedPlayerPrefab;
         [SerializeField] private CharacterImages characterImages;
 
-        private void Start()
-        {
-            ListAllPlayers();
-        }
-
         private void Update()
         {
             connectedPlayersPanel.SetActive(Input.GetKey(KeyCode.Tab));
         }
     
-        private void ListAllPlayers()
+        public void ListAllPlayers()
         {
             foreach (var roomPlayer in connectedPlayersView.transform)
             {
@@ -35,23 +30,17 @@ namespace Gameplay
                     Destroy(player.gameObject);
                 }
             }
-        
-            foreach (var player in PhotonNetwork.PlayerList)
-            {
-                OnPlayerEnteredRoom(player);
-            }
-        }
 
-        public override void OnPlayerEnteredRoom(Photon.Realtime.Player player)
-        {
-            var roomPlayer = Instantiate(connectedPlayerPrefab, connectedPlayersView.transform);
-            var playerCharacter = (CharactersEnum)player.CustomProperties[CharacterKey];
-            roomPlayer.SetPlayerInfo(player.NickName, characterImages.GetCharacterSprite((int)playerCharacter));
-        }
-    
-        public override void OnPlayerLeftRoom(Photon.Realtime.Player player)
-        {
-            ListAllPlayers();
+            foreach (var player in MatchManager.Instance.PlayerInfos)
+            {
+                var roomPlayer = Instantiate(connectedPlayerPrefab, connectedPlayersView.transform);
+                var networkPlayer = PhotonNetwork.CurrentRoom.GetPlayer(player.ActorNumber);
+                if(networkPlayer == null) continue;
+                var playerCharacter = (CharactersEnum)networkPlayer.CustomProperties[CharacterKey];
+                var playerTeam = (int)networkPlayer.CustomProperties[TeamKey];
+                roomPlayer.SetPlayerInfo(player.Name, characterImages.GetCharacterSprite((int)playerCharacter),
+                    player.Kills, 3 - player.Lives, playerTeam);
+            }
         }
     }
 }

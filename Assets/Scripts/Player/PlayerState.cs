@@ -15,11 +15,9 @@ namespace Player
 
         public bool IsDead { get; set; } = true;
 
-        public bool IsDodging { get; set; }
-        
-        public bool IsDashing { get; set; }
-
         public bool IsStunned { get; set; }
+        
+        public bool IsDisabled { get; set; }
         
         public bool IsInvincible { get; set; }
 
@@ -38,7 +36,7 @@ namespace Player
         public float MeleeEnergy { get; set; } = 1;
         
         public float ShieldEnergy { get; set; } = 1;
-
+        
         public int StrikerActorNumber { get; set; }
     }
 }

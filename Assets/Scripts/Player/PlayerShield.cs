@@ -8,11 +8,12 @@ namespace Player
     {
         [SerializeField] private float shieldEnergyDuration;
         [SerializeField] private ParticleSystem ps;
+        [SerializeField] private float shieldStunDuration;
+        
+        public float ShieldStunDuration => shieldStunDuration * transform.localScale.x;
         
         public PlayerScript Player { get; private set; }
         
-        private const float endScale = 0.1f;
-
         private void Awake()
         {
             Player = GetComponentInParent<PlayerScript>();
@@ -36,7 +37,7 @@ namespace Player
         public void TriggerShield(bool trigger)
         {
             gameObject.SetActive(trigger);
-            Player.PlayerState.CanMove = !trigger;
+            // Player.PlayerState.CanMove = !trigger;
             Player.PlayerState.IsInvincible = trigger;
             if (trigger) ps.Play();
             else ps.Stop();

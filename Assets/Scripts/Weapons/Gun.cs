@@ -6,8 +6,9 @@ namespace Weapons
 {
     public class Gun : MonoBehaviour
     {
-        
         [SerializeField] private Projectile projectilePrefab;
+        public Projectile ProjectilePrefab => projectilePrefab;
+        
         [SerializeField] private Transform barrelTransform;
         
         public void Shoot(PlayerScript player)
@@ -15,9 +16,7 @@ namespace Weapons
             var projectile = PhotonNetwork.Instantiate(projectilePrefab.name,
                 barrelTransform.position, Quaternion.identity);
             var direction = new Vector2(player.transform.localScale.x, 0);
-            projectile.GetPhotonView().RPC("Initialize", RpcTarget.All, direction,
-                player.PlayerStats.RangedAttack.KnockBackDirection, player.PlayerStats.RangedAttack.Damage,
-                player.PlayerStats.RangedAttack.KnockBack);
+            projectile.GetPhotonView().RPC("Initialize", RpcTarget.All, direction);
         }
     }
 }

@@ -579,6 +579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldEnergyDuration: 3
   ps: {fileID: 6677290416242638285}
+  shieldStunDuration: 3
 --- !u!58 &6132260931385987274
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -643,7 +644,7 @@ AudioSource:
   m_GameObject: {fileID: 6677290415125602274}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7035590888840167572, guid: 5592f3e318ba24b4aa6c6b0578f9fcf9, type: 2}
   m_audioClip: {fileID: 8300000, guid: 8d1bcec8107fe4a81ba124e8ca655510, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1

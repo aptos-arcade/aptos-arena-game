@@ -26,10 +26,6 @@ namespace MainMenu
         [Header("Displays")]
         [SerializeField] private TMP_Text usernameText;
         
-        
-        
-        
-        
         private void Start()
         {
             openUsernamePanelButton.onClick.AddListener(OpenUsernamePanel);

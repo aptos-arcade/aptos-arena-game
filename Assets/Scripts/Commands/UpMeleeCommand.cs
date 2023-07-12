@@ -2,7 +2,6 @@ using Gameplay;
 using Global;
 using Player;
 using UnityEngine;
-using Weapons;
 
 namespace Commands
 {
@@ -21,9 +20,7 @@ namespace Commands
             if (player.PlayerState.MeleeEnergy >= player.PlayerStats.UpMeleeAttack.Energy)
             {
                 if (player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
-                player.PlayerReferences.Sword.KnockBackDirection = player.PlayerStats.UpMeleeAttack.KnockBackDirection;
-                player.PlayerReferences.Sword.KnockBackForce = player.PlayerStats.UpMeleeAttack.KnockBack;
-                player.PlayerReferences.Sword.Damage = player.PlayerStats.UpMeleeAttack.Damage;
+                player.PlayerReferences.Sword.strikerData = player.PlayerStats.UpMeleeAttack;
                 
                 player.PlayerComponents.Animator.SetAttackDirection(Directions.Up);
                 
@@ -32,7 +29,7 @@ namespace Commands
             }
             else
             {
-                MatchManager.Instance.NoEnergy(Global.Weapons.Sword);
+                MatchManager.Instance.NoEnergy(EnergyUIController.EnergyType.Sword);
             }
         }
     }

@@ -11,25 +11,40 @@ namespace Gameplay
         [Header("Gun Energy")]
         [SerializeField] private Slider gunEnergySlider;
         [SerializeField] private Image gunEnergyFill;
-        [SerializeField] private Color gunEnergyColor;
 
         [Header("Sword Energy")]
         [SerializeField] private Slider swordEnergySlider;
         [SerializeField] private Image swordEnergyFill;
-        [SerializeField] private Color swordEnergyColor;
         
         [Header("Shield Energy")]
         [SerializeField] private Slider shieldEnergySlider;
-        
+
         [Header("Audio Clips")]
         [SerializeField] private AudioClip noEnergyAudioClip;
         
+        private Color gunEnergyColor;
+        private Color swordEnergyColor;
+        private Color dashEnergyColor;
         
         private AudioSource audioSource;
+        
+        private Coroutine noSwordEnergyCoroutine;
+        private Coroutine noRangedEnergyCoroutine;
+        private Coroutine noDashEnergyCoroutine;
+        
+        public enum EnergyType
+        {
+            Gun,
+            Sword,
+            Shield,
+        }
         
         private void Start()
         {
             audioSource = GetComponent<AudioSource>();
+            
+            gunEnergyColor = gunEnergyFill.color;
+            swordEnergyColor = swordEnergyFill.color;
         }
 
         private void Update()
@@ -49,23 +64,27 @@ namespace Gameplay
             swordEnergySlider.value = MatchManager.Instance.Player.PlayerState.MeleeEnergy;
         }
         
-        public void SetShieldEnergy()
+        private void SetShieldEnergy()
         {
             shieldEnergySlider.value = MatchManager.Instance.Player.PlayerState.ShieldEnergy;
         }
-        
-        public void NoEnergy(Global.Weapons weapon)
+
+        public void NoEnergy(EnergyType energyType)
         {
-            switch (weapon)
+            switch (energyType)
             {
-                case Global.Weapons.Gun:
-                    StartCoroutine(NoRangedEnergyCor());
+                case EnergyType.Gun:
+                    if (noRangedEnergyCoroutine != null) StopCoroutine(noRangedEnergyCoroutine);
+                    noRangedEnergyCoroutine = StartCoroutine(NoRangedEnergyCor());
                     break;
-                case Global.Weapons.Sword:
-                    StartCoroutine(NoSwordEnergyCor());
+                case EnergyType.Sword:
+                    if(noSwordEnergyCoroutine != null) StopCoroutine(noSwordEnergyCoroutine);
+                    noSwordEnergyCoroutine = StartCoroutine(NoSwordEnergyCor());
+                    break;
+                case EnergyType.Shield:
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(weapon), weapon, null);
+                    throw new ArgumentOutOfRangeException(nameof(energyType), energyType, null);
             }
         }
         
@@ -75,6 +94,7 @@ namespace Gameplay
             PlayNoEnergySound();
             yield return new WaitForSeconds(0.5f);
             gunEnergyFill.color = gunEnergyColor;
+            noRangedEnergyCoroutine = null;
         }
 
         private IEnumerator NoSwordEnergyCor()
@@ -83,8 +103,9 @@ namespace Gameplay
             PlayNoEnergySound();
             yield return new WaitForSeconds(0.5f);
             swordEnergyFill.color = swordEnergyColor;
+            noSwordEnergyCoroutine = null;
         }
-            
+
         private void PlayNoEnergySound()
         {
             audioSource.Stop();

@@ -514,32 +514,37 @@ MonoBehaviour:
   playerStats:
     jumpForce: 1100
     doubleJumpForce: 1000
-    dodgeForce: 400
-    dashForce: 800
+    dodgeVelocity: 12.5
+    dashVelocity: 17.5
     speed: 7.5
     acceleration: 15
     deceleration: 15
     velPower: 1
+    fastFallForce: 700
     sideMeleeAttack:
       energy: 0.4
       knockBack: 12.5
       knockBackDirection: {x: 1, y: 2}
       damage: 0.6
+      stunTime: 0.25
     jabMeleeAttack:
-      energy: 0.15
-      knockBack: 7.5
+      energy: 0.2
+      knockBack: 1
       knockBackDirection: {x: 1, y: 1}
-      damage: 0.3
+      damage: 0.1
+      stunTime: 0.25
     upMeleeAttack:
       energy: 0.2
       knockBack: 10
       knockBackDirection: {x: 0, y: 1}
       damage: 0.4
-    rangedAttack:
-      energy: 0.25
+      stunTime: 0.125
+    downMeleeAttack:
+      energy: 0.3
       knockBack: 5
-      knockBackDirection: {x: 3, y: 2}
-      damage: 0.2
+      knockBackDirection: {x: 1, y: 1}
+      damage: 0.5
+      stunTime: 0.125
     meleeEnergyRegenTime: 7.5
     rangedEnergyRegenTime: 5
     shieldEnergyRegenTime: 5
@@ -695,7 +700,7 @@ AudioSource:
   m_GameObject: {fileID: 2830128808628532848}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7035590888840167572, guid: 5592f3e318ba24b4aa6c6b0578f9fcf9, type: 2}
   m_audioClip: {fileID: 8300000, guid: 6b1196b9a7ca34a62a216ae280a6f26c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -791,7 +796,7 @@ AudioSource:
   m_GameObject: {fileID: 2830128808628532848}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7035590888840167572, guid: 5592f3e318ba24b4aa6c6b0578f9fcf9, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1

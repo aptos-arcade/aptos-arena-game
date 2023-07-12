@@ -11,12 +11,15 @@ namespace Animations
         public string Name { get; }
         
         public bool Active { get; set; }
+        
+        public bool HoldOnEnd { get; }
 
-        public AnyStateAnimation(Rig rig, string name, params string[] higherPriority)
+        public AnyStateAnimation(Rig rig, bool holdOnEnd, string name, params string[] higherPriority)
         {
             AnimationRig = rig;
             Name = name;
             HigherPriority = higherPriority;
+            HoldOnEnd = holdOnEnd;
         }
 
 

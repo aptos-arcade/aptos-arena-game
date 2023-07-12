@@ -11,6 +11,7 @@ using Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static Photon.PlayerPropertyKeys;
+using Room = Matchmaking.Room;
 
 namespace Gameplay
 {
@@ -48,6 +49,7 @@ namespace Gameplay
         [SerializeField] private OutOfLivesManager outOfLivesManager;
         [SerializeField] private FeedManager feedManager;
         [SerializeField] private KillTextManager killTextManager;
+        [SerializeField] private ConnectedPlayersManager connectedPlayersManager;
         
         [Header("UI")]
         [SerializeField] private GameObject energyUI;
@@ -64,14 +66,13 @@ namespace Gameplay
         private GameState gameState = GameState.Waiting;
         private int winningTeam;
         
-        private readonly List<PlayerInfo> playerInfos = new();
+        public readonly List<PlayerInfo> PlayerInfos = new();
         
         private EnergyUIController energyUIController;
 
         private void Start()
         {
             energyUIController = energyUI.GetComponent<EnergyUIController>();
-            sceneCamera.gameObject.SetActive(false);
             SpawnPosition = spawnPositions[(int)PhotonNetwork.LocalPlayer.CustomProperties[TeamKey]].position;
             var characterPrefabName = Characters.Characters.AvailableCharacters[(CharactersEnum)PhotonNetwork.LocalPlayer
                 .CustomProperties[CharacterKey]].PrefabName;
@@ -79,6 +80,12 @@ namespace Gameplay
             gameState = GameState.Playing;
             NewPlayerSend();
             respawnManager.StartRespawn();
+        }
+        
+        public void SetPlayerCameraActive(bool active)
+        {
+            Player.PlayerComponents.PlayerCamera.gameObject.SetActive(active);
+            sceneCamera.gameObject.SetActive(!active);
         }
 
         public void OnEvent(EventData photonEvent)
@@ -138,28 +145,28 @@ namespace Gameplay
             var team = (int)data[3];
             var character = (CharactersEnum)data[4];
             var kills = (int)data[5];
-            
-            
+
             var playerInfo = new PlayerInfo(username, actorNumber, lives, team, character, kills);
-            playerInfos.Add(playerInfo);
+            PlayerInfos.Add(playerInfo);
             ListPlayersSend();
         }
         
         private void ListPlayersSend()
         {
-            var package = new object[playerInfos.Count + 2];
+            if (!PhotonNetwork.IsMasterClient) return;
+            var package = new object[PlayerInfos.Count + 2];
             package[0] = gameState;
             package[1] = winningTeam;
-            for (var i = 0; i < playerInfos.Count; i++)
+            for (var i = 0; i < PlayerInfos.Count; i++)
             {
                 package[i + 2] = new object[]
                 {
-                    playerInfos[i].Name,
-                    playerInfos[i].ActorNumber,
-                    playerInfos[i].Lives,
-                    playerInfos[i].Team,
-                    playerInfos[i].Character,
-                    playerInfos[i].Kills
+                    PlayerInfos[i].Name,
+                    PlayerInfos[i].ActorNumber,
+                    PlayerInfos[i].Lives,
+                    PlayerInfos[i].Team,
+                    PlayerInfos[i].Character,
+                    PlayerInfos[i].Kills
                 };
             }
 
@@ -169,7 +176,7 @@ namespace Gameplay
 
         private void ListPlayersReceive(IReadOnlyList<object> data)
         {
-            playerInfos.Clear();
+            PlayerInfos.Clear();
             gameState = (GameState)data[0];
             winningTeam = (int)data[1];
             foreach (object[] playerInfoData in data.Skip(2))
@@ -182,8 +189,14 @@ namespace Gameplay
                     (CharactersEnum)playerInfoData[4],
                     (int)playerInfoData[5]
                 );
-                playerInfos.Add(playerInfo);
+                PlayerInfos.Add(playerInfo);
             }
+            PlayerInfos.Sort((a, b) =>
+            {
+                var killsComparison = b.Kills.CompareTo(a.Kills);
+                return killsComparison != 0 ? killsComparison : b.Lives.CompareTo(a.Lives);
+            });
+            connectedPlayersManager.ListAllPlayers();
             StateCheck();
         }
 
@@ -200,38 +213,35 @@ namespace Gameplay
             var actorKill = (int)data[1];
             
             DeathFeedMessage(actorDeath, actorKill);
-            if (actorKill == PhotonNetwork.LocalPlayer.ActorNumber)
-            {
-                killTextManager.OnKill();
-            }
             
-            var deathPlayerIndex = playerInfos.FindIndex(x => x.ActorNumber == actorDeath);
-            // HACK SOLUTION, FIX THIS
-            if (deathPlayerIndex >= 0 && deathPlayerIndex < playerInfos.Count)
-            {
-                playerInfos[deathPlayerIndex].Lives--;
-            }
+            var killPlayerIndex = PlayerInfos.FindIndex(x => x.ActorNumber == actorKill);
+            if (killPlayerIndex >= 0 && killPlayerIndex < PlayerInfos.Count) PlayerInfos[killPlayerIndex].Kills++;
+            if (actorKill == PhotonNetwork.LocalPlayer.ActorNumber) killTextManager.OnKill();
+
+            var deathPlayerIndex = PlayerInfos.FindIndex(x => x.ActorNumber == actorDeath);
+            if (deathPlayerIndex >= 0 && deathPlayerIndex < PlayerInfos.Count) PlayerInfos[deathPlayerIndex].Lives--;
             if (actorDeath == PhotonNetwork.LocalPlayer.ActorNumber)
             {
-                if(playerInfos[deathPlayerIndex].Lives > 0)
+                if(PlayerInfos[deathPlayerIndex].Lives > 0)
                     OnPlayerDeath();
                 else
                     OnPlayerOutOfLives();
             }
             ScoreCheck();
+            ListPlayersSend();
         }
 
         private void DeathFeedMessage(int actorDeath, int actorKill)
         {
-            var deathPlayerName = PhotonNetwork.CurrentRoom.Players[actorDeath].NickName;
+            var deathPlayerName = PhotonNetwork.CurrentRoom.GetPlayer(actorDeath).NickName;
             if (actorKill == 0)
             {
                 feedManager.WriteMessage(deathPlayerName + " died!", 5f);
             }
             else
             {
-                var killPlayerName = PhotonNetwork.CurrentRoom.Players[actorKill].NickName;
-                feedManager.WriteMessage(deathPlayerName + " was killed by " + killPlayerName + "!", 5f);
+                var killPlayerName = PhotonNetwork.CurrentRoom.GetPlayer(actorKill).NickName;
+                feedManager.WriteMessage(killPlayerName + " killed " + deathPlayerName + "!", 5f);
             }
         }
 
@@ -251,9 +261,9 @@ namespace Gameplay
             energyUI.SetActive(active);
         }
 
-        public void NoEnergy(Global.Weapons weapon)
+        public void NoEnergy(EnergyUIController.EnergyType energyType)
         {
-            energyUIController.NoEnergy(weapon);
+            energyUIController.NoEnergy(energyType);
         }
         
         private void ScoreCheck()
@@ -263,7 +273,7 @@ namespace Gameplay
             // check if there is only one team left that has players with more than one life
             var winnerFound = false;
             var curWinningTeam = -1;
-            foreach (var playerInfo in playerInfos.Where(playerInfo => playerInfo.Lives > 0))
+            foreach (var playerInfo in PlayerInfos.Where(playerInfo => playerInfo.Lives > 0))
             {
                 if (curWinningTeam == -1 || curWinningTeam == playerInfo.Team)
                 {
@@ -282,8 +292,6 @@ namespace Gameplay
         {
             gameState = GameState.MatchOver;
             winningTeam = winnerIndex;
-            ListPlayersSend();
-            // check if room is ranked room
             if ((GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey] != GameModes.Ranked) return;
             var matchAddress = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchAddressPropKey];
             StartCoroutine(MatchEntryFunctions.SetMatchResult(matchAddress, winnerIndex, OnMatchResultReported));
@@ -333,8 +341,9 @@ namespace Gameplay
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
             if (!PhotonNetwork.IsMasterClient) return;
-            playerInfos.RemoveAt(playerInfos.FindIndex(x => x.ActorNumber == otherPlayer.ActorNumber));
+            PlayerInfos.RemoveAt(PlayerInfos.FindIndex(x => x.ActorNumber == otherPlayer.ActorNumber));
             ScoreCheck();
+            ListPlayersSend();
         }
     }
 }

@@ -50,11 +50,17 @@ namespace Player
         {
             player.PlayerState.ShieldEnergy -= damage;
         }
+        
+        [PunRPC]
+        public void ShieldStunEffect(bool stunned)
+        {
+            player.PlayerUtilities.StunEffect(stunned, new Color(240, 0, 255));
+        }
 
         [PunRPC]
         public void HurtEffect(bool hurt)
         {
-            player.PlayerUtilities.HurtEffect(hurt);
+            player.PlayerUtilities.StunEffect(hurt, Color.red);
         }
 
         [PunRPC]
@@ -62,13 +68,7 @@ namespace Player
         {
             player.PlayerUtilities.DodgeEffect(dodging);
         }
-        
-        [PunRPC]
-        public void DashEffect(bool dashing)
-        {
-            player.PlayerUtilities.DashEffect(dashing);
-        }
-        
+
         [PunRPC]
         public void TriggerInvincibility(bool invincible)
         {

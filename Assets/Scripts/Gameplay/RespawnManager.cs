@@ -24,6 +24,7 @@ namespace Gameplay
 
         public void StartRespawn()
         {
+            MatchManager.Instance.SetPlayerCameraActive(false);
             respawnPanel.gameObject.SetActive(true);
             respawnTime = respawnDuration;
             isRespawning = true;

@@ -39,5 +39,7 @@ namespace Player
         public AudioSource OneShotAudioSource => oneShotAudioSource;
 
         public List<SpriteRenderer> PlayerSprites { get; set; } = new();
+        
+        public List<Color> PlayerSpriteColors { get; set; } = new();
     }
 }

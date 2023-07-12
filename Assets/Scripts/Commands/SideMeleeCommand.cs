@@ -23,9 +23,7 @@ namespace Commands
             if (player.PlayerState.MeleeEnergy >= player.PlayerStats.SideMeleeAttack.Energy)
             {
                 if (player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
-                player.PlayerReferences.Sword.KnockBackDirection = player.PlayerStats.SideMeleeAttack.KnockBackDirection;
-                player.PlayerReferences.Sword.KnockBackForce = player.PlayerStats.SideMeleeAttack.KnockBack;
-                player.PlayerReferences.Sword.Damage = player.PlayerStats.SideMeleeAttack.Damage;
+                player.PlayerReferences.Sword.strikerData = player.PlayerStats.SideMeleeAttack;
 
                 player.gameObject.transform.localScale = new Vector3(xScale, 1, 1);
                 player.PlayerReferences.PlayerCanvas.transform.localScale = new Vector3(xScale, 1, 1);
@@ -37,7 +35,7 @@ namespace Commands
             }
             else
             {
-                MatchManager.Instance.NoEnergy(Global.Weapons.Sword);
+                MatchManager.Instance.NoEnergy(EnergyUIController.EnergyType.Sword);
             }
             
         }

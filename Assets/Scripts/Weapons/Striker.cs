@@ -6,13 +6,8 @@ namespace Weapons
 {
     public class Striker: MonoBehaviourPun
     {
-        [SerializeField] private float damage;
-        public float Damage { get => damage; set => damage = value; }
-        
-        [SerializeField] private float knockBackForce;
-        public float KnockBackForce { get => knockBackForce; set => knockBackForce = value; }
-        
-        public Vector2 KnockBackDirection { get; set; }
+
+        public StrikerData strikerData;
 
         public Vector2 KnockBackSignedDirection { get; protected set; }
         
@@ -20,10 +15,15 @@ namespace Weapons
 
         private void Start()
         {
-            KnockBackSignedDirection = KnockBackDirection;
+            KnockBackSignedDirection = strikerData.KnockBackDirection;
         }
 
-        protected virtual void OnStrike(Vector2 position)
+        protected virtual void OnPlayerStrike(Vector2 position, PlayerScript player)
+        {
+            PhotonNetwork.Instantiate(hitEffect.name, position, Quaternion.identity);
+        }
+        
+        protected virtual void OnShieldStrike(Vector2 position, PlayerShield shield)
         {
             PhotonNetwork.Instantiate(hitEffect.name, position, Quaternion.identity);
         }
@@ -36,7 +36,7 @@ namespace Weapons
             if (player != null && !player.photonView.IsMine
                                && !player.PlayerUtilities.IsSameTeam(photonView) && !player.PlayerState.IsInvincible)
             {
-                OnStrike(col.transform.position);
+                OnPlayerStrike(col.transform.position, player);
                 player.PlayerUtilities.StrikerCollision(this);
                 return;
             }
@@ -45,7 +45,7 @@ namespace Weapons
             if (shield != null && !shield.photonView.IsMine
                                && !shield.Player.PlayerUtilities.IsSameTeam(photonView))
             {
-                OnStrike(col.transform.position);
+                OnShieldStrike(col.transform.position, shield);
                 shield.Player.PlayerUtilities.ShieldCollision(this);
             }
             

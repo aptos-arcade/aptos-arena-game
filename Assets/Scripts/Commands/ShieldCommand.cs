@@ -12,6 +12,19 @@ namespace Commands
             this.player = player;
         }
 
+        public override void GetKey()
+        {
+            if (!player.PlayerUtilities.IsDodging && Input.GetAxisRaw("Horizontal") != 0 && player.PlayerState.CanDodge)
+            {
+                player.PlayerState.Direction = Input.GetAxisRaw("Horizontal") * Vector2.right;
+                player.PlayerActions.TryDodge();
+            }
+            else
+            {
+                player.PlayerActions.TryShield();
+            }
+        }
+
         public override void GetKeyDown()
         {
             if (Input.GetAxisRaw("Horizontal") != 0)

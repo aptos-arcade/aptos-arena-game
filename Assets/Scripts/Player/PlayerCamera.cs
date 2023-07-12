@@ -15,12 +15,12 @@ namespace Player
 
         private Vector3 targetPos;
 
-        private void Start()
+        private void OnEnable()
         {
-            // start the camera at the players position
-            targetPos = transform.position;
+            var position = target.transform.position;
+            position.z = transform.position.z;
+            transform.position = ClampCamera(position + offset);
         }
-
 
         private void FixedUpdate()
         {
@@ -34,7 +34,7 @@ namespace Player
             targetDirection.z = 0;
             
             // calculate target position as the camera's current position * velocity * time
-            this.targetPos = cameraPos + (targetDirection * (speed * Time.deltaTime));
+            targetPos = cameraPos + (targetDirection * (speed * Time.deltaTime));
 
             transform.position = ClampCamera(Vector3.Lerp(cameraPos, this.targetPos + offset, 0.25f));
         }

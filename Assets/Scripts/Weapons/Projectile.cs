@@ -7,7 +7,7 @@ namespace Weapons
 {
     public class Projectile: Striker
     {
-        [SerializeReference] private float speed;
+        [SerializeField] private float speed;
         
         [SerializeField] private float destroyTime;
 
@@ -27,15 +27,13 @@ namespace Weapons
         }
 
         [PunRPC]
-        public void Initialize(Vector2 direction, Vector2 knockBackDirection, float damage, float knockBack)
+        public void Initialize(Vector2 dir)
         {
-            this.direction = direction;
+            direction = dir;
             KnockBackSignedDirection = new Vector2(
-                direction.x > 0 ? knockBackDirection.x : -knockBackDirection.x,
-                knockBackDirection.y
+                direction.x > 0 ? strikerData.KnockBackDirection.x : -strikerData.KnockBackDirection.x,
+                strikerData.KnockBackDirection.y
             );
-            Damage = damage;
-            KnockBackForce = knockBack;
         }
 
         private void Destroy()
@@ -49,9 +47,9 @@ namespace Weapons
             Destroy();
         }
 
-        protected override void OnStrike(Vector2 position)
+        protected override void OnPlayerStrike(Vector2 position, PlayerScript player)
         {
-            base.OnStrike(position);
+            base.OnPlayerStrike(position, player);
             Destroy();
         }
     }

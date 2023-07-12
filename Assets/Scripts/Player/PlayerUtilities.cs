@@ -20,6 +20,14 @@ namespace Player
         public bool IsOnPlatform => player.PlayerComponents.FootCollider.IsTouchingLayers(player.PlayerComponents.Platform.value);
         public bool IsGrounded => IsOnGround || IsOnPlatform;
         private bool IsFalling => player.PlayerComponents.RigidBody.velocity.y < 0 && !IsGrounded;
+        
+        public bool IsDashing => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dash" ||
+                                 player.PlayerComponents.Animator.CurrentAnimationLegs == "Legs_Dash";
+        public bool IsDodging => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dodge" ||
+                                 player.PlayerComponents.Animator.CurrentAnimationLegs == "Legs_Dodge";
+
+        private Coroutine hurtCoroutine;
+        private Coroutine shieldStunCoroutine;
 
         public PlayerUtilities(PlayerScript player)
         {
@@ -32,22 +40,26 @@ namespace Player
             commands.Add(new SideMeleeCommand(player, KeyCode.A, -1));
             commands.Add(new SideMeleeCommand(player, KeyCode.D, 1));
             commands.Add(new ShieldCommand(player, KeyCode.LeftShift));
-            commands.Add(new DashCommand(player, KeyCode.LeftArrow));
-            commands.Add(new DashCommand(player, KeyCode.RightArrow));
+            commands.Add(new DashCommand(player, KeyCode.LeftArrow, -1));
+            commands.Add(new DashCommand(player, KeyCode.RightArrow, 1));
         }
 
         public void HandleInput()
         {
-            if (!player.PlayerComponents.PhotonView.IsMine) return;
-            
-            if(Input.anyKeyDown) player.PlayerState.IsStunned = false;
+            if (!player.PlayerComponents.PhotonView.IsMine || player.PlayerState.IsDisabled) return;
+
+            if (player.PlayerState.IsStunned && Input.anyKeyDown) player.PlayerState.IsStunned = false;
 
             if (player.PlayerState.CanMove)
             {
                 var x = Input.GetAxisRaw("Horizontal");
-                player.PlayerState.Direction = new Vector2(x, 0);
-            } 
-            else
+                if (x != 0 || !player.PlayerUtilities.IsDashing)
+                {
+                    player.PlayerState.Direction = new Vector2(x, 0);
+                }
+                
+            }
+            else if(!player.PlayerUtilities.IsDodging)
             {
                 player.PlayerState.Direction = Vector2.zero;
             }
@@ -111,6 +123,7 @@ namespace Player
         
         private void OnDeath()
         {
+            MatchManager.Instance.SetPlayerCameraActive(false);
             PhotonNetwork.Instantiate(player.PlayerReferences.ExplosionPrefab.name, player.transform.position, Quaternion.identity);
             player.photonView.RPC("OnDeath", RpcTarget.AllBuffered);
             MatchManager.Instance.SetEnergyUIActive(false);
@@ -120,66 +133,78 @@ namespace Player
 
         public void StrikerCollision(Striker striker)
         {
-            player.StartCoroutine(HurtCoroutine());
+            if(hurtCoroutine != null) player.StopCoroutine(hurtCoroutine);
+            hurtCoroutine = player.StartCoroutine(HurtCoroutine(striker));
             player.photonView.RPC(
                 "OnStrike",
                 RpcTarget.AllBuffered,
                 striker.KnockBackSignedDirection,
-                striker.KnockBackForce,
-                striker.Damage,
+                striker.strikerData.KnockBack,
+                striker.strikerData.Damage,
                 striker.photonView.OwnerActorNr
             );
         }
 
-        public void ShieldCollision(Striker striker)
+        private IEnumerator HurtCoroutine(Striker striker)
         {
-            player.photonView.RPC("OnShieldStrike", RpcTarget.AllBuffered, striker.Damage);
+            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, true);
+            yield return new WaitForSeconds(striker.strikerData.StunTime * player.PlayerState.DamageMultiplier);
+            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, false);
+            hurtCoroutine = null;
         }
 
-        public void HurtEffect(bool hurt)
+        public void ShieldCollision(Striker striker)
         {
-            if (hurt)
+            player.photonView.RPC("OnShieldStrike", RpcTarget.AllBuffered, striker.strikerData.Damage);
+        }
+        
+        public void StunEffect(bool stunned, Color effectColor)
+        {
+            if (stunned)
             {
                 player.PlayerState.IsStunned = true;
             }
-            player.PlayerState.CanMove = !hurt;
-            player.PlayerState.IsInvincible = hurt;
-            foreach (var renderer in player.PlayerComponents.PlayerSprites)
+            player.PlayerState.IsDisabled = stunned;
+            player.PlayerState.CanMove = !stunned;
+            for (var i = 0; i < player.PlayerComponents.PlayerSprites.Count; i++)
             {
-                renderer.color = hurt ? Color.red : Color.white;
+                player.PlayerComponents.PlayerSprites[i].color = stunned 
+                    ? effectColor
+                    : player.PlayerComponents.PlayerSpriteColors[i];
             }
         }
-        
-        private IEnumerator HurtCoroutine()
+
+        public void ShieldHit(PlayerShield shield)
         {
-            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, true);
-            yield return new WaitForSeconds(0.5f);
-            player.PlayerComponents.PhotonView.RPC("HurtEffect", RpcTarget.AllBuffered, false);
+            if(shieldStunCoroutine != null) player.StopCoroutine(shieldStunCoroutine);
+            shieldStunCoroutine = player.StartCoroutine(ShieldStunCoroutine(shield));
+        }
+
+        private IEnumerator ShieldStunCoroutine(PlayerShield shield)
+        {
+            player.PlayerComponents.PhotonView.RPC("ShieldStunEffect", RpcTarget.AllBuffered, true);
+            yield return new WaitForSeconds(shield.ShieldStunDuration);
+            player.PlayerComponents.PhotonView.RPC("ShieldStunEffect", RpcTarget.AllBuffered, false);
+            shieldStunCoroutine = null;
         }
 
         public void DodgeEffect(bool dodging)
         {
             player.PlayerState.CanMove = !dodging;
-            player.PlayerState.IsDodging = dodging;
             player.PlayerComponents.BodyCollider.enabled = !dodging;
             player.PlayerComponents.RigidBody.gravityScale = dodging ? 0 : 5;
             foreach (var renderer in player.PlayerComponents.PlayerSprites)
             {
-                var dodgeColor = Color.white;
-                dodgeColor.a = 0.5f;
-                renderer.color = dodging ? dodgeColor : Color.white;
+                var color = renderer.color;
+                color.a = dodging ? 0.5f : 1;
+                renderer.color = color;
             }
-        }
-        
-        public void DashEffect(bool dashing)
-        {
-            player.PlayerState.CanMove = !dashing;
-            player.PlayerState.IsDashing = dashing;
         }
 
         public IEnumerator SpawnCoroutine(Vector3 spawnPosition)
         {
             player.transform.position = spawnPosition;
+            MatchManager.Instance.SetPlayerCameraActive(true);
             var portal = PhotonNetwork.Instantiate(
                 player.PlayerReferences.Portal.name,
                 spawnPosition,
@@ -201,7 +226,9 @@ namespace Player
         {
             foreach (Transform transform in player.PlayerReferences.PlayerMesh.transform)
             {
-                player.PlayerComponents.PlayerSprites.Add(transform.GetComponent<SpriteRenderer>());
+                var spriteRenderer = transform.GetComponent<SpriteRenderer>();
+                player.PlayerComponents.PlayerSprites.Add(spriteRenderer);
+                player.PlayerComponents.PlayerSpriteColors.Add(spriteRenderer.color);
             }
         }
 
@@ -260,6 +287,9 @@ namespace Player
                 case "Jab_Melee":
                     player.PlayerActions.JabMelee();
                     break;
+                case "Down_Melee":
+                    player.PlayerActions.DownMelee();
+                    break;
                 case "Jump":
                     player.PlayerActions.Jump();
                     break;
@@ -273,7 +303,10 @@ namespace Player
                     player.StartCoroutine(player.PlayerActions.DodgeCoroutine());
                     break;
                 case "Dash":
-                    player.StartCoroutine(player.PlayerActions.DashCoroutine());
+                    player.PlayerActions.Dash();
+                    break;
+                case "FastFall":
+                    player.PlayerActions.FastFall();
                     break;
             }
         }

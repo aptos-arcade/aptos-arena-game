@@ -16,22 +16,35 @@ namespace Commands
 
         public override void GetKeyDown()
         {
-            if (player.PlayerState.MeleeEnergy >= player.PlayerStats.JabMeleeAttack.Energy)
+            if (player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
+            if (player.PlayerUtilities.IsGrounded)
             {
-                if (player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Attack") return;
-                player.PlayerReferences.Sword.KnockBackDirection = player.PlayerStats.JabMeleeAttack.KnockBackDirection;
-                player.PlayerReferences.Sword.KnockBackForce = player.PlayerStats.JabMeleeAttack.KnockBack;
-                player.PlayerReferences.Sword.Damage = player.PlayerStats.JabMeleeAttack.Damage;
-                
-                player.PlayerComponents.Animator.SetAttackDirection(Directions.Neutral);
-                
-                player.PlayerActions.TrySwapWeapon(Global.Weapons.Sword);
-                player.PlayerActions.Attack();
+                if (player.PlayerState.MeleeEnergy >= player.PlayerStats.JabMeleeAttack.Energy)
+                {
+                    player.PlayerReferences.Sword.strikerData = player.PlayerStats.JabMeleeAttack;
+                    player.PlayerComponents.Animator.SetAttackDirection(Directions.Neutral);
+                }
+                else
+                {
+                    MatchManager.Instance.NoEnergy(EnergyUIController.EnergyType.Sword);
+                    return;
+                }
             }
             else
             {
-                MatchManager.Instance.NoEnergy(Global.Weapons.Sword);
+                if (player.PlayerState.MeleeEnergy >= player.PlayerStats.DownMeleeAttack.Energy)
+                {
+                    player.PlayerReferences.Sword.strikerData = player.PlayerStats.DownMeleeAttack;
+                    player.PlayerComponents.Animator.SetAttackDirection(Directions.Down);
+                }
+                else
+                {
+                    MatchManager.Instance.NoEnergy(EnergyUIController.EnergyType.Sword);
+                    return;
+                }
             }
+            player.PlayerActions.TrySwapWeapon(Global.Weapons.Sword);
+            player.PlayerActions.Attack();
         }
     }
 }

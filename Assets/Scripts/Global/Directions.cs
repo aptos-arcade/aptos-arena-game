@@ -4,6 +4,7 @@ namespace Global
     {
         Neutral,
         Up,
-        Side
+        Side,
+        Down
     }
 }

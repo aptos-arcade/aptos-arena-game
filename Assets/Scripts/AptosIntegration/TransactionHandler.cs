@@ -14,7 +14,6 @@ namespace AptosIntegration
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             } else if (Instance != this)
             {
                 Destroy(gameObject);

@@ -22,21 +22,29 @@ namespace Matchmaking
     
         private readonly List<RoomPlayer> allPlayers = new();
 
-        private static readonly Dictionary<int, string> GameModes = new()
-        {
-            {1, "Training"},
-            {2, "Duel (1v1)"},
-            {4, "Duos (2v2)"},
-            {8, "Squads (4v4)"}
-        };
-
         private void Start()
         {
-            roomName.text = GameModes[PhotonNetwork.CurrentRoom.MaxPlayers];
+            var numTeams = (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey];
+            roomName.text = RoomTitle(numTeams, PhotonNetwork.CurrentRoom.MaxPlayers / numTeams);
             ListAllPlayers();
             backButton.onClick.AddListener(LeaveRoom);
         }
-    
+
+        
+        private string RoomTitle(int numTeams, int numPlayersPerTeam)
+        {
+            var roomTitle = "";
+            for(var i = 0; i < numTeams; i++)
+            {
+                roomTitle += $"{numPlayersPerTeam}";
+                if(i < numTeams - 1)
+                {
+                    roomTitle += "v";
+                }
+            }
+            return roomTitle;
+        }
+
         private void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
@@ -86,7 +94,7 @@ namespace Matchmaking
             for (var i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 var playerProperties = PhotonNetwork.PlayerList[i].CustomProperties;
-                var team = i % 2;
+                var team = i % (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey];
                 if(!playerProperties.TryAdd(TeamKey, team)) playerProperties[TeamKey] = team;
                 PhotonNetwork.PlayerList[i].SetCustomProperties(playerProperties);
                 if (!isRanked) continue;

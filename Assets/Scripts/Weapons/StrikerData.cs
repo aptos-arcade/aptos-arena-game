@@ -17,5 +17,8 @@ namespace Weapons
         
         [SerializeField] private float damage;
         public float Damage => damage;
+
+        [SerializeField] private float stunTime;
+        public float StunTime => stunTime;
     }
 }

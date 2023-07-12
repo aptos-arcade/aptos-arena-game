@@ -16,12 +16,26 @@ namespace Player
 
         public void Move(Transform transform)
         {
-            if (player.PlayerState.IsStunned || player.PlayerState.IsDodging || player.PlayerState.IsDashing)
+            if (player.PlayerState.IsStunned)
             {
                 player.PlayerComponents.RunAudioSource.Stop();
                 return;
             }
-            var targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
+
+            float targetSpeed;
+            if (player.PlayerUtilities.IsDashing)
+            {
+                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.DashVelocity;
+            }
+            else if (player.PlayerUtilities.IsDodging)
+            {
+                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.DodgeVelocity;
+            }
+            else
+            {
+                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
+            }
+
             var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
             var accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? player.PlayerStats.Acceleration : player.PlayerStats.Deceleration;
             var movement = Mathf.Pow(Mathf.Abs(speedDiff) * accelRate, player.PlayerStats.VelPower) * Mathf.Sign(speedDiff);
@@ -45,7 +59,8 @@ namespace Player
                 player.PlayerComponents.Animator.TryPlayAnimation("Legs_Idle");
             }
             
-            if(!player.PlayerUtilities.IsGrounded || player.PlayerComponents.RigidBody.velocity.magnitude < 0.1f)
+            if(!player.PlayerUtilities.IsGrounded || player.PlayerComponents.RigidBody.velocity.magnitude < 0.1f || 
+               player.PlayerUtilities.IsDashing || player.PlayerUtilities.IsDodging)
             {
                 player.PlayerComponents.RunAudioSource.Stop();
             }
@@ -121,7 +136,7 @@ namespace Player
         {
             player.PlayerReferences.Gun.Shoot(player);
             PlayWeaponSound(player.PlayerReferences.ShootAudioClip);
-            player.PlayerState.RangedEnergy -= player.PlayerStats.RangedAttack.Energy;
+            player.PlayerState.RangedEnergy -= player.PlayerReferences.Gun.ProjectilePrefab.strikerData.Energy;
         }
 
         public void SideMelee()
@@ -140,6 +155,12 @@ namespace Player
         {
             PlayWeaponSound(player.PlayerReferences.JabMeleeAudioClip);
             player.PlayerState.MeleeEnergy -= player.PlayerStats.JabMeleeAttack.Energy;
+        }
+        
+        public void DownMelee()
+        {
+            PlayWeaponSound(player.PlayerReferences.SideMeleeAudioClip);
+            player.PlayerState.MeleeEnergy -= player.PlayerStats.DownMeleeAttack.Energy;
         }
 
         public void Jump()
@@ -175,8 +196,6 @@ namespace Player
             player.PlayerUtilities.PlayOneShotAudio(player.PlayerReferences.DodgeAudioClip);
             player.PlayerState.CanDodge = false;
             player.PlayerComponents.RigidBody.velocity = Vector2.zero;
-            player.PlayerComponents.RigidBody.AddForce(new Vector2(
-                    player.PlayerStats.DodgeForce * player.transform.localScale.x, 0));
             player.photonView.RPC("DodgeEffect", RpcTarget.AllBuffered, true);
             yield return new WaitForSeconds(0.35f);
             player.photonView.RPC("DodgeEffect", RpcTarget.AllBuffered, false);
@@ -188,15 +207,16 @@ namespace Player
             player.PlayerComponents.Animator.TryPlayAnimation("Legs_Dash");
         }
 
-        public IEnumerator DashCoroutine()
+        public void Dash()
         {
             player.PlayerUtilities.PlayOneShotAudio(player.PlayerReferences.DashAudioClip);
             player.PlayerComponents.RigidBody.velocity = Vector2.zero;
-            player.PlayerComponents.RigidBody.AddForce(new Vector2(
-                player.PlayerStats.DashForce * player.transform.localScale.x, 0));
-            player.photonView.RPC("DashEffect", RpcTarget.AllBuffered, true);
-            yield return new WaitForSeconds(0.5f);
-            player.photonView.RPC("DashEffect", RpcTarget.AllBuffered, false);
+        }
+
+        public void FastFall()
+        {
+            player.PlayerComponents.RigidBody.velocity = new Vector2(player.PlayerComponents.RigidBody.velocity.x, 0);
+            player.PlayerComponents.RigidBody.AddForce(Vector2.down * player.PlayerStats.FastFallForce);
         }
     }
 }

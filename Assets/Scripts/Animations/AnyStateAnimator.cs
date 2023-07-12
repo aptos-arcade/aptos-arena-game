@@ -21,6 +21,7 @@ namespace Animations
 
         private string currentAnimationBody = string.Empty;
         public string CurrentAnimationBody => currentAnimationBody;
+        public string CurrentAnimationLegs => currentAnimationLegs;
     
         private static readonly int Weapon = Animator.StringToHash("Weapon");
         private static readonly int AttackDirection = Animator.StringToHash("AttackDirection");
@@ -38,8 +39,10 @@ namespace Animations
 
         public void OnDeath()
         {
-            animator.Play("Body_Idle", 0);
-            animator.Play("Legs_Idle", 1);
+            foreach (var key in animations.Keys)
+            {
+                animator.SetBool(key, false);
+            }
         }
 
         public void AddAnimations(params AnyStateAnimation[] newAnimations)
@@ -76,7 +79,8 @@ namespace Animations
                     (currentAnimation != newAnimation 
                      && !animations[newAnimation].HigherPriority.Contains(currentAnimation))
                     || !animations[currentAnimation].Active
-                    || (animator.GetCurrentAnimatorStateInfo((int)rig).IsName("Body_Attack")
+                    || (!animations[currentAnimation].HoldOnEnd
+                        && animator.GetCurrentAnimatorStateInfo((int)rig).IsName(currentAnimation)
                         && animator.GetCurrentAnimatorStateInfo((int)rig).normalizedTime >= 1)
                 )
                 {
