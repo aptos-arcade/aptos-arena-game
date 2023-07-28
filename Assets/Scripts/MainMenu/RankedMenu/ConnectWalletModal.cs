@@ -1,4 +1,4 @@
-using AptosIntegration.WalletManager;
+using AptosIntegration;
 using UnityEngine;
 
 namespace MainMenu.RankedMenu

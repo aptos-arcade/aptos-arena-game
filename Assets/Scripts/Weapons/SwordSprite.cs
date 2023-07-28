@@ -18,7 +18,7 @@ namespace Weapons
 
         public void UpdateSwordSprite()
         {
-            if (photonView.Owner == null)
+            if (photonView == null || photonView.Owner == null)
             {
                 spriteRenderer.sprite = PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue(PlayerPropertyKeys.SwordKey,
                     out var swordIndex) ? swordImages.GetSwordImage((int)swordIndex) : swordImages.GetSwordImage(0);

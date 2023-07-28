@@ -16,6 +16,7 @@ namespace Matchmaking
 
         public const string ModePropKey = "m";
         public const string NumTeamsPropKey = "nt";
+        public const string MatchIdPropKey = "mid";
         public const string MatchAddressPropKey = "ma";
     
         private void Start()

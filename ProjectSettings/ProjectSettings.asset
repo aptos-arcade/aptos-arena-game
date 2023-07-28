@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.0
+  bundleVersion: 0.0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -889,7 +889,7 @@ PlayerSettings:
   cloudProjectId: c5f51d64-1f26-4715-9af2-d3bd1976f6f9
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Aptos Arena
+  projectName: BRAWL3R
   organizationId: jason_unity182
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

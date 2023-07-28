@@ -1,16 +1,22 @@
 using System;
 using System.Threading.Tasks;
-using TMPro;
+using Player.PlayerStats;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.RemoteConfig;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace UGS
 {
     public class UnityAuthentication : MonoBehaviour
     {
+        
+        public struct userAttributes {}
+
+        public struct appAttributes {}
+        
+        [SerializeField] private PlayerStats playerStats;
 
         private async void Awake()
         {
@@ -34,29 +40,49 @@ namespace UGS
             }
             catch (AuthenticationException ex)
             {
-                // Compare error code to AuthenticationErrorCodes
-                // Notify the player with the proper error message
+                
                 Debug.LogException(ex);
             }
             catch (RequestFailedException ex)
             {
-                // Compare error code to CommonErrorCodes
-                // Notify the player with the proper error message
                 Debug.LogException(ex);
             }
         }
 
-        private static void SetupEvents()
+        private void ApplyRemoteSettings (ConfigResponse configResponse) {
+            // Conditionally update settings, depending on the response's origin:
+            switch (configResponse.requestOrigin) {
+                case ConfigOrigin.Default:
+                    Debug.Log ("No settings loaded this session; using default values.");
+                    break;
+                case ConfigOrigin.Cached:
+                    Debug.Log ("No settings loaded this session; using cached values from a previous session.");
+                    break;
+                case ConfigOrigin.Remote:
+                    Debug.Log ("New settings loaded this session; update values accordingly.");
+                    var jsonCubeString = RemoteConfigService.Instance.appConfig.GetJson("PlayerStats");
+                    JsonUtility.FromJsonOverwrite(jsonCubeString, playerStats);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            SceneManager.LoadScene("PhotonLoadingScene");
+        }
+
+
+        private void SetupEvents()
         {
             AuthenticationService.Instance.SignedIn += OnSignedIn;
             AuthenticationService.Instance.SignInFailed += OnSignInFailed;
             AuthenticationService.Instance.SignedOut += OnSignedOut;
             AuthenticationService.Instance.Expired += OnExpired;
+            
+            RemoteConfigService.Instance.FetchCompleted += ApplyRemoteSettings;
         }
 
         private static void OnSignedIn()
         {
-            SceneManager.LoadScene("PhotonLoadingScene");
+            RemoteConfigService.Instance.FetchConfigs(new userAttributes(), new appAttributes());
         }
 
         private static void OnSignInFailed(RequestFailedException err)

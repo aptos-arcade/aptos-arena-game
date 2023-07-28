@@ -23,6 +23,8 @@ namespace Player
         
         public bool IsDashing => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dash";
         public bool IsDodging => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Dodge";
+        public bool IsStunned => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Stunned";
+        public bool IsShielding => player.PlayerComponents.Animator.CurrentAnimationBody == "Body_Shield";
 
         private Coroutine hurtCoroutine;
         private Coroutine shieldStunCoroutine;
@@ -46,7 +48,11 @@ namespace Player
         {
             if (!player.PlayerComponents.PhotonView.IsMine || player.PlayerState.IsDisabled) return;
 
-            if (player.PlayerState.IsStunned && Input.anyKeyDown) player.PlayerState.IsStunned = false;
+            if (IsStunned && Input.anyKeyDown)
+            {
+                player.PlayerComponents.Animator.TryPlayAnimation("Body_Idle");
+                player.PlayerComponents.Animator.TryPlayAnimation("Legs_Idle");
+            }
 
             if (player.PlayerState.CanMove)
             {
@@ -55,7 +61,6 @@ namespace Player
                 {
                     player.PlayerState.Direction = new Vector2(x, 0);
                 }
-                
             }
             else if(!player.PlayerUtilities.IsDodging)
             {
@@ -91,7 +96,6 @@ namespace Player
             if(IsGrounded)
             {
                 player.PlayerState.CanDoubleJump = true;
-                player.PlayerState.CanDodge = true;
             }
         }
 
@@ -160,7 +164,8 @@ namespace Player
         {
             if (stunned)
             {
-                player.PlayerState.IsStunned = true;
+                player.PlayerComponents.Animator.TryPlayAnimation("Body_Stunned");
+                player.PlayerComponents.Animator.TryPlayAnimation("Legs_Stunned");
             }
             player.PlayerState.IsDisabled = stunned;
             player.PlayerState.CanMove = !stunned;
@@ -247,7 +252,6 @@ namespace Player
 
             player.PlayerState.IsDead = !isRevive;
             player.PlayerState.CanMove = isRevive;
-            player.PlayerState.IsStunned = !isRevive;
             player.PlayerState.MeleeEnergy = isRevive ? 1 : 0;
             player.PlayerState.RangedEnergy = isRevive ? 1 : 0;
 

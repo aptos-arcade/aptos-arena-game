@@ -1,5 +1,4 @@
 using AptosIntegration;
-using AptosIntegration.WalletManager;
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
@@ -9,14 +8,13 @@ namespace MainMenu.RankedMenu
 {
     public class WalletConnectManager : MonoBehaviour
     {
-
-        [SerializeField] private ModalManager modalManager;
-        
         [SerializeField] private Button walletContinueButton;
         [SerializeField] private Button walletConnectButton;
         
         [SerializeField] private TMP_Text walletAddressText;
         [SerializeField] private TMP_Text messageText;
+        
+        [SerializeField] private TMP_InputField walletAddressInputField;
     
         private void Start()
         {
@@ -26,8 +24,10 @@ namespace MainMenu.RankedMenu
 
             walletConnectButton.onClick.AddListener(WalletManager.OpenConnectWalletModal);
 
+            walletAddressInputField.gameObject.SetActive(false);
             #if UNITY_EDITOR
-                WalletManager.Instance.SetAccountAddress("0xc09622c20bdd49b2b83b7e05c264a62cfedeb45eaf5c629d0f0174917d801aef");
+                walletAddressInputField.gameObject.SetActive(true);
+                walletAddressInputField.onEndEdit.AddListener((val) => WalletManager.Instance.SetAccountAddress(val));
             #endif
         }
         

@@ -15,9 +15,6 @@ namespace Gameplay
         [Header("Sword Energy")]
         [SerializeField] private Slider swordEnergySlider;
         [SerializeField] private Image swordEnergyFill;
-        
-        [Header("Shield Energy")]
-        [SerializeField] private Slider shieldEnergySlider;
 
         [Header("Audio Clips")]
         [SerializeField] private AudioClip noEnergyAudioClip;
@@ -36,7 +33,6 @@ namespace Gameplay
         {
             Gun,
             Sword,
-            Shield,
         }
         
         private void Start()
@@ -51,7 +47,6 @@ namespace Gameplay
         {
             SetRangedEnergy();
             SetSwordEnergy();
-            SetShieldEnergy();
         }
 
         private void SetRangedEnergy()
@@ -62,11 +57,6 @@ namespace Gameplay
         private void SetSwordEnergy()
         {
             swordEnergySlider.value = MatchManager.Instance.Player.PlayerState.MeleeEnergy;
-        }
-        
-        private void SetShieldEnergy()
-        {
-            shieldEnergySlider.value = MatchManager.Instance.Player.PlayerState.ShieldEnergy;
         }
 
         public void NoEnergy(EnergyType energyType)
@@ -80,8 +70,6 @@ namespace Gameplay
                 case EnergyType.Sword:
                     if(noSwordEnergyCoroutine != null) StopCoroutine(noSwordEnergyCoroutine);
                     noSwordEnergyCoroutine = StartCoroutine(NoSwordEnergyCor());
-                    break;
-                case EnergyType.Shield:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(energyType), energyType, null);

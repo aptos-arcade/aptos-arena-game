@@ -43,6 +43,8 @@ namespace Animations
             {
                 animator.SetBool(key, false);
             }
+            TryPlayAnimation("Body_Idle");
+            TryPlayAnimation("Legs_Idle");
         }
 
         public void AddAnimations(params AnyStateAnimation[] newAnimations)

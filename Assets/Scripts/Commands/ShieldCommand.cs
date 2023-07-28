@@ -14,29 +14,19 @@ namespace Commands
 
         public override void GetKey()
         {
-            if (!player.PlayerUtilities.IsDodging && Input.GetAxisRaw("Horizontal") != 0 && player.PlayerState.CanDodge)
+            if (Input.GetAxisRaw("Horizontal") == 0)
             {
+                if (player.PlayerState.ShieldEnergy < 0.1 || !player.PlayerUtilities.IsGrounded) return;
+                player.PlayerActions.TryShield();
+            }
+            else
+            {
+                if (player.PlayerUtilities.IsDodging || !player.PlayerState.CanDodge) return;
                 player.PlayerState.Direction = Input.GetAxisRaw("Horizontal") * Vector2.right;
                 player.PlayerActions.TryDodge();
             }
-            else
-            {
-                player.PlayerActions.TryShield();
-            }
         }
 
-        public override void GetKeyDown()
-        {
-            if (Input.GetAxisRaw("Horizontal") != 0)
-            {
-                if(player.PlayerState.CanDodge) player.PlayerActions.TryDodge();
-            }
-            else
-            {
-                player.PlayerActions.TryShield();
-            }
-        }
-        
         public override void GetKeyUp()
         {
             player.PlayerComponents.Animator.OnAnimationDone("Body_Shield");

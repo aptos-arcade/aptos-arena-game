@@ -1,6 +1,5 @@
 using System.Collections;
 using AptosIntegration;
-using AptosIntegration.WalletManager;
 using TMPro;
 using UnityEngine;
 
@@ -42,7 +41,7 @@ namespace MainMenu.RankedMenu
         {
             if(!WalletManager.Instance.IsLoggedIn) yield break;
             ShowLoading();
-            yield return StartCoroutine(ApiServices.ApiClient.FetchBrawlerAddress(HandleFetchBrawlerAddress,
+            yield return StartCoroutine(ApiServices.FetchServices.FetchBrawlerAddress(HandleFetchBrawlerAddress,
                 WalletManager.Instance.Address));
         }
 

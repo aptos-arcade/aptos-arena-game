@@ -16,6 +16,8 @@ namespace Weapons
         private void Start()
         {
             if (!photonView.IsMine) return;
+            strikerData = Owner.PlayerStats.RangedAttack;
+            photonView.RPC("Initialize", RpcTarget.All, new Vector2(Owner.transform.localScale.x, 0));
             StartCoroutine(DestroyBullet());
         }
 

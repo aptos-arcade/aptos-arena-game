@@ -1,6 +1,5 @@
-using ApiServices.Models;
+using ApiServices.Models.Fetch;
 using AptosIntegration;
-using AptosIntegration.WalletManager;
 using UnityEngine;
 
 namespace MainMenu.RankedMenu
@@ -19,7 +18,7 @@ namespace MainMenu.RankedMenu
         private void OnEnable()
         {
             StartCoroutine(
-                ApiServices.ApiClient.FetchOwnedCharacters(AddAvailableCharacters, WalletManager.Instance.Address));
+                ApiServices.FetchServices.FetchOwnedCharacters(AddAvailableCharacters, WalletManager.Instance.Address));
             TransactionHandler.OnTransactionRequestEvent += OnTransactionRequest;
             TransactionHandler.OnTransactionResult += OnTransactionResult;
         }

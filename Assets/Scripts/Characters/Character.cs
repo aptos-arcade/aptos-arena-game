@@ -16,10 +16,13 @@ namespace Characters
         public string DisplayName { get; }
         
         public string PrefabName { get; }
+        
+        public string CollectionIdHash { get; }
 
-        public Character(string displayName, string prefabName) {
+        public Character(string displayName, string prefabName, string collectionIdHash) {
             DisplayName = displayName;
             PrefabName = prefabName;
+            CollectionIdHash = collectionIdHash;
         }
     }
 }

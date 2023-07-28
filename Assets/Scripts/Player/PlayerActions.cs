@@ -9,6 +9,8 @@ namespace Player
 
         private readonly PlayerScript player;
 
+        private const float Acceleration = 15;
+
         public PlayerActions(PlayerScript player)
         {
             this.player = player;
@@ -16,31 +18,12 @@ namespace Player
 
         public void Move(Transform transform)
         {
-            if (player.PlayerState.IsStunned)
+            if (player.PlayerUtilities.IsStunned)
             {
                 player.PlayerComponents.RunAudioSource.Stop();
                 return;
             }
-
-            float targetSpeed;
-            if (player.PlayerUtilities.IsDashing)
-            {
-                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.DashVelocity;
-            }
-            else if (player.PlayerUtilities.IsDodging)
-            {
-                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.DodgeVelocity;
-            }
-            else
-            {
-                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
-            }
-
-            var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
-            var accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? player.PlayerStats.Acceleration : player.PlayerStats.Deceleration;
-            var movement = Mathf.Pow(Mathf.Abs(speedDiff) * accelRate, player.PlayerStats.VelPower) * Mathf.Sign(speedDiff);
-            player.PlayerComponents.RigidBody.AddForce(movement * Vector2.right);
-
+            
             if(player.PlayerState.Direction.x != 0)
             {
                 var direction = player.PlayerState.Direction.x < 0 ? -1 : 1;
@@ -64,6 +47,28 @@ namespace Player
             {
                 player.PlayerComponents.RunAudioSource.Stop();
             }
+
+            float targetSpeed;
+            if (player.PlayerUtilities.IsDashing)
+            {
+                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.DashVelocity;
+            }
+            else if (player.PlayerUtilities.IsDodging)
+            {
+                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.DodgeVelocity;
+            }
+            else if (player.PlayerUtilities.IsShielding)
+            {
+                targetSpeed = 0;
+            }
+            else
+            {
+                targetSpeed = player.PlayerState.Direction.x * player.PlayerStats.Speed;
+            }
+
+            var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
+            var movement = Mathf.Abs(speedDiff) * Acceleration * Mathf.Sign(speedDiff);
+            player.PlayerComponents.RigidBody.AddForce(movement * Vector2.right);
         }
 
         public void TryJump()
@@ -134,9 +139,9 @@ namespace Player
 
         public void Shoot()
         {
-            player.PlayerReferences.Gun.Shoot(player);
+            player.PlayerReferences.Gun.Shoot();
             PlayWeaponSound(player.PlayerReferences.ShootAudioClip);
-            player.PlayerState.RangedEnergy -= player.PlayerReferences.Gun.ProjectilePrefab.strikerData.Energy;
+            player.PlayerState.RangedEnergy -= player.PlayerStats.RangedAttack.Energy;
         }
 
         public void SideMelee()
@@ -199,6 +204,8 @@ namespace Player
             player.photonView.RPC("DodgeEffect", RpcTarget.AllBuffered, true);
             yield return new WaitForSeconds(0.35f);
             player.photonView.RPC("DodgeEffect", RpcTarget.AllBuffered, false);
+            yield return new WaitForSeconds(0.65f);
+            player.PlayerState.CanDodge = true;
         }
         
         public void TryDash()

@@ -1,5 +1,5 @@
 using System;
-using ApiServices.Models;
+using ApiServices.Models.Fetch;
 using Global;
 
 namespace AptosIntegration
@@ -16,7 +16,13 @@ namespace AptosIntegration
         public static void EquipCharacter(TokenData tokenData)
         {
             TransactionHandler.Instance.RequestTransaction(Modules.ScriptFunctionAddress("equip_character"),
-                new[] { tokenData.Creator, tokenData.Collection, tokenData.Name, tokenData.PropertyVersion.ToString() },
+                new[]
+                {
+                    tokenData.TokenDataId.Creator, 
+                    tokenData.TokenDataId.Collection, 
+                    tokenData.TokenDataId.Name, 
+                    tokenData.PropertyVersion.ToString()
+                },
                 Array.Empty<string>());
         }
     }

@@ -1,5 +1,4 @@
 using AptosIntegration;
-using AptosIntegration.WalletManager;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;

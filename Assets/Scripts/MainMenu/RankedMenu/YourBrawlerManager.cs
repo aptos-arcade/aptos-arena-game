@@ -1,7 +1,6 @@
 using System.Collections;
-using ApiServices.Models;
+using ApiServices.Models.Fetch;
 using AptosIntegration;
-using AptosIntegration.WalletManager;
 using Photon;
 using Photon.Pun;
 using TMPro;
@@ -51,7 +50,7 @@ namespace MainMenu.RankedMenu
         {
             ShowLoading();
             yield return StartCoroutine(
-                ApiServices.ApiClient.FetchBrawlerData(HandleFetchBrawlerData, WalletManager.Instance.Address));
+                ApiServices.FetchServices.FetchBrawlerData(HandleFetchBrawlerData, WalletManager.Instance.Address));
         }
 
         private void HandleFetchBrawlerData(BrawlerData brawlerData)

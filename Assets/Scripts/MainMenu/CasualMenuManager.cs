@@ -1,4 +1,3 @@
-using System;
 using Characters;
 using Photon.Pun;
 using Unity.Services.Authentication;
@@ -39,7 +38,7 @@ namespace MainMenu
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
             characterDisplay.UpdateCharacter();
             
-            PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName;
+            PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName.Split("#")[0];
             CharacterCard.OnSelect += OnCharacterSelect;
             continueToRoomsButton.onClick.AddListener(OnContinueToRooms);
         }

@@ -1,9 +1,11 @@
-using System;
+using ApiServices;
 using Photon.Pun;
 using TMPro;
+using UIComponents;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MainMenu
@@ -25,6 +27,7 @@ namespace MainMenu
         
         [Header("Displays")]
         [SerializeField] private TMP_Text usernameText;
+        [SerializeField] private Modal loadingModal;
         
         private void Start()
         {
@@ -32,9 +35,12 @@ namespace MainMenu
             closeUsernamePanelButton.onClick.AddListener(CloseUsernamePanel);
             setUsernameButton.onClick.AddListener(SetUsername);
             
-            signOutButton.onClick.AddListener(SignOut);
+            #if UNITY_EDITOR
+                signOutButton.gameObject.SetActive(true);
+                signOutButton.onClick.AddListener(SignOut);
+            #endif
             
-            usernameText.text = AuthenticationService.Instance.PlayerName;
+            usernameText.text = AuthenticationService.Instance.PlayerName.Split("#")[0];
         }
         
         private void OpenUsernamePanel()
@@ -53,23 +59,37 @@ namespace MainMenu
         {
             try
             {
-                var username = await AuthenticationService.Instance.UpdatePlayerNameAsync(usernameInputField.text);
-                usernameText.text = username;
-                PhotonNetwork.NickName = username;
-                CloseUsernamePanel();
+                loadingModal.Show();
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(usernameInputField.text);
+                PhotonNetwork.NickName = usernameInputField.text;
+                StartCoroutine(PlayerServices.SetPlayerName(usernameInputField.text, success =>
+                {
+                    if (success)
+                    {
+                        usernameText.text = usernameInputField.text;
+                        CloseUsernamePanel();
+                    }
+                    else
+                    {
+                        usernameErrorText.gameObject.SetActive(true);
+                        usernameErrorText.text = "Username already taken";
+                    }
+                    loadingModal.Hide();
+                }));
             }
             catch (RequestFailedException e)
             {
                 usernameErrorText.gameObject.SetActive(true);
                 usernameErrorText.text = e.Message;
+                loadingModal.Hide();
             }
-            
-            
         }
         
         private static void SignOut()
         {
             AuthenticationService.Instance.SignOut();
+            PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene("LaunchScene");
         }
 
     }

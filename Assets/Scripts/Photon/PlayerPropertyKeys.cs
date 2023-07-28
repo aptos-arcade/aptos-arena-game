@@ -7,5 +7,6 @@ namespace Photon
         public const string SwordKey = "Sword";
         public const string GunKey = "Gun";
         public const string AccountAddressKey = "AccountAddress";
+        public const string PlayerIdKey = "PlayerId";
     }
 }

@@ -12,5 +12,6 @@ namespace Global
         TrainingMenuScene,
         MatchmakingScene,
         GameplayScene,
+        LeaderboardScene,
     }
 }

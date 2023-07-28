@@ -1,73 +1,72 @@
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 
 namespace SFX
 {
     public class AudioManager : MonoBehaviour
     {
+        
+        public static AudioManager Instance { get; private set; }
 
-        [Header("Audio Mixer")]
         [SerializeField] private AudioMixer mixer;
         
-        [Header("Volume Sliders")]
-        [SerializeField] private Slider masterVolumeSlider;
-        [SerializeField] private Slider musicVolumeSlider;
-        [SerializeField] private Slider gameSfxVolumeSlider;
-        [SerializeField] private Slider menuSfxVolumeSlider;
-        
-        [Header("Modal Controller")]
-        [SerializeField] private Button openAudioModalButton;
-        [SerializeField] private Button closeAudioModalButton;
-        [SerializeField] private GameObject audioModal;
-        
+        public static float MasterVolume => PlayerPrefs.GetFloat(MasterVolumeKey, DefaultMasterValue);
+        public static float MusicVolume => PlayerPrefs.GetFloat(MusicVolumeKey, DefaultMusicValue);
+        public static float GameSfxVolume => PlayerPrefs.GetFloat(GameSfxVolumeKey, DefaultGameSfxValue);
+        public static float MenuSfxVolume => PlayerPrefs.GetFloat(MenuSfxVolumeKey, DefaultMenuSfxValue);
+
         private const string MasterVolumeKey = "MasterVolume";
         private const string MusicVolumeKey = "MusicVolume";
         private const string GameSfxVolumeKey = "GameSfxVolume";
         private const string MenuSfxVolumeKey = "MenuSfxVolume";
         
-        private const float DefaultValue = 1f;
+        private const float DefaultMasterValue = 1f;
+        private const float DefaultMusicValue = 0.25f;
+        private const float DefaultGameSfxValue = 0.5f;
+        private const float DefaultMenuSfxValue = 0.5f;
+        
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+                return;
+            }
+            
+            Destroy(gameObject);
+        }
 
         private void Start()
         {
-            openAudioModalButton.onClick.AddListener(() => audioModal.SetActive(true));
-            closeAudioModalButton.onClick.AddListener(() => audioModal.SetActive(false));
-
-            // add listeners to each slider
-            masterVolumeSlider.onValueChanged.AddListener(SetMasterVolume);
-            musicVolumeSlider.onValueChanged.AddListener(SetMusicVolume);
-            gameSfxVolumeSlider.onValueChanged.AddListener(SetGameSfxVolume);
-            menuSfxVolumeSlider.onValueChanged.AddListener(SetMenuSfxVolume);
-            
-            // set slider values to player prefs values
-            masterVolumeSlider.value = PlayerPrefs.GetFloat(MasterVolumeKey, DefaultValue);
-            musicVolumeSlider.value = PlayerPrefs.GetFloat(MusicVolumeKey, DefaultValue);
-            gameSfxVolumeSlider.value = PlayerPrefs.GetFloat(GameSfxVolumeKey, DefaultValue);
-            menuSfxVolumeSlider.value = PlayerPrefs.GetFloat(MenuSfxVolumeKey, DefaultValue);
+            SetMasterVolume(MasterVolume);
+            SetMusicVolume(MusicVolume);
+            SetGameSfxVolume(GameSfxVolume);
+            SetMenuSfxVolume(MenuSfxVolume);
         }
         
-        private void SetMasterVolume(float volume)
+        public void SetMasterVolume(float volume)
         {
             var masterVolume = ScaleVolumeSliderValue(volume);
             mixer.SetFloat(MasterVolumeKey, masterVolume);
             PlayerPrefs.SetFloat(MasterVolumeKey, volume);
         }
         
-        private void SetMusicVolume(float volume)
+        public void SetMusicVolume(float volume)
         {
             var musicVolume = ScaleVolumeSliderValue(volume);
             mixer.SetFloat(MusicVolumeKey, musicVolume);
             PlayerPrefs.SetFloat(MusicVolumeKey, volume);
         }
         
-        private void SetGameSfxVolume(float volume)
+        public void SetGameSfxVolume(float volume)
         {
             var gameSfxVolume = ScaleVolumeSliderValue(volume);
             mixer.SetFloat(GameSfxVolumeKey, gameSfxVolume);
             PlayerPrefs.SetFloat(GameSfxVolumeKey, volume);
         }
         
-        private void SetMenuSfxVolume(float volume)
+        public void SetMenuSfxVolume(float volume)
         {
             var menuSfxVolume = ScaleVolumeSliderValue(volume);
             mixer.SetFloat(MenuSfxVolumeKey, menuSfxVolume);

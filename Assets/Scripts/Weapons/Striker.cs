@@ -1,3 +1,5 @@
+using System;
+using Gameplay;
 using Photon.Pun;
 using Player;
 using UnityEngine;
@@ -6,12 +8,19 @@ namespace Weapons
 {
     public class Striker: MonoBehaviourPun
     {
+        protected PlayerScript Owner;
 
         public StrikerData strikerData;
 
         public Vector2 KnockBackSignedDirection { get; protected set; }
         
         [SerializeField] private GameObject hitEffect;
+
+        private void Awake()
+        {
+            if (!photonView.IsMine) return;
+            Owner = MatchManager.Instance.Player;
+        }
 
         private void Start()
         {

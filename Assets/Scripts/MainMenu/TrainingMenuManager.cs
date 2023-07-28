@@ -27,7 +27,7 @@ namespace MainMenu
                 { GunKey, Random.Range(0, 5)}
             };
             PhotonNetwork.SetPlayerCustomProperties(playerProperties);
-            PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName;
+            PhotonNetwork.NickName = AuthenticationService.Instance.PlayerName.Split("#")[0];
             characterDisplay.UpdateCharacter();
             CharacterCard.OnSelect += OnCharacterSelect;
             continueButton.onClick.AddListener(JoinTrainingRoom);

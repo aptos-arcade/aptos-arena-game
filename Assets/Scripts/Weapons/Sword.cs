@@ -6,13 +6,6 @@ namespace Weapons
 {
     public class Sword : Striker
     {
-        [SerializeField] private Transform ownerTransform;
-        
-        private void Awake()
-        {
-            if(ownerTransform == null) ownerTransform = transform.parent;
-        }
-        
         protected override void OnPlayerStrike(Vector2 position, PlayerScript player)
         {
             base.OnPlayerStrike(position, player);
@@ -22,13 +15,14 @@ namespace Weapons
         protected override void OnShieldStrike(Vector2 position, PlayerShield shield)
         {
             base.OnShieldStrike(position, shield);
-            ownerTransform.GetComponent<PlayerScript>().PlayerUtilities.ShieldHit(shield);
+            Owner.PlayerUtilities.ShieldHit(shield);
         }
 
         private void Update()
         {
+            if (!photonView.IsMine) return;
             KnockBackSignedDirection = new Vector2(
-                ownerTransform.localScale.x * strikerData.KnockBackDirection.x,
+                Owner.transform.localScale.x * strikerData.KnockBackDirection.x,
                 strikerData.KnockBackDirection.y
             );
         }

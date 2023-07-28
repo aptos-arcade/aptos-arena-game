@@ -14,8 +14,6 @@ namespace Player
         public bool CanDodge { get; set; } = true;
 
         public bool IsDead { get; set; } = true;
-
-        public bool IsStunned { get; set; }
         
         public bool IsDisabled { get; set; }
         

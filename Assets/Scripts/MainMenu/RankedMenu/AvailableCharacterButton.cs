@@ -1,4 +1,4 @@
-using ApiServices.Models;
+using ApiServices.Models.Fetch;
 using AptosIntegration;
 using TMPro;
 using UnityEngine;
@@ -17,7 +17,7 @@ namespace MainMenu.RankedMenu
         public void InitializeButton(TokenData tokenDataParam)
         {
             tokenData = tokenDataParam;
-            buttonText.text = tokenData.Name;
+            buttonText.text = tokenData.TokenDataId.Name;
             GetComponent<Button>().onClick.AddListener(OnClick);
         }
         

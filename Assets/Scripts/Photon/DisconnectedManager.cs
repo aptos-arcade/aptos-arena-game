@@ -55,6 +55,7 @@ namespace Photon
         
         public override void OnDisconnected(DisconnectCause cause)
         {
+            if(DisconnectCause.DisconnectByClientLogic == cause) return;
             disconnectText.text = "Disconnected from server: " + cause;
             disconnectText.color = Color.red;
             disconnectUI.SetActive(true);

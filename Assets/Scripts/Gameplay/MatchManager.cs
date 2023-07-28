@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ApiServices;
 using AptosIntegration;
 using Characters;
 using ExitGames.Client.Photon;
@@ -292,12 +293,28 @@ namespace Gameplay
         {
             gameState = GameState.MatchOver;
             winningTeam = winnerIndex;
-            if ((GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey] != GameModes.Ranked) return;
-            var matchAddress = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchAddressPropKey];
-            StartCoroutine(MatchEntryFunctions.SetMatchResult(matchAddress, winnerIndex, OnMatchResultReported));
+            switch ((GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey])
+            {
+                case GameModes.Casual:
+                    var matchId = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchIdPropKey];
+                    StartCoroutine(CasualMatchServices.SetMatchResult(matchId, winnerIndex, OnCasualMatchResultReported));
+                    break;
+                case GameModes.Ranked:
+                    var matchAddress = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchAddressPropKey];
+                    StartCoroutine(RankedMatchServices.SetMatchResult(matchAddress, winnerIndex, OnRankedMatchResultReported));
+                    break;
+                case GameModes.Training:
+                default:
+                    break;
+            }
+        }
+        
+        private static void OnCasualMatchResultReported(bool success, string message)
+        {
+            Debug.Log(message);
         }
 
-        private static void OnMatchResultReported(bool success, string message)
+        private static void OnRankedMatchResultReported(bool success, string message)
         {
             Debug.Log(message);
         }

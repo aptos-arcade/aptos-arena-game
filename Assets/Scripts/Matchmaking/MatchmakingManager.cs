@@ -1,6 +1,9 @@
 using System.Collections.Generic;
-using AptosIntegration;
+using ApiServices;
+using ApiServices.Models.CasualMatch;
+using ApiServices.Models.RankedMatch;
 using Characters;
+using Global;
 using Photon.Pun;
 using ScriptableObjects;
 using TMPro;
@@ -31,7 +34,7 @@ namespace Matchmaking
         }
 
         
-        private string RoomTitle(int numTeams, int numPlayersPerTeam)
+        private static string RoomTitle(int numTeams, int numPlayersPerTeam)
         {
             var roomTitle = "";
             for(var i = 0; i < numTeams; i++)
@@ -88,33 +91,83 @@ namespace Matchmaking
         {
             if (!PhotonNetwork.IsMasterClient) return;
             PhotonNetwork.CurrentRoom.IsOpen = false;
-            List<List<string>> teams = new();
-            var isRanked = (Global.GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey] ==
-                          Global.GameModes.Ranked;
+            AssignTeams();
+            switch ((GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey])
+            {
+                case GameModes.Casual:
+                    CreateCasualMatch();
+                    break;
+                case GameModes.Ranked:
+                    CreateRankedMatch();
+                    break;
+                case GameModes.Training:
+                default:
+                    LoadGame();
+                    break;
+            }
+        }
+
+        private static void AssignTeams()
+        {
             for (var i = 0; i < PhotonNetwork.PlayerList.Length; i++)
             {
                 var playerProperties = PhotonNetwork.PlayerList[i].CustomProperties;
                 var team = i % (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey];
-                if(!playerProperties.TryAdd(TeamKey, team)) playerProperties[TeamKey] = team;
+                if (!playerProperties.TryAdd(TeamKey, team)) playerProperties[TeamKey] = team;
                 PhotonNetwork.PlayerList[i].SetCustomProperties(playerProperties);
-                if (!isRanked) continue;
-                if (teams.Count <= team) teams.Add(new List<string>());
-                teams[team].Add(playerProperties[AccountAddressKey].ToString());
-            }
-
-            if (isRanked)
-            {
-                StartCoroutine(MatchEntryFunctions.CreateMatch(teams, OnMatchCreated));
-            }
-            else
-            {
-                LoadGame();
             }
         }
 
-        private static void OnMatchCreated(bool success, string message)
+        private void CreateCasualMatch()
         {
-            if (!success) return;
+            List<List<CasualMatchPlayer>> teams = new();
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                var team = player.CustomProperties[TeamKey];
+                if (teams.Count <= (int)team) teams.Add(new List<CasualMatchPlayer>());
+                teams[(int)team].Add(new CasualMatchPlayer(
+                    player.CustomProperties[PlayerIdKey].ToString(),
+                    (CharactersEnum)player.CustomProperties[CharacterKey]
+                ));
+            }
+            StartCoroutine(CasualMatchServices.CreateMatch(teams, OnCasualMatchCreated));
+        }
+
+        private void OnCasualMatchCreated(bool success, string message)
+        {
+            if (!success)
+            {
+                OnMatchCreateError();
+                return;
+            }
+            var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+            roomProperties[Room.MatchIdPropKey] = message;
+            PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
+            LoadGame();
+        }
+        
+        private void CreateRankedMatch()
+        {
+            List<List<RankedMatchPlayer>> teams = new();
+            foreach (var player in PhotonNetwork.PlayerList)
+            {
+                var team = player.CustomProperties[TeamKey];
+                if (teams.Count <= (int)team) teams.Add(new List<RankedMatchPlayer>());
+                teams[(int)team].Add(new RankedMatchPlayer(
+                    player.CustomProperties[AccountAddressKey].ToString()[2..],
+                    (CharactersEnum)player.CustomProperties[CharacterKey]
+                ));
+            }
+            StartCoroutine(RankedMatchServices.CreateMatch(teams, OnRankedMatchCreated));
+        }
+
+        private void OnRankedMatchCreated(bool success, string message)
+        {
+            if (!success)
+            {
+                OnMatchCreateError();
+                return;
+            }
             var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
             roomProperties[Room.MatchAddressPropKey] = message;
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
@@ -134,6 +187,11 @@ namespace Matchmaking
         public override void OnLeftRoom()
         {
             SceneManager.LoadScene("ModeSelectScene");
+        }
+
+        private void OnMatchCreateError()
+        {
+            waitingText.text = "Error creating match";
         }
 
         private void SetWaitingText()

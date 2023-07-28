@@ -1,8 +1,6 @@
 using System.Collections;
-using ApiServices;
-using ApiServices.Models;
+using ApiServices.Models.Fetch;
 using AptosIntegration;
-using AptosIntegration.WalletManager;
 using TMPro;
 using UnityEngine;
 
@@ -24,7 +22,7 @@ namespace MainMenu.RankedMenu
 
         private IEnumerator LoadPlayerStats()
         {
-            yield return ApiClient.FetchPlayerStats(HandlePlayerStats, WalletManager.Instance.Address);
+            yield return ApiServices.FetchServices.FetchPlayerStats(HandlePlayerStats, WalletManager.Instance.Address);
         }
 
         private void HandlePlayerStats(PlayerStats stats)
