@@ -4,6 +4,7 @@ using System.Linq;
 using ApiServices;
 using AptosIntegration;
 using Characters;
+using Com.LuisPedroFonseca.ProCamera2D;
 using ExitGames.Client.Photon;
 using Global;
 using Photon.Pun;
@@ -43,7 +44,8 @@ namespace Gameplay
         public PlayerScript Player { get; set; }
         
         [Header("Game Objects")]
-        [SerializeField] private Camera sceneCamera;
+        [SerializeField] private ProCamera2D sceneCamera;
+        public ProCamera2D SceneCamera => sceneCamera;
         
         [Header("Managers")]
         [SerializeField] private RespawnManager respawnManager;
@@ -81,12 +83,6 @@ namespace Gameplay
             gameState = GameState.Playing;
             NewPlayerSend();
             respawnManager.StartRespawn();
-        }
-        
-        public void SetPlayerCameraActive(bool active)
-        {
-            Player.PlayerComponents.PlayerCamera.gameObject.SetActive(active);
-            sceneCamera.gameObject.SetActive(!active);
         }
 
         public void OnEvent(EventData photonEvent)

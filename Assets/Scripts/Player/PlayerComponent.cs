@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Animations;
+using Com.LuisPedroFonseca.ProCamera2D;
+using Gameplay;
 using Photon.Pun;
 using UnityEngine;
 
@@ -29,14 +31,13 @@ namespace Player
         [SerializeField] private PhotonView photonView;
         public PhotonView PhotonView { get => photonView; set => photonView = value; }
 
-        [SerializeField] private PlayerCamera playerCamera;
-        public PlayerCamera PlayerCamera => playerCamera;
-
         [SerializeField] private AudioSource runAudioSource;
         public AudioSource RunAudioSource => runAudioSource;
         
         [SerializeField] private AudioSource oneShotAudioSource;
         public AudioSource OneShotAudioSource => oneShotAudioSource;
+        
+        public ProCamera2DShake ProCamera2DShake => MatchManager.Instance.SceneCamera.GetComponent<ProCamera2DShake>();
 
         public List<SpriteRenderer> PlayerSprites { get; set; } = new();
         

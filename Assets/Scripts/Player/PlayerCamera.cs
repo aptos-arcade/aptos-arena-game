@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Player
 {
@@ -14,6 +16,13 @@ namespace Player
         [SerializeField] private Vector2 maxBoundary;
 
         private Vector3 targetPos;
+        
+        public Camera Camera { get; private set; }
+
+        private void Start()
+        {
+            Camera = GetComponent<Camera>();
+        }
 
         private void OnEnable()
         {

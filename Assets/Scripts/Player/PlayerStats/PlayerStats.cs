@@ -12,6 +12,18 @@ namespace Player.PlayerStats
         public float JumpForce => jumpForce;
 
         public float DoubleJumpForce => jumpForce * 0.9f;
+        
+        [SerializeField] private float acceleration;
+        public float Acceleration => acceleration;
+        
+        [SerializeField] private float deceleration;
+        public float Deceleration => deceleration;
+        
+        [SerializeField] private float velocityPower;
+        public float VelocityPower => velocityPower;
+        
+        [SerializeField] private float gravityScale;
+        public float GravityScale => gravityScale;
 
         [SerializeField] private float speed;
         public float Speed => speed;

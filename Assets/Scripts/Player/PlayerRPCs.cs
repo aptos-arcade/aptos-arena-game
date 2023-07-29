@@ -1,4 +1,5 @@
 using System.Collections;
+using Com.LuisPedroFonseca.ProCamera2D;
 using Photon.Pun;
 using UnityEngine;
 
@@ -36,7 +37,7 @@ namespace Player
         [PunRPC]
         public void OnStrike(Vector2 direction, float knockBack, float damage, int strikerActorNumber)
         {
-            player.StartCoroutine(player.PlayerComponents.PlayerCamera.Shake(0.2f, 0.1f));
+            player.PlayerComponents.ProCamera2DShake.Shake(0);
             player.PlayerState.StrikerActorNumber = strikerActorNumber;
             player.PlayerState.DamageMultiplier += damage;
             player.PlayerReferences.DamageDisplay.text = ((player.PlayerState.DamageMultiplier - 1) * 100).ToString("F0") + "%";

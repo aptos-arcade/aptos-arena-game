@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a23089ecf4304d9e88c25e9f76460aa2, type: 3}
   m_Name: DefaultStats
   m_EditorClassIdentifier: 
-  jumpForce: 1100
-  speed: 7.5
+  jumpForce: 1000
+  acceleration: 15
+  deceleration: 15
+  velocityPower: 1
+  gravityScale: 4
+  speed: 8
   fastFallForce: 700
   sideMeleeAttack:
     energy: 0.4
     knockBack: 12.5
-    knockBackDirection: {x: 1, y: 1}
+    knockBackDirection: {x: 1, y: 2}
     damage: 0.6
     stunTime: 0.25
   jabMeleeAttack:

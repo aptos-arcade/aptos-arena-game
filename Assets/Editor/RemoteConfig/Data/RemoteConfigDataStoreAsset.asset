@@ -12,51 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
   m_Name: RemoteConfigDataStoreAsset
   m_EditorClassIdentifier: 
-  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"81d860a5-a154-4141-aaff-a45c3a7392f4\"\n   
+  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"8f105f3c-8b0c-49da-9315-0c58eb78421a\"\n   
     },\n    \"rs\": {\n      \"key\": \"PlayerStats\",\n      \"type\": \"json\",\n     
-    \"schemaId\": null,\n      \"value\": {\n        \"jumpForce\": 1100,\n       
-    \"speed\": 10,\n        \"fastFallForce\": 700,\n        \"sideMeleeAttack\":
-    {\n          \"energy\": 0.40000000596046448,\n          \"knockBack\": 12.5,\n         
-    \"knockBackDirection\": {\n            \"x\": 1,\n            \"y\": 2\n         
-    },\n          \"damage\": 0.60000002384185791,\n          \"stunTime\": 0.25\n       
-    },\n        \"jabMeleeAttack\": {\n          \"energy\": 0.20000000298023224,\n         
-    \"knockBack\": 1,\n          \"knockBackDirection\": {\n            \"x\": 1,\n           
-    \"y\": 0\n          },\n          \"damage\": 0.10000000149011612,\n         
-    \"stunTime\": 0.25\n        },\n        \"upMeleeAttack\": {\n          \"energy\":
-    0.20000000298023224,\n          \"knockBack\": 10,\n          \"knockBackDirection\":
-    {\n            \"x\": 1,\n            \"y\": 4\n          },\n          \"damage\":
-    0.40000000596046448,\n          \"stunTime\": 0.125\n        },\n        \"downMeleeAttack\":
-    {\n          \"energy\": 0.30000001192092896,\n          \"knockBack\": 5,\n         
-    \"knockBackDirection\": {\n            \"x\": 1,\n            \"y\": -1\n         
-    },\n          \"damage\": 0.5,\n          \"stunTime\": 0.125\n        },\n       
-    \"rangedAttack\": {\n          \"energy\": 0.33000001311302185,\n          \"knockBack\":
-    1,\n          \"knockBackDirection\": {\n            \"x\": 3,\n            \"y\":
-    2\n          },\n          \"damage\": 0.20000000298023224,\n          \"stunTime\":
-    0.05000000074505806\n        },\n        \"shieldDuration\": 3,\n        \"shieldStunDuration\":
-    3,\n        \"shieldEnergyRegenTime\": 5,\n        \"meleeEnergyRegenTime\":
+    \"schemaId\": null,\n      \"value\": {\n        \"jumpForce\": 1000,\n       
+    \"acceleration\": 15,\n        \"deceleration\": 15,\n        \"velocityPower\":
+    1,\n        \"gravityScale\": 4,\n        \"speed\": 8,\n        \"fastFallForce\":
+    700,\n        \"sideMeleeAttack\": {\n          \"energy\": 0.40000000596046448,\n         
+    \"knockBack\": 12.5,\n          \"knockBackDirection\": {\n            \"x\":
+    1,\n            \"y\": 2\n          },\n          \"damage\": 0.60000002384185791,\n         
+    \"stunTime\": 0.25\n        },\n        \"jabMeleeAttack\": {\n          \"energy\":
+    0.20000000298023224,\n          \"knockBack\": 1,\n          \"knockBackDirection\":
+    {\n            \"x\": 1,\n            \"y\": 0\n          },\n          \"damage\":
+    0.10000000149011612,\n          \"stunTime\": 0.25\n        },\n        \"upMeleeAttack\":
+    {\n          \"energy\": 0.20000000298023224,\n          \"knockBack\": 10,\n         
+    \"knockBackDirection\": {\n            \"x\": 1,\n            \"y\": 4\n         
+    },\n          \"damage\": 0.40000000596046448,\n          \"stunTime\": 0.125\n       
+    },\n        \"downMeleeAttack\": {\n          \"energy\": 0.30000001192092896,\n         
+    \"knockBack\": 5,\n          \"knockBackDirection\": {\n            \"x\": 1,\n           
+    \"y\": -1\n          },\n          \"damage\": 0.5,\n          \"stunTime\":
+    0.125\n        },\n        \"rangedAttack\": {\n          \"energy\": 0.33000001311302185,\n         
+    \"knockBack\": 1,\n          \"knockBackDirection\": {\n            \"x\": 3,\n           
+    \"y\": 2\n          },\n          \"damage\": 0.20000000298023224,\n         
+    \"stunTime\": 0.05000000074505806\n        },\n        \"shieldDuration\": 3,\n       
+    \"shieldStunDuration\": 3,\n        \"shieldEnergyRegenTime\": 5,\n        \"meleeEnergyRegenTime\":
     7.5,\n        \"rangedEnergyRegenTime\": 5\n      }\n    }\n  }\n]"
-  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"81d860a5-a154-4141-aaff-a45c3a7392f4\"\n   
+  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"8f105f3c-8b0c-49da-9315-0c58eb78421a\"\n   
     },\n    \"rs\": {\n      \"key\": \"PlayerStats\",\n      \"type\": \"json\",\n     
-    \"schemaId\": null,\n      \"value\": {\n        \"jumpForce\": 1100,\n       
-    \"speed\": 10,\n        \"fastFallForce\": 700,\n        \"sideMeleeAttack\":
-    {\n          \"energy\": 0.40000000596046448,\n          \"knockBack\": 12.5,\n         
-    \"knockBackDirection\": {\n            \"x\": 1,\n            \"y\": 2\n         
-    },\n          \"damage\": 0.60000002384185791,\n          \"stunTime\": 0.25\n       
-    },\n        \"jabMeleeAttack\": {\n          \"energy\": 0.20000000298023224,\n         
-    \"knockBack\": 1,\n          \"knockBackDirection\": {\n            \"x\": 1,\n           
-    \"y\": 0\n          },\n          \"damage\": 0.10000000149011612,\n         
-    \"stunTime\": 0.25\n        },\n        \"upMeleeAttack\": {\n          \"energy\":
-    0.20000000298023224,\n          \"knockBack\": 10,\n          \"knockBackDirection\":
-    {\n            \"x\": 1,\n            \"y\": 4\n          },\n          \"damage\":
-    0.40000000596046448,\n          \"stunTime\": 0.125\n        },\n        \"downMeleeAttack\":
-    {\n          \"energy\": 0.30000001192092896,\n          \"knockBack\": 5,\n         
-    \"knockBackDirection\": {\n            \"x\": 1,\n            \"y\": -1\n         
-    },\n          \"damage\": 0.5,\n          \"stunTime\": 0.125\n        },\n       
-    \"rangedAttack\": {\n          \"energy\": 0.33000001311302185,\n          \"knockBack\":
-    1,\n          \"knockBackDirection\": {\n            \"x\": 3,\n            \"y\":
-    2\n          },\n          \"damage\": 0.20000000298023224,\n          \"stunTime\":
-    0.05000000074505806\n        },\n        \"shieldDuration\": 3,\n        \"shieldStunDuration\":
-    3,\n        \"shieldEnergyRegenTime\": 5,\n        \"meleeEnergyRegenTime\":
+    \"schemaId\": null,\n      \"value\": {\n        \"jumpForce\": 1000,\n       
+    \"acceleration\": 15,\n        \"deceleration\": 15,\n        \"velocityPower\":
+    1,\n        \"gravityScale\": 4,\n        \"speed\": 8,\n        \"fastFallForce\":
+    700,\n        \"sideMeleeAttack\": {\n          \"energy\": 0.40000000596046448,\n         
+    \"knockBack\": 12.5,\n          \"knockBackDirection\": {\n            \"x\":
+    1,\n            \"y\": 2\n          },\n          \"damage\": 0.60000002384185791,\n         
+    \"stunTime\": 0.25\n        },\n        \"jabMeleeAttack\": {\n          \"energy\":
+    0.20000000298023224,\n          \"knockBack\": 1,\n          \"knockBackDirection\":
+    {\n            \"x\": 1,\n            \"y\": 0\n          },\n          \"damage\":
+    0.10000000149011612,\n          \"stunTime\": 0.25\n        },\n        \"upMeleeAttack\":
+    {\n          \"energy\": 0.20000000298023224,\n          \"knockBack\": 10,\n         
+    \"knockBackDirection\": {\n            \"x\": 1,\n            \"y\": 4\n         
+    },\n          \"damage\": 0.40000000596046448,\n          \"stunTime\": 0.125\n       
+    },\n        \"downMeleeAttack\": {\n          \"energy\": 0.30000001192092896,\n         
+    \"knockBack\": 5,\n          \"knockBackDirection\": {\n            \"x\": 1,\n           
+    \"y\": -1\n          },\n          \"damage\": 0.5,\n          \"stunTime\":
+    0.125\n        },\n        \"rangedAttack\": {\n          \"energy\": 0.33000001311302185,\n         
+    \"knockBack\": 1,\n          \"knockBackDirection\": {\n            \"x\": 3,\n           
+    \"y\": 2\n          },\n          \"damage\": 0.20000000298023224,\n         
+    \"stunTime\": 0.05000000074505806\n        },\n        \"shieldDuration\": 3,\n       
+    \"shieldStunDuration\": 3,\n        \"shieldEnergyRegenTime\": 5,\n        \"meleeEnergyRegenTime\":
     7.5,\n        \"rangedEnergyRegenTime\": 5\n      }\n    }\n  }\n]"
   _environments: "[\n  {\n    \"projectId\": \"c5f51d64-1f26-4715-9af2-d3bd1976f6f9\",\n   
     \"name\": \"production\",\n    \"id\": \"52520036-d6ae-48ba-a623-7eca62c30c63\",\n   

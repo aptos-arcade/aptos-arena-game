@@ -32,11 +32,6 @@ namespace Player
             {
                 if (!MatchManager.Instance) return;
                 MatchManager.Instance.Player = this;
-
-                var playerPosition = transform.position;
-                playerReferences.PlayerCamera.transform.position = new Vector3(playerPosition.x, playerPosition.y, playerReferences.PlayerCamera.transform.position.z);
-                playerReferences.PlayerCamera.SetActive(true);
-                playerReferences.PlayerCamera.transform.SetParent(null, true);
                 
                 playerReferences.NameTag.text = PhotonNetwork.NickName;
                 playerReferences.NameTag.color = new Color(0.6588235f, 0.8078431f, 1f);

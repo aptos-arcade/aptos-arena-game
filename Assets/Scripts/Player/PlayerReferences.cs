@@ -29,9 +29,6 @@ namespace Player
         [SerializeField] private GameObject playerCanvas;
         public GameObject PlayerCanvas { get => playerCanvas; set => playerCanvas = value; }
 
-        [SerializeField] private GameObject playerCamera;
-        public GameObject PlayerCamera { get => playerCamera; set => playerCamera = value; }
-        
         [SerializeField] private Weapon[] weaponObjects;
         public Weapon[] WeaponObjects => weaponObjects;
 

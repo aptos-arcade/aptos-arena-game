@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Characters;
+using Com.LuisPedroFonseca.ProCamera2D;
 using Commands;
 using Gameplay;
 using Photon.Pun;
@@ -125,7 +126,6 @@ namespace Player
         
         private void OnDeath()
         {
-            MatchManager.Instance.SetPlayerCameraActive(false);
             PhotonNetwork.Instantiate(player.PlayerReferences.ExplosionPrefab.name, player.transform.position, Quaternion.identity);
             player.photonView.RPC("OnDeath", RpcTarget.AllBuffered);
             MatchManager.Instance.SetEnergyUIActive(false);
@@ -195,7 +195,7 @@ namespace Player
         {
             player.PlayerState.CanMove = !dodging;
             player.PlayerComponents.BodyCollider.enabled = !dodging;
-            player.PlayerComponents.RigidBody.gravityScale = dodging ? 0 : 5;
+            player.PlayerComponents.RigidBody.gravityScale = dodging ? 0 : player.PlayerStats.GravityScale;
             foreach (var renderer in player.PlayerComponents.PlayerSprites)
             {
                 var color = renderer.color;
@@ -207,7 +207,6 @@ namespace Player
         public IEnumerator SpawnCoroutine(Vector3 spawnPosition)
         {
             player.transform.position = spawnPosition;
-            MatchManager.Instance.SetPlayerCameraActive(true);
             var portal = PhotonNetwork.Instantiate(
                 player.PlayerReferences.Portal.name,
                 spawnPosition,
@@ -242,11 +241,26 @@ namespace Player
         
         public void DeathRevive(bool isRevive)
         {
+            if (isRevive)
+            {
+                MatchManager.Instance.SceneCamera.CameraTargets.Add(new CameraTarget
+                {
+                    TargetTransform = player.transform
+                });
+            }
+            else
+            {
+                MatchManager.Instance.SceneCamera.CameraTargets.Remove(
+                    MatchManager.Instance.SceneCamera.CameraTargets.Find(target => target.TargetTransform == player.transform)
+                );
+            }
+
+
             SetPlayerEnabled(isRevive);
             
             player.PlayerReferences.PlayerCanvas.SetActive(isRevive);
 
-            player.PlayerComponents.RigidBody.gravityScale = isRevive ? 5 : 0;
+            player.PlayerComponents.RigidBody.gravityScale = isRevive ? player.PlayerStats.GravityScale : 0;
             player.PlayerComponents.FootCollider.enabled = isRevive;
             player.PlayerComponents.BodyCollider.enabled = isRevive;
 

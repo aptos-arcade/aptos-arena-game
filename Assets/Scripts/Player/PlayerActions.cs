@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Photon.Pun;
 using UnityEngine;
@@ -8,9 +9,7 @@ namespace Player
     {
 
         private readonly PlayerScript player;
-
-        private const float Acceleration = 15;
-
+        
         public PlayerActions(PlayerScript player)
         {
             this.player = player;
@@ -67,7 +66,10 @@ namespace Player
             }
 
             var speedDiff = targetSpeed - player.PlayerComponents.RigidBody.velocity.x;
-            var movement = Mathf.Abs(speedDiff) * Acceleration * Mathf.Sign(speedDiff);
+            var accelerationRate = (Mathf.Abs(targetSpeed) > 0.01f || Math.Abs(Mathf.Sign(targetSpeed) - Mathf.Sign(player.PlayerComponents.RigidBody.velocity.x)) < 0.1) 
+                ? player.PlayerStats.Acceleration 
+                : player.PlayerStats.Deceleration;
+            var movement = Mathf.Pow(Mathf.Abs(speedDiff) * accelerationRate, player.PlayerStats.VelocityPower) * Mathf.Sign(speedDiff);
             player.PlayerComponents.RigidBody.AddForce(movement * Vector2.right);
         }
 
