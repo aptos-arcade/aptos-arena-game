@@ -19,5 +19,8 @@ namespace ApiServices.Models.Leaderboard
         
         [JsonProperty("losses", Required = Required.Always)]
         public int Losses { get; private set; }
+        
+        [JsonProperty("eliminations", Required = Required.Always)]
+        public int Eliminations { get; private set; }
     }
 }

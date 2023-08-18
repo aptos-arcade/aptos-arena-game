@@ -18,12 +18,17 @@ namespace ApiServices
             return $"{ApiClient.BaseUrl()}/match/casual/{function}";
         }
 
-        public static IEnumerator CreateMatch(List<List<CasualMatchPlayer>> teams, Action<bool, string> callback)
+        public static IEnumerator CreateMatch(IEnumerable<List<string>> teams, Action<bool, string> callback)
         {
-            var payload = new CreateCasualMatchPayload { Teams = teams };
-            var payloadBytes = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(payload));
+            // verify that no two strings from teams are the same
+            var allPlayers = teams.SelectMany(team => team).ToList();
+            if (allPlayers.Distinct().Count() != allPlayers.Count)
+            {
+                callback(false, "Cannot create match with duplicate players.");
+                yield break;
+            }
+
             var request = new UnityWebRequest(GetEndpoint("createMatch"), "POST");
-            request.uploadHandler = new UploadHandlerRaw(payloadBytes);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Content-Type", "application/json");
             yield return request.SendWebRequest();
@@ -39,12 +44,13 @@ namespace ApiServices
             }
         }
         
-        public static IEnumerator SetMatchResult(string matchId, int winnerIndex, Action<bool, string> callback)
+        public static IEnumerator SetMatchResult(string matchId, int winnerIndex, List<List<CasualMatchPlayer>> teams, Action<bool, string> callback)
         {
             var payload = new SetCasualMatchResultPayload()
             {
                 MatchId = matchId,
-                WinnerIndex = winnerIndex
+                WinnerIndex = winnerIndex,
+                Teams = teams
             };
             var payloadBytes = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(payload));
             var request = new UnityWebRequest(GetEndpoint("setMatchResult"), "POST");

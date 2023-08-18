@@ -17,7 +17,7 @@ namespace ApiServices
             return $"{ApiClient.BaseUrl()}/match/ranked/{function}";
         }
 
-        public static IEnumerator CreateMatch(List<List<RankedMatchPlayer>> teams, Action<bool, string> callback)
+        public static IEnumerator CreateMatch(List<List<string>> teams, Action<bool, string> callback)
         {
             var payload = new CreateRankedMatchPayload { Teams = teams };
             var payloadBytes = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(payload));
@@ -38,13 +38,10 @@ namespace ApiServices
             }
         }
         
-        public static IEnumerator SetMatchResult(string matchAddress, int winnerIndex, Action<bool, string> callback)
+        public static IEnumerator SetMatchResult(string matchAddress, int winnerIndex, 
+            List<List<RankedMatchPlayer>> teams, Action<bool, string> callback)
         {
-            var payload = new SetRankedMatchResultPayload()
-            {
-                MatchAddress = matchAddress,
-                WinnerIndex = winnerIndex
-            };
+            var payload = new SetRankedMatchResultPayload(matchAddress, winnerIndex, teams);
             var payloadBytes = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(payload));
             var request = new UnityWebRequest(GetEndpoint("setMatchResult"), "POST");
             request.SetRequestHeader("Content-Type", "application/json");

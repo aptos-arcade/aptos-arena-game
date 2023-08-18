@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using ApiServices;
-using ApiServices.Models.CasualMatch;
-using ApiServices.Models.RankedMatch;
 using Characters;
 using Global;
 using Photon.Pun;
@@ -120,15 +118,12 @@ namespace Matchmaking
 
         private void CreateCasualMatch()
         {
-            List<List<CasualMatchPlayer>> teams = new();
+            List<List<string>> teams = new();
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 var team = player.CustomProperties[TeamKey];
-                if (teams.Count <= (int)team) teams.Add(new List<CasualMatchPlayer>());
-                teams[(int)team].Add(new CasualMatchPlayer(
-                    player.CustomProperties[PlayerIdKey].ToString(),
-                    (CharactersEnum)player.CustomProperties[CharacterKey]
-                ));
+                if (teams.Count <= (int)team) teams.Add(new List<string>());
+                teams[(int)team].Add(player.CustomProperties[PlayerIdKey].ToString());
             }
             StartCoroutine(CasualMatchServices.CreateMatch(teams, OnCasualMatchCreated));
         }
@@ -148,15 +143,12 @@ namespace Matchmaking
         
         private void CreateRankedMatch()
         {
-            List<List<RankedMatchPlayer>> teams = new();
+            List<List<string>> teams = new();
             foreach (var player in PhotonNetwork.PlayerList)
             {
                 var team = player.CustomProperties[TeamKey];
-                if (teams.Count <= (int)team) teams.Add(new List<RankedMatchPlayer>());
-                teams[(int)team].Add(new RankedMatchPlayer(
-                    player.CustomProperties[AccountAddressKey].ToString()[2..],
-                    (CharactersEnum)player.CustomProperties[CharacterKey]
-                ));
+                if (teams.Count <= (int)team) teams.Add(new List<string>());
+                teams[(int)team].Add(player.CustomProperties[AccountAddressKey].ToString()[2..]);
             }
             StartCoroutine(RankedMatchServices.CreateMatch(teams, OnRankedMatchCreated));
         }

@@ -111,24 +111,24 @@ namespace ApiServices
         
         private static LeaderboardRowData CasualPlayerRowToLeaderboardRowData(CasualPlayerRow row)
         {
-            return new LeaderboardRowData(row.PlayerName, row.Wins, row.Losses);
+            return new LeaderboardRowData(row.PlayerName, row.Wins, row.Losses, row.Eliminations);
         }
         
         private static LeaderboardRowData CasualCollectionRowToLeaderboardRowData(CasualCollectionRow row)
         {
             return new LeaderboardRowData(Characters.Characters.GetCollectionName(row.CollectionIdHash), row.Wins,
-                row.Losses);
+                row.Losses, row.Eliminations);
         }
         
         private static LeaderboardRowData RankedPlayerRowToLeaderboardRowData(RankedPlayerRow row)
         {
-            return new LeaderboardRowData(StringUtils.Ellipsize(row.PlayerAddress), row.Wins, row.Losses);
+            return new LeaderboardRowData(StringUtils.Ellipsize(row.PlayerAddress), row.Wins, row.Losses, row.Eliminations);
         }
         
         private static LeaderboardRowData RankedCollectionRowToLeaderboardRowData(RankedCollectionRow row)
         {
             return new LeaderboardRowData(Characters.Characters.GetCollectionName(row.CollectionIdHash), row.Wins,
-                row.Losses);
+                row.Losses, row.Eliminations);
         }
     }
 }

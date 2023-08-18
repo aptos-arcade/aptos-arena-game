@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApiServices;
-using AptosIntegration;
+using ApiServices.Models.CasualMatch;
+using ApiServices.Models.RankedMatch;
 using Characters;
 using Com.LuisPedroFonseca.ProCamera2D;
 using ExitGames.Client.Photon;
@@ -121,8 +122,16 @@ namespace Gameplay
 
         private static void NewPlayerSend()
         {
+            var id = (GameModes)PhotonNetwork.CurrentRoom.CustomProperties[Room.ModePropKey] switch
+            {
+                GameModes.Casual => PhotonNetwork.LocalPlayer.CustomProperties[PlayerIdKey].ToString(),
+                GameModes.Ranked => PhotonNetwork.LocalPlayer.CustomProperties[AccountAddressKey].ToString()[2..],
+                GameModes.Training => "",
+                _ => throw new ArgumentOutOfRangeException()
+            };
             object[] package =
             {
+                id,
                 PhotonNetwork.NickName, 
                 PhotonNetwork.LocalPlayer.ActorNumber, 
                 3,
@@ -136,14 +145,15 @@ namespace Gameplay
         
         private void NewPlayerReceive(IReadOnlyList<object> data)
         {
-            var username = (string)data[0];
-            var actorNumber = (int)data[1];
-            var lives = (int)data[2];
-            var team = (int)data[3];
-            var character = (CharactersEnum)data[4];
-            var kills = (int)data[5];
+            var id = (string)data[0];
+            var username = (string)data[1];
+            var actorNumber = (int)data[2];
+            var lives = (int)data[3];
+            var team = (int)data[4];
+            var character = (CharactersEnum)data[5];
+            var eliminations = (int)data[6];
 
-            var playerInfo = new PlayerInfo(username, actorNumber, lives, team, character, kills);
+            var playerInfo = new PlayerInfo(id, username, actorNumber, lives, team, character, eliminations);
             PlayerInfos.Add(playerInfo);
             ListPlayersSend();
         }
@@ -158,12 +168,13 @@ namespace Gameplay
             {
                 package[i + 2] = new object[]
                 {
+                    PlayerInfos[i].Id,
                     PlayerInfos[i].Name,
                     PlayerInfos[i].ActorNumber,
                     PlayerInfos[i].Lives,
                     PlayerInfos[i].Team,
                     PlayerInfos[i].Character,
-                    PlayerInfos[i].Kills
+                    PlayerInfos[i].Eliminations
                 };
             }
 
@@ -180,18 +191,19 @@ namespace Gameplay
             {
                 var playerInfo = new PlayerInfo(
                     (string)playerInfoData[0],
-                    (int)playerInfoData[1],
+                    (string)playerInfoData[1],
                     (int)playerInfoData[2],
                     (int)playerInfoData[3],
-                    (CharactersEnum)playerInfoData[4],
-                    (int)playerInfoData[5]
+                    (int)playerInfoData[4],
+                    (CharactersEnum)playerInfoData[5],
+                    (int)playerInfoData[6]
                 );
                 PlayerInfos.Add(playerInfo);
             }
             PlayerInfos.Sort((a, b) =>
             {
-                var killsComparison = b.Kills.CompareTo(a.Kills);
-                return killsComparison != 0 ? killsComparison : b.Lives.CompareTo(a.Lives);
+                var eliminationsComparison = b.Eliminations.CompareTo(a.Eliminations);
+                return eliminationsComparison != 0 ? eliminationsComparison : b.Lives.CompareTo(a.Lives);
             });
             connectedPlayersManager.ListAllPlayers();
             StateCheck();
@@ -212,7 +224,7 @@ namespace Gameplay
             DeathFeedMessage(actorDeath, actorKill);
             
             var killPlayerIndex = PlayerInfos.FindIndex(x => x.ActorNumber == actorKill);
-            if (killPlayerIndex >= 0 && killPlayerIndex < PlayerInfos.Count) PlayerInfos[killPlayerIndex].Kills++;
+            if (killPlayerIndex >= 0 && killPlayerIndex < PlayerInfos.Count) PlayerInfos[killPlayerIndex].Eliminations++;
             if (actorKill == PhotonNetwork.LocalPlayer.ActorNumber) killTextManager.OnKill();
 
             var deathPlayerIndex = PlayerInfos.FindIndex(x => x.ActorNumber == actorDeath);
@@ -270,7 +282,7 @@ namespace Gameplay
             // check if there is only one team left that has players with more than one life
             var winnerFound = false;
             var curWinningTeam = -1;
-            foreach (var playerInfo in PlayerInfos.Where(playerInfo => playerInfo.Lives > 0))
+            foreach (var playerInfo in PlayerInfos.Where(playerInfo => playerInfo.Lives > 0 && playerInfo.IsActive))
             {
                 if (curWinningTeam == -1 || curWinningTeam == playerInfo.Team)
                 {
@@ -293,11 +305,33 @@ namespace Gameplay
             {
                 case GameModes.Casual:
                     var matchId = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchIdPropKey];
-                    StartCoroutine(CasualMatchServices.SetMatchResult(matchId, winnerIndex, OnCasualMatchResultReported));
+                    var casualTeams = new List<List<CasualMatchPlayer>>();
+                    for (var i = 0; i < (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey]; i++)
+                    {
+                        casualTeams.Add(new List<CasualMatchPlayer>());
+                    }
+                    foreach (var playerInfo in PlayerInfos)
+                    {
+                        casualTeams[playerInfo.Team]
+                            .Add(new CasualMatchPlayer(playerInfo.Id, playerInfo.Character, playerInfo.Eliminations));
+                    }
+
+                    StartCoroutine(CasualMatchServices.SetMatchResult(matchId, winnerIndex, casualTeams,
+                        OnCasualMatchResultReported));
                     break;
                 case GameModes.Ranked:
                     var matchAddress = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchAddressPropKey];
-                    StartCoroutine(RankedMatchServices.SetMatchResult(matchAddress, winnerIndex, OnRankedMatchResultReported));
+                    var rankedTeams = new List<List<RankedMatchPlayer>>();
+                    for (var i = 0; i < (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey]; i++)
+                    {
+                        rankedTeams.Add(new List<RankedMatchPlayer>());
+                    }
+                    foreach (var playerInfo in PlayerInfos)
+                    {
+                        rankedTeams[playerInfo.Team]
+                            .Add(new RankedMatchPlayer(playerInfo.Id, playerInfo.Character, playerInfo.Eliminations));
+                    }
+                    StartCoroutine(RankedMatchServices.SetMatchResult(matchAddress, winnerIndex, rankedTeams, OnRankedMatchResultReported));
                     break;
                 case GameModes.Training:
                 default:
@@ -354,7 +388,8 @@ namespace Gameplay
         public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
         {
             if (!PhotonNetwork.IsMasterClient) return;
-            PlayerInfos.RemoveAt(PlayerInfos.FindIndex(x => x.ActorNumber == otherPlayer.ActorNumber));
+            var playerIndex = PlayerInfos.FindIndex(x => x.ActorNumber == otherPlayer.ActorNumber);
+            if (playerIndex >= 0 && playerIndex < PlayerInfos.Count) PlayerInfos[playerIndex].IsActive = false;
             ScoreCheck();
             ListPlayersSend();
         }
@@ -364,20 +399,24 @@ namespace Gameplay
 [Serializable]
 public class PlayerInfo
 {
+    public string Id { get; set; }
     public string Name { get; set; }
     public int ActorNumber { get; set; }
     public int Team { get; set; }
     public CharactersEnum Character { get; set; }
     public int Lives { get; set; }
-    public int Kills { get; set; }
+    public int Eliminations { get; set; }
+    public bool IsActive { get; set; }
     
-    public PlayerInfo(string name, int actorNumber, int lives, int team, CharactersEnum character, int kills)
+    public PlayerInfo(string id, string name, int actorNumber, int lives, int team, CharactersEnum character, int eliminations)
     {
+        Id = id;
         Name = name;
         ActorNumber = actorNumber;
         Lives = lives;
         Team = team;
         Character = character;
-        Kills = kills;
+        Eliminations = eliminations;
+        IsActive = true;
     }
 }

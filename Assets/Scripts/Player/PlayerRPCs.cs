@@ -37,13 +37,13 @@ namespace Player
         [PunRPC]
         public void OnStrike(Vector2 direction, float knockBack, float damage, int strikerActorNumber)
         {
-            player.PlayerComponents.ProCamera2DShake.Shake(0);
             player.PlayerState.StrikerActorNumber = strikerActorNumber;
             player.PlayerState.DamageMultiplier += damage;
             player.PlayerReferences.DamageDisplay.text = ((player.PlayerState.DamageMultiplier - 1) * 100).ToString("F0") + "%";
             player.PlayerUtilities.PlayOneShotAudio(player.PlayerReferences.DamageAudioClip);
             player.PlayerComponents.RigidBody.velocity =
                 direction.normalized * knockBack * player.PlayerState.DamageMultiplier;
+            if(photonView.IsMine) player.PlayerComponents.ProCamera2DShake.Shake(0);
         }
         
         [PunRPC]

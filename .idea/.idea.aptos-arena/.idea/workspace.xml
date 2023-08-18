@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="37273cba-c971-4955-a8b6-0a7c31e5b0fb" name="Changes" comment="Leaderboard check in">
+    <list default="true" id="37273cba-c971-4955-a8b6-0a7c31e5b0fb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.aptos-arena/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.aptos-arena/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Editor/RemoteConfig/Data/RemoteConfigDataStoreAsset.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/RemoteConfig/Data/RemoteConfigDataStoreAsset.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/CharacterSelect/Characters Row.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/CharacterSelect/Characters Row.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Gameplay/Connected Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Gameplay/Connected Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/Leaderboard.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/Leaderboard.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/Player Row.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Leaderboard/Player Row.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterDisplay.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterDisplay.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterRig.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/CharacterRig.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Shield.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Shield.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Dropdown.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Dropdown.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameplayScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameplayScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LaunchScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LaunchScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/LeaderboardScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/LeaderboardScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/ApiClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/ApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/CasualMatchServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/CasualMatchServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/LeaderboardServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/LeaderboardServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/CasualMatch/CasualMatchPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/CasualMatch/CasualMatchPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/CasualMatch/SetCasualMatchResultPayload.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/CasualMatch/SetCasualMatchResultPayload.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/CasualCollectionRow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/CasualCollectionRow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/CasualPlayerRow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/CasualPlayerRow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/LeaderboardRowData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/LeaderboardRowData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/RankedCollectionRow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/RankedCollectionRow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/RankedPlayerRow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/Leaderboard/RankedPlayerRow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/RankedMatch/CreateRankedMatchPayload.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/RankedMatch/CreateRankedMatchPayload.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/RankedMatch/RankedMatchPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/RankedMatch/RankedMatchPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/RankedMatch/SetRankedMatchResultPayload.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/Models/RankedMatch/SetRankedMatchResultPayload.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ApiServices/RankedMatchServices.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ApiServices/RankedMatchServices.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Characters/Characters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Characters/Characters.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/ConnectedPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/ConnectedPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/ConnectedPlayersManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/ConnectedPlayersManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Gameplay/RespawnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Gameplay/RespawnManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerActions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerComponent.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerComponent.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Leaderboard/LeaderboardPlayerRow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Leaderboard/LeaderboardPlayerRow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Matchmaking/MatchmakingManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Matchmaking/MatchmakingManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRPCs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerRPCs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerReferences.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerReferences.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerScript.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerScript.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats/DefaultStats.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats/DefaultStats.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats/PlayerStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStats/PlayerStats.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUtilities.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerUtilities.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerShield.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerShield.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/CharacterImages.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/CharacterImages.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +63,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/GameMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/MatchManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Gameplay/PingTextController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock:///Users/jason/Documents/games/aptos-arena/Assets/Scripts/MainMenu/AccountMenuManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenu/CasualMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenu/RankedMenu/RankedMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/MainMenu/TrainingMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -292,6 +312,10 @@
       <workItem from="1690421730441" duration="4943000" />
       <workItem from="1690475232011" duration="7404000" />
       <workItem from="1690488950416" duration="16013000" />
+      <workItem from="1690829618871" duration="1008000" />
+      <workItem from="1691631791278" duration="35000" />
+      <workItem from="1692131652284" duration="811000" />
+      <workItem from="1692371814996" duration="1905000" />
     </task>
     <task id="LOCAL-00001" summary="shield and new Unity SDK">
       <created>1687546436071</created>

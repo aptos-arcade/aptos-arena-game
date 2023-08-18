@@ -10,7 +10,8 @@ namespace ApiServices
     public static class ApiClient
     {
         private const string ProdURL = "https://www.brawl3r.com";
-        private const string DevURL = "http://localhost:3000";
+        private const string DevURL = "https://www.brawl3r.com";
+        // private const string DevURL = "http://localhost:3000";
 
 
         public static string BaseUrl()

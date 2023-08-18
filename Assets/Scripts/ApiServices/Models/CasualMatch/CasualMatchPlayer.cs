@@ -7,10 +7,11 @@ namespace ApiServices.Models.CasualMatch
     public class CasualMatchPlayer
     {
         [JsonConstructor]
-        public CasualMatchPlayer(string playerId, CharactersEnum charactersEnum)
+        public CasualMatchPlayer(string playerId, CharactersEnum charactersEnum, int eliminations)
         {
             PlayerId = playerId;
             CollectionIdHash = Characters.Characters.GetCharacter(charactersEnum).CollectionIdHash;
+            Eliminations = eliminations;
         }
 
         [JsonProperty("playerId", Required = Required.Always)]
@@ -18,5 +19,8 @@ namespace ApiServices.Models.CasualMatch
         
         [JsonProperty("collectionIdHash", Required = Required.Always)]
         public string CollectionIdHash { get; private set; }
+        
+        [JsonProperty("eliminations", Required = Required.Always)]
+        public int Eliminations { get; set; }
     }
 }

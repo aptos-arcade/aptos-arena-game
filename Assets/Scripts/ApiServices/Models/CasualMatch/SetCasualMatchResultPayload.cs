@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace ApiServices.Models.CasualMatch
@@ -10,5 +11,8 @@ namespace ApiServices.Models.CasualMatch
         
         [JsonProperty("winnerIndex", Required = Required.Always)]
         public int WinnerIndex { get; set; }
+        
+        [JsonProperty("teams", Required = Required.Always)]
+        public List<List<CasualMatchPlayer>> Teams { get; set; }
     }
 }

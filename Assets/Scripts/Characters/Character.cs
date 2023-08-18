@@ -9,6 +9,7 @@ namespace Characters
         DarkAges,
         Mavriks,
         Spooks,
+        AptoRobos
     }
     
     public class Character

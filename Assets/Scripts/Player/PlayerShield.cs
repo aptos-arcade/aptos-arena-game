@@ -1,4 +1,3 @@
-using Gameplay;
 using Photon.Pun;
 using UnityEngine;
 
@@ -6,8 +5,6 @@ namespace Player
 {
     public class PlayerShield : MonoBehaviourPun
     {
-        [SerializeField] private ParticleSystem ps;
-
         public PlayerScript Player { get; private set; }
         
         public float ShieldStunDuration => Player.PlayerStats.ShieldStunDuration * transform.localScale.x;
@@ -37,8 +34,6 @@ namespace Player
         {
             gameObject.SetActive(trigger);
             Player.PlayerState.IsInvincible = trigger;
-            if (trigger) ps.Play();
-            else ps.Stop();
         }
     }
 }

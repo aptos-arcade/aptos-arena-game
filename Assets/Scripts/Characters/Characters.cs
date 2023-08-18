@@ -63,6 +63,14 @@ namespace Characters
                     "Spook",
                     "bc79c099fc7d0f853d8b9d69f34138c07bbb0caf3b75ee70d163e524153c8561"
                 )
+            },
+            {
+                CharactersEnum.AptoRobos,
+                new Character(
+                    "AptoRobos",
+                    "AptoRobo",
+                    "bc222aa0c75c5e09b536cbebebe53545e5c7d8259872642765e0248b7bb06465"
+                )
             }
         };
 
@@ -74,7 +82,8 @@ namespace Characters
             {"MAVRIK", CharactersEnum.Mavriks},
             {"Pontem Space Pirates", CharactersEnum.PontemPirates},
             {"Spooks", CharactersEnum.Spooks},
-            {"Aptomingos", CharactersEnum.Aptomingos}
+            {"Aptomingos", CharactersEnum.Aptomingos},
+            {"AptoRobos", CharactersEnum.AptoRobos}
         };
         
         private static readonly Dictionary<string, string> CollectionIdHashToCollectionName = new()
@@ -85,7 +94,8 @@ namespace Characters
             {"da59e5f610419f274a20341fb198bf98415712de11a4468cfd45cbe495600c2a", "Bruh Bears"},
             {"a23b49b39acacce0adbcc328f94b910eb4adf7aa3258e7362cfbf2be505e1ec7", "Dark Ages"},
             {"b0c10aba073b4ed474fa9615df596f9e9a689b8b9482bae5ae2832fab970a42d", "MAVRIK"},
-            {"bc79c099fc7d0f853d8b9d69f34138c07bbb0caf3b75ee70d163e524153c8561", "Spooks"}
+            {"bc79c099fc7d0f853d8b9d69f34138c07bbb0caf3b75ee70d163e524153c8561", "Spooks"},
+            {"bc222aa0c75c5e09b536cbebebe53545e5c7d8259872642765e0248b7bb06465", "AptoRobos"}
         };
 
         public static Character GetCharacter(CharactersEnum characterEnum)

@@ -23,12 +23,10 @@ namespace Gameplay
     
         public void ListAllPlayers()
         {
-            foreach (var roomPlayer in connectedPlayersView.transform)
+            // delete all children of connectedPlayersView but the first
+            for (var i = 1; i < connectedPlayersView.transform.childCount; i++)
             {
-                if (roomPlayer is Transform player)
-                {
-                    Destroy(player.gameObject);
-                }
+                Destroy(connectedPlayersView.transform.GetChild(i).gameObject);
             }
 
             foreach (var player in MatchManager.Instance.PlayerInfos)
@@ -39,7 +37,7 @@ namespace Gameplay
                 var playerCharacter = (CharactersEnum)networkPlayer.CustomProperties[CharacterKey];
                 var playerTeam = (int)networkPlayer.CustomProperties[TeamKey];
                 roomPlayer.SetPlayerInfo(player.Name, characterImages.GetCharacterSprite((int)playerCharacter),
-                    player.Kills, 3 - player.Lives, playerTeam);
+                    player.Eliminations, 3 - player.Lives, playerTeam);
             }
         }
     }
