@@ -1,11 +1,10 @@
-using Newtonsoft.Json;
+using System;
 
 namespace ApiServices.Models.RankedMatch
 {
-    [JsonObject]
+    [Serializable]
     public class CreateRankedMatchResponse
     {
-        [JsonProperty("message", Required = Required.Always)]
-        public string Message { get; set; }
+        public string message;
     }
 }

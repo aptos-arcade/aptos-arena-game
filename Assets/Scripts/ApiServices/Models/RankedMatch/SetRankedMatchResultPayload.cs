@@ -1,26 +1,20 @@
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace ApiServices.Models.RankedMatch
 {
-    [JsonObject]
+    [Serializable]
     public class SetRankedMatchResultPayload
     {
-        [JsonConstructor]
-        public SetRankedMatchResultPayload(string matchAddress, int winnerIndex, List<List<RankedMatchPlayer>> teams)
+        public SetRankedMatchResultPayload(string matchAddress, int winnerIndex, List<RankedMatchTeam> teams)
         {
-            MatchAddress = matchAddress;
-            WinnerIndex = winnerIndex;
-            Teams = teams;
+            this.matchAddress = matchAddress;
+            this.winnerIndex = winnerIndex;
+            this.teams = teams;
         }
 
-        [JsonProperty("matchAddress", Required = Required.Always)]
-        public string MatchAddress { get; set; }
-        
-        [JsonProperty("winnerIndex", Required = Required.Always)]
-        public int WinnerIndex { get; set; }
-        
-        [JsonProperty("teams", Required = Required.Always)]
-        public List<List<RankedMatchPlayer>> Teams { get; set; }
+        public string matchAddress;
+        public int winnerIndex;
+        public List<RankedMatchTeam> teams;
     }
 }

@@ -1,4 +1,4 @@
-namespace Leaderboard
+namespace ApiServices.Models.Leaderboard
 {
     public class LeaderboardRowData
     {

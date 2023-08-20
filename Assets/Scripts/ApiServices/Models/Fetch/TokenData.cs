@@ -1,17 +1,11 @@
-using Newtonsoft.Json;
+using System;
 
 namespace ApiServices.Models.Fetch
 {
-    [JsonObject]
+    [Serializable]
     public class TokenData
     {
-        [JsonConstructor]
-        public TokenData() { }
-        
-        [JsonProperty("tokenDataId", Required = Required.Always)]
-        public TokenDataId TokenDataId { get; private set; }
-        
-        [JsonProperty("propertyVersion", Required = Required.Always)]
-        public int PropertyVersion { get; private set; }
+        public TokenDataId tokenDataId;
+        public int propertyVersion;
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using ApiServices.Models.Fetch;
 using AptosIntegration;
 using TMPro;
 using UnityEngine;
@@ -45,9 +46,9 @@ namespace MainMenu.RankedMenu
                 WalletManager.Instance.Address));
         }
 
-        private void HandleFetchBrawlerAddress(string brawlerAddress)
+        private void HandleFetchBrawlerAddress(BrawlerAddress brawlerAddress)
         {
-            playerHasBrawler = brawlerAddress != string.Empty;
+            playerHasBrawler = brawlerAddress.address != string.Empty;
             loadingText.gameObject.SetActive(false);
             if (playerHasBrawler)
             {

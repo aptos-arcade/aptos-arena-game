@@ -1,23 +1,19 @@
-using Newtonsoft.Json;
+using System;
 
 namespace ApiServices.Models.Leaderboard
 {
-    [JsonObject]
+    [Serializable]
     public class RankedCollectionRow
     {
-        [JsonConstructor]
-        public RankedCollectionRow() {}
-
-        [JsonProperty("collectionIdHash", Required = Required.Always)]
-        public string CollectionIdHash { get; private set; }
-        
-        [JsonProperty("wins", Required = Required.Always)]
-        public int Wins { get; private set; }
-        
-        [JsonProperty("losses", Required = Required.Always)]
-        public int Losses { get; private set; }
-        
-        [JsonProperty("eliminations", Required = Required.Always)]
-        public int Eliminations { get; private set; }
+        public string collectionIdHash;        
+        public int wins;
+        public int losses;
+        public int eliminations;
+    }
+    
+    [Serializable]
+    public class RankedCollectionResponse
+    {
+        public RankedCollectionRow[] rows;
     }
 }

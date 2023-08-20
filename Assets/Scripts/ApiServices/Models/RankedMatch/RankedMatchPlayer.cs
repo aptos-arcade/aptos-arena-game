@@ -1,26 +1,20 @@
+using System;
 using Characters;
-using Newtonsoft.Json;
 
 namespace ApiServices.Models.RankedMatch
 {
-    [JsonObject]
+    [Serializable]
     public class RankedMatchPlayer
     {
-        [JsonConstructor]
         public RankedMatchPlayer(string playerAddress, CharactersEnum charactersEnum, int eliminations)
         {
-            PlayerAddress = playerAddress;
-            CollectionIdHash = Characters.Characters.GetCharacter(charactersEnum).CollectionIdHash;
-            Eliminations = eliminations;
+            this.playerAddress = playerAddress;
+            this.collectionIdHash = Characters.Characters.GetCharacter(charactersEnum).CollectionIdHash;
+            this.eliminations = eliminations;
         }
 
-        [JsonProperty("playerAddress", Required = Required.Always)]
-        public string PlayerAddress { get; private set; }
-        
-        [JsonProperty("collectionIdHash", Required = Required.Always)]
-        public string CollectionIdHash { get; private set; }
-        
-        [JsonProperty("eliminations", Required = Required.Always)]
-        public int Eliminations { get; private set; }
+        public string playerAddress;
+        public string collectionIdHash;
+        public int eliminations;
     }
 }

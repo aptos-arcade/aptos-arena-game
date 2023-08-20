@@ -1,26 +1,20 @@
+using System;
 using Characters;
-using Newtonsoft.Json;
 
 namespace ApiServices.Models.CasualMatch
 {
-    [JsonObject]
+    [Serializable]
     public class CasualMatchPlayer
     {
-        [JsonConstructor]
         public CasualMatchPlayer(string playerId, CharactersEnum charactersEnum, int eliminations)
         {
-            PlayerId = playerId;
-            CollectionIdHash = Characters.Characters.GetCharacter(charactersEnum).CollectionIdHash;
-            Eliminations = eliminations;
+            this.playerId = playerId;
+            this.collectionIdHash = Characters.Characters.GetCharacter(charactersEnum).CollectionIdHash;
+            this.eliminations = eliminations;
         }
 
-        [JsonProperty("playerId", Required = Required.Always)]
-        public string PlayerId { get; private set; }
-        
-        [JsonProperty("collectionIdHash", Required = Required.Always)]
-        public string CollectionIdHash { get; private set; }
-        
-        [JsonProperty("eliminations", Required = Required.Always)]
-        public int Eliminations { get; set; }
+        public string playerId;
+        public string collectionIdHash;
+        public int eliminations;
     }
 }

@@ -1,62 +1,37 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using ApiServices.Models.RankedMatch;
-using Newtonsoft.Json;
-using UnityEngine;
-using UnityEngine.Networking;
 
 namespace ApiServices
 {
     public static class RankedMatchServices
     {
-        
-        private static string GetEndpoint(string function)
-        {
-            return $"{ApiClient.BaseUrl()}/match/ranked/{function}";
-        }
 
-        public static IEnumerator CreateMatch(List<List<string>> teams, Action<bool, string> callback)
+        public static IEnumerator CreateMatch(List<CreateRankedMatchTeam> teams, Action<bool, string> callback)
         {
-            var payload = new CreateRankedMatchPayload { Teams = teams };
-            var payloadBytes = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(payload));
-            var request = new UnityWebRequest(GetEndpoint("createMatch"), "POST");
-            request.uploadHandler = new UploadHandlerRaw(payloadBytes);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            request.SetRequestHeader("Content-Type", "application/json");
-            yield return request.SendWebRequest();
-            if (request.result != UnityWebRequest.Result.Success)
+            var allPlayers = teams.SelectMany(team => team.players).ToList();
+            if (allPlayers.Distinct().Count() != allPlayers.Count)
             {
-                Debug.Log(request.downloadHandler.text);
-                callback(false, request.error);
+                callback(false, "Cannot create match with duplicate players.");
+                yield break;
             }
-            else
+            
+            yield return ApiClient.PostRequest<CreateRankedMatchPayload, CreateRankedMatchResponse>(response =>
             {
-                var response = JsonConvert.DeserializeObject<CreateRankedMatchResponse>(request.downloadHandler.text);
-                callback(true, response.Message);
-            }
+                callback(response != null, response == null ? "Error creating match" : response.message);
+            }, "match/ranked/createMatch", new CreateRankedMatchPayload(teams));
         }
         
         public static IEnumerator SetMatchResult(string matchAddress, int winnerIndex, 
-            List<List<RankedMatchPlayer>> teams, Action<bool, string> callback)
+            List<RankedMatchTeam> teams, Action<bool, string> callback)
         {
-            var payload = new SetRankedMatchResultPayload(matchAddress, winnerIndex, teams);
-            var payloadBytes = new UTF8Encoding().GetBytes(JsonConvert.SerializeObject(payload));
-            var request = new UnityWebRequest(GetEndpoint("setMatchResult"), "POST");
-            request.SetRequestHeader("Content-Type", "application/json");
-            request.uploadHandler = new UploadHandlerRaw(payloadBytes);
-            request.downloadHandler = new DownloadHandlerBuffer();
-            yield return request.SendWebRequest();
-            if (request.result != UnityWebRequest.Result.Success)
+            yield return ApiClient.PostRequest<SetRankedMatchResultPayload, string>(response =>
             {
-                Debug.Log(request.downloadHandler.text);
-                callback(false, request.error);
-            }
-            else
-            {
-                callback(true, request.downloadHandler.text);
-            }
+                callback(response != null, response == null ? "Error creating match" : "Match result set successfully");
+            }, "match/ranked/setMatchResult", new SetRankedMatchResultPayload(matchAddress, winnerIndex, teams));
+        
         }
     }
 }

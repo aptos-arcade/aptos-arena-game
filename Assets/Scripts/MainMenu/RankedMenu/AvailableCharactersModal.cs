@@ -29,22 +29,24 @@ namespace MainMenu.RankedMenu
             TransactionHandler.OnTransactionResult -= OnTransactionResult;
         }
 
-        private void AddAvailableCharacters(TokenData[] tokens)
+        private void AddAvailableCharacters(OwnedTokens ownedTokens)
         {
             foreach (Transform child in availableCharactersTransform)
             {
                 Destroy(child.gameObject);
             }
+            
+            Debug.Log(ownedTokens.tokens.Length);
 
-            foreach (var token in tokens)
+            foreach (var token in ownedTokens.tokens)
             {
                 var availableCharacterButton =
                     Instantiate(availableCharacterButtonPrefab, availableCharactersTransform);
                 availableCharacterButton.InitializeButton(token);
             }
             
-            noCharactersText.SetActive(tokens.Length == 0);
-            availableCharactersDisplay.SetActive(tokens.Length != 0);
+            noCharactersText.SetActive(ownedTokens.tokens.Length == 0);
+            availableCharactersDisplay.SetActive(ownedTokens.tokens.Length != 0);
         }
 
         private void OnTransactionRequest(string function, string[] args, string[] typeArgs)

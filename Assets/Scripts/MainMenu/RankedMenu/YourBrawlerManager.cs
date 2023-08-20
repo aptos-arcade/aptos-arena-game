@@ -57,12 +57,12 @@ namespace MainMenu.RankedMenu
         {
             var playerProperties = PhotonNetwork.LocalPlayer.CustomProperties;
             if (brawlerData == null) return;
-            var hasCharacter = brawlerData.Character.Collection != string.Empty;
+            var hasCharacter = brawlerData.character.collection != string.Empty;
             playerProperties[PlayerPropertyKeys.CharacterKey] = hasCharacter
-                ? Characters.Characters.GetCharacterEnum(brawlerData.Character.Collection)
+                ? Characters.Characters.GetCharacterEnum(brawlerData.character.collection)
                 : null;
-            playerProperties[PlayerPropertyKeys.SwordKey] = brawlerData.MeleeWeapon.Type - 1;
-            playerProperties[PlayerPropertyKeys.GunKey] = brawlerData.RangedWeapon.Type - 1;
+            playerProperties[PlayerPropertyKeys.SwordKey] = brawlerData.meleeWeapon.type - 1;
+            playerProperties[PlayerPropertyKeys.GunKey] = brawlerData.rangedWeapon.type - 1;
             PhotonNetwork.LocalPlayer.SetCustomProperties(playerProperties);
             
             // remove loading text

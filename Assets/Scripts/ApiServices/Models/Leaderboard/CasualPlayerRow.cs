@@ -1,26 +1,20 @@
-using Newtonsoft.Json;
+using System;
 
 namespace ApiServices.Models.Leaderboard
 {
-    [JsonObject]
+    [Serializable]
     public class CasualPlayerRow
     {
-        [JsonConstructor]
-        public CasualPlayerRow() {}
-
-        [JsonProperty("playerId", Required = Required.Always)]
-        public string PlayerId { get; private set; }
-        
-        [JsonProperty("playerName", Required = Required.Always)]
-        public string PlayerName { get; private set; }
-        
-        [JsonProperty("wins", Required = Required.Always)]
-        public int Wins { get; private set; }
-        
-        [JsonProperty("losses", Required = Required.Always)]
-        public int Losses { get; private set; }
-        
-        [JsonProperty("eliminations", Required = Required.Always)]
-        public int Eliminations { get; private set; }
+        public string playerId;
+        public string playerName;
+        public int wins;
+        public int losses;
+        public int eliminations;
+    }
+    
+    [Serializable]
+    public class CasualPlayerResponse
+    {
+        public CasualPlayerRow[] rows;
     }
 }

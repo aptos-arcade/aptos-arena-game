@@ -40,7 +40,8 @@ namespace MainMenu
             {
                 loadingModal.Show();
                 await AuthenticationService.Instance.UpdatePlayerNameAsync(usernameInputField.text);
-                StartCoroutine(PlayerServices.SetPlayerName(usernameInputField.text, success =>
+                StartCoroutine(PlayerServices.SetPlayerName(AuthenticationService.Instance.PlayerId, 
+                    usernameInputField.text, success =>
                 {
                     if (success)
                     {

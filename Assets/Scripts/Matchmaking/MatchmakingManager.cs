@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using ApiServices;
+using ApiServices.Models.RankedMatch;
 using Characters;
 using Global;
 using Photon.Pun;
@@ -150,7 +152,9 @@ namespace Matchmaking
                 if (teams.Count <= (int)team) teams.Add(new List<string>());
                 teams[(int)team].Add(player.CustomProperties[AccountAddressKey].ToString()[2..]);
             }
-            StartCoroutine(RankedMatchServices.CreateMatch(teams, OnRankedMatchCreated));
+            
+            StartCoroutine(RankedMatchServices.CreateMatch(
+                teams.Select(team => new CreateRankedMatchTeam(team)).ToList(), OnRankedMatchCreated));
         }
 
         private void OnRankedMatchCreated(bool success, string message)

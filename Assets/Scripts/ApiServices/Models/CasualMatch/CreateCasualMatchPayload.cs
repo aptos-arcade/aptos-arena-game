@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace ApiServices.Models.CasualMatch
 {
-    [JsonObject]
+    [Serializable]
     public class CreateCasualMatchPayload
     {
-        [JsonProperty("teams", Required = Required.Always)]
-        public List<List<CasualMatchPlayer>> Teams { get; set; }
+        public CreateCasualMatchPayload(List<CasualMatchTeam> teams)
+        {
+            this.teams = teams;
+        }
+
+        public List<CasualMatchTeam> teams;
     }
 }

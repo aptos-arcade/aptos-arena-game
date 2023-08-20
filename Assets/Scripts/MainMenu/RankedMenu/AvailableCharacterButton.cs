@@ -17,7 +17,7 @@ namespace MainMenu.RankedMenu
         public void InitializeButton(TokenData tokenDataParam)
         {
             tokenData = tokenDataParam;
-            buttonText.text = tokenData.TokenDataId.Name;
+            buttonText.text = tokenData.tokenDataId.name;
             GetComponent<Button>().onClick.AddListener(OnClick);
         }
         

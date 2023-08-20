@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using ApiServices;
+using ApiServices.Models.Leaderboard;
 using Global;
 using TMPro;
 using UnityEngine;

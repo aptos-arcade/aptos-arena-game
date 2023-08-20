@@ -1,17 +1,11 @@
-using Newtonsoft.Json;
+using System;
 
 namespace ApiServices.Models.Fetch
 {
-    [JsonObject]
+    [Serializable]
     public class RangedWeaponData
     {
-        [JsonConstructor]
-        public RangedWeaponData() { }
-
-        [JsonProperty("power", Required = Required.Always)]
-        public int Power { get; private set; }
-
-        [JsonProperty("type", Required = Required.Always)]
-        public int Type { get; private set; }
+        public int power;
+        public int type;
     }
 }

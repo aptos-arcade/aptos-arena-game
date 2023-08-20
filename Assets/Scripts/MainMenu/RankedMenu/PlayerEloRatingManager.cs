@@ -28,9 +28,9 @@ namespace MainMenu.RankedMenu
         private void HandlePlayerStats(PlayerStats stats)
         {
             if (stats == null) return;
-            eloText.text = stats.EloRating.ToString();
-            winsText.text = stats.Wins.ToString();
-            lossesText.text = stats.Losses.ToString();
+            eloText.text = stats.eloRating.ToString();
+            winsText.text = stats.wins.ToString();
+            lossesText.text = stats.losses.ToString();
         }
 
         public void ShowEloRating(bool active)

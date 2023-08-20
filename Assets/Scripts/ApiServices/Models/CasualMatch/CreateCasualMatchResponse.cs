@@ -1,11 +1,11 @@
-using Newtonsoft.Json;
+
+using System;
 
 namespace ApiServices.Models.CasualMatch
 {
-    [JsonObject]
+    [Serializable]
     public class CreateCasualMatchResponse
     {
-        [JsonProperty("message", Required = Required.Always)]
-        public string Message { get; set; }
+        public string message;
     }
 }

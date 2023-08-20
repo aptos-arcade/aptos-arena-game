@@ -3,9 +3,8 @@ using System;
 namespace ApiServices.Models.Fetch
 {
     [Serializable]
-    public class MeleeWeaponData
+    public class OwnedTokens
     {
-        public int power;
-        public int type;
+        public TokenData[] tokens;
     }
 }

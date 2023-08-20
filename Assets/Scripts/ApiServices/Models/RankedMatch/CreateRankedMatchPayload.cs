@@ -1,12 +1,16 @@
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace ApiServices.Models.RankedMatch
 {
-    [JsonObject]
+    [Serializable]
     public class CreateRankedMatchPayload
     {
-        [JsonProperty("teams", Required = Required.Always)]
-        public List<List<string>> Teams { get; set; }
+        public CreateRankedMatchPayload(List<CreateRankedMatchTeam> teams)
+        {
+            this.teams = teams;
+        }
+        
+        public List<CreateRankedMatchTeam> teams;
     }
 }

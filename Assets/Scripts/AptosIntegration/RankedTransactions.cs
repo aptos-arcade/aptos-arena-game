@@ -18,10 +18,10 @@ namespace AptosIntegration
             TransactionHandler.Instance.RequestTransaction(Modules.ScriptFunctionAddress("equip_character"),
                 new[]
                 {
-                    tokenData.TokenDataId.Creator, 
-                    tokenData.TokenDataId.Collection, 
-                    tokenData.TokenDataId.Name, 
-                    tokenData.PropertyVersion.ToString()
+                    tokenData.tokenDataId.creator, 
+                    tokenData.tokenDataId.collection, 
+                    tokenData.tokenDataId.name, 
+                    tokenData.propertyVersion.ToString()
                 },
                 Array.Empty<string>());
         }

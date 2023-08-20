@@ -305,33 +305,36 @@ namespace Gameplay
             {
                 case GameModes.Casual:
                     var matchId = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchIdPropKey];
-                    var casualTeams = new List<List<CasualMatchPlayer>>();
+                    var casualPlayers = new List<List<CasualMatchPlayer>>();
                     for (var i = 0; i < (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey]; i++)
                     {
-                        casualTeams.Add(new List<CasualMatchPlayer>());
+                        casualPlayers.Add(new List<CasualMatchPlayer>());
                     }
                     foreach (var playerInfo in PlayerInfos)
                     {
-                        casualTeams[playerInfo.Team]
+                        casualPlayers[playerInfo.Team]
                             .Add(new CasualMatchPlayer(playerInfo.Id, playerInfo.Character, playerInfo.Eliminations));
                     }
-
-                    StartCoroutine(CasualMatchServices.SetMatchResult(matchId, winnerIndex, casualTeams,
+                    
+                    StartCoroutine(CasualMatchServices.SetMatchResult(matchId, winnerIndex, 
+                        casualPlayers.Select(team => new CasualMatchTeam(team)).ToList(),
                         OnCasualMatchResultReported));
                     break;
                 case GameModes.Ranked:
                     var matchAddress = (string)PhotonNetwork.CurrentRoom.CustomProperties[Room.MatchAddressPropKey];
-                    var rankedTeams = new List<List<RankedMatchPlayer>>();
+                    var rankedPlayers = new List<List<RankedMatchPlayer>>();
                     for (var i = 0; i < (int)PhotonNetwork.CurrentRoom.CustomProperties[Room.NumTeamsPropKey]; i++)
                     {
-                        rankedTeams.Add(new List<RankedMatchPlayer>());
+                        rankedPlayers.Add(new List<RankedMatchPlayer>());
                     }
                     foreach (var playerInfo in PlayerInfos)
                     {
-                        rankedTeams[playerInfo.Team]
+                        rankedPlayers[playerInfo.Team]
                             .Add(new RankedMatchPlayer(playerInfo.Id, playerInfo.Character, playerInfo.Eliminations));
                     }
-                    StartCoroutine(RankedMatchServices.SetMatchResult(matchAddress, winnerIndex, rankedTeams, OnRankedMatchResultReported));
+                    StartCoroutine(RankedMatchServices.SetMatchResult(matchAddress, winnerIndex, 
+                        rankedPlayers.Select(team => new RankedMatchTeam(team)).ToList(), 
+                        OnRankedMatchResultReported));
                     break;
                 case GameModes.Training:
                 default:

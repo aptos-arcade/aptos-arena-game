@@ -2,10 +2,6 @@ using System;
 using System.Collections;
 using ApiServices.Models.Leaderboard;
 using Global;
-using Leaderboard;
-using Newtonsoft.Json;
-using UnityEngine.Networking;
-using Utilities;
 
 namespace ApiServices
 {
@@ -23,68 +19,65 @@ namespace ApiServices
             int limit, string collectionIdHash)
         {
             var endpoint =
-                $"{ApiClient.BaseUrl()}/leaderboard/{Modes[(int)gameMode]}/{Endpoints[(int)leaderboardEndpoint]}?numDays={numDays}&limit={limit}";
+                $"leaderboard/{Modes[(int)gameMode]}/{Endpoints[(int)leaderboardEndpoint]}?numDays={numDays}&limit={limit}";
             if (collectionIdHash != null)
             {
                 endpoint += $"&collectionIdHash={collectionIdHash}";
             }
             return endpoint;
         }
-        
-        private static IEnumerator GetLeaderboardData(Action<bool, string> callback, GameModes mode,
-            LeaderboardEndpoints leaderboardEndpoint, int numDays, int limit, string collectionIdHash)
+
+        private static IEnumerator GetCasualPlayers(Action<LeaderboardRowData[]> callback, int numDays, int limit, 
+            string collectionIdHash)
         {
-            var endpoint = GetEndpoint(mode, leaderboardEndpoint, numDays, limit, collectionIdHash);
-            var request = UnityWebRequest.Get(endpoint);
-            yield return request.SendWebRequest();
-            callback(request.result == UnityWebRequest.Result.Success, request.downloadHandler.text);
+            return ApiClient.GetRequest<CasualPlayerResponse>((response) =>
+            {
+                callback(Array.ConvertAll(response.rows,
+                    row => new LeaderboardRowData(row.playerName, row.wins, row.losses, row.eliminations)));
+            }, GetEndpoint(GameModes.Casual, LeaderboardEndpoints.Players, numDays, limit, collectionIdHash));
         }
         
-        private static IEnumerator GetCasualPlayers(Action<CasualPlayerRow[]> callback, int numDays, int limit, string collectionIdHash)
+        private static IEnumerator GetCasualCollections(Action<LeaderboardRowData[]> callback, int numDays, int limit)
         {
-            return GetLeaderboardData((success, response) =>
+            return ApiClient.GetRequest<CasualCollectionResponse>((response) =>
             {
-                callback(success ? JsonConvert.DeserializeObject<CasualPlayerRow[]>(response) : Array.Empty<CasualPlayerRow>());
-            }, GameModes.Casual, LeaderboardEndpoints.Players, numDays, limit, collectionIdHash);
-        }
-        
-        private static IEnumerator GetCasualCollections(Action<CasualCollectionRow[]> callback, int numDays, int limit)
-        {
-            return GetLeaderboardData((success, response) =>
-            {
-                callback(success ? JsonConvert.DeserializeObject<CasualCollectionRow[]>(response) : Array.Empty<CasualCollectionRow>());
-            }, GameModes.Casual, LeaderboardEndpoints.Collections, numDays, limit, null);
+                callback(Array.ConvertAll(response.rows,
+                    row => new LeaderboardRowData(Characters.Characters.GetCollectionName(row.collectionIdHash),
+                        row.wins, row.losses, row.eliminations)));
+            }, GetEndpoint(GameModes.Casual, LeaderboardEndpoints.Collections, numDays, limit, null));
         }   
 
-        private static IEnumerator GetRankedPlayers(Action<RankedPlayerRow[]> callback, int numDays, int limit, string collectionIdHash)
+        private static IEnumerator GetRankedPlayers(Action<LeaderboardRowData[]> callback, int numDays, int limit, 
+            string collectionIdHash)
         {
-            return GetLeaderboardData((success, response) =>
+            return ApiClient.GetRequest<RankedPlayerResponse>((response) =>
             {
-                callback(success ? JsonConvert.DeserializeObject<RankedPlayerRow[]>(response) : Array.Empty<RankedPlayerRow>());
-            }, GameModes.Ranked, LeaderboardEndpoints.Players, numDays, limit, collectionIdHash);
+                
+                callback(Array.ConvertAll(response.rows,
+                    row => new LeaderboardRowData(row.playerAddress, row.wins, row.losses, row.eliminations)));
+            }, GetEndpoint(GameModes.Ranked, LeaderboardEndpoints.Players, numDays, limit, collectionIdHash));
         }
         
-        private static IEnumerator GetRankedCollections(Action<RankedCollectionRow[]> callback, int numDays, int limit)
+        private static IEnumerator GetRankedCollections(Action<LeaderboardRowData[]> callback, int numDays, int limit)
         {
-            return GetLeaderboardData((success, response) =>
+            return ApiClient.GetRequest<RankedCollectionResponse>((response) =>
             {
-                callback(success ? JsonConvert.DeserializeObject<RankedCollectionRow[]>(response) : Array.Empty<RankedCollectionRow>());
-            }, GameModes.Ranked, LeaderboardEndpoints.Collections, numDays, limit, null);
+                callback(Array.ConvertAll(response.rows,
+                    row => new LeaderboardRowData(Characters.Characters.GetCollectionName(row.collectionIdHash),
+                        row.wins, row.losses, row.eliminations)));
+            }, GetEndpoint(GameModes.Ranked, LeaderboardEndpoints.Collections, numDays, limit, null));
         }
         
-        public static IEnumerator GetLeaderboardData(Action<LeaderboardRowData[]> callback, GameModes mode, LeaderboardEndpoints leaderboardEndpoint, int numDays, int limit, string collectionIdHash)
+        public static IEnumerator GetLeaderboardData(Action<LeaderboardRowData[]> callback, GameModes mode, 
+            LeaderboardEndpoints leaderboardEndpoint, int numDays, int limit, string collectionIdHash)
         {
             switch (mode)
             {
                 case GameModes.Casual:
                     yield return leaderboardEndpoint switch
                     {
-                        LeaderboardEndpoints.Players => GetCasualPlayers(
-                            rows => { callback(Array.ConvertAll(rows, CasualPlayerRowToLeaderboardRowData)); }, numDays,
-                            limit, collectionIdHash),
-                        LeaderboardEndpoints.Collections => GetCasualCollections(
-                            rows => { callback(Array.ConvertAll(rows, CasualCollectionRowToLeaderboardRowData)); },
-                            numDays, limit),
+                        LeaderboardEndpoints.Players => GetCasualPlayers(callback, numDays, limit, collectionIdHash),
+                        LeaderboardEndpoints.Collections => GetCasualCollections(callback, numDays, limit),
                         _ => throw new ArgumentOutOfRangeException(nameof(leaderboardEndpoint), leaderboardEndpoint,
                             null)
                     };
@@ -92,12 +85,8 @@ namespace ApiServices
                 case GameModes.Ranked:
                     yield return leaderboardEndpoint switch
                     {
-                        LeaderboardEndpoints.Players => GetRankedPlayers(
-                            rows => { callback(Array.ConvertAll(rows, RankedPlayerRowToLeaderboardRowData)); }, numDays,
-                            limit, collectionIdHash),
-                        LeaderboardEndpoints.Collections => GetRankedCollections(
-                            rows => { callback(Array.ConvertAll(rows, RankedCollectionRowToLeaderboardRowData)); },
-                            numDays, limit),
+                        LeaderboardEndpoints.Players => GetRankedPlayers(callback, numDays, limit, collectionIdHash),
+                        LeaderboardEndpoints.Collections => GetRankedCollections(callback, numDays, limit),
                         _ => throw new ArgumentOutOfRangeException(nameof(leaderboardEndpoint), leaderboardEndpoint,
                             null)
                     };
@@ -107,28 +96,6 @@ namespace ApiServices
                 default:
                     throw new ArgumentOutOfRangeException(nameof(mode), mode, null);
             }
-        }
-        
-        private static LeaderboardRowData CasualPlayerRowToLeaderboardRowData(CasualPlayerRow row)
-        {
-            return new LeaderboardRowData(row.PlayerName, row.Wins, row.Losses, row.Eliminations);
-        }
-        
-        private static LeaderboardRowData CasualCollectionRowToLeaderboardRowData(CasualCollectionRow row)
-        {
-            return new LeaderboardRowData(Characters.Characters.GetCollectionName(row.CollectionIdHash), row.Wins,
-                row.Losses, row.Eliminations);
-        }
-        
-        private static LeaderboardRowData RankedPlayerRowToLeaderboardRowData(RankedPlayerRow row)
-        {
-            return new LeaderboardRowData(StringUtils.Ellipsize(row.PlayerAddress), row.Wins, row.Losses, row.Eliminations);
-        }
-        
-        private static LeaderboardRowData RankedCollectionRowToLeaderboardRowData(RankedCollectionRow row)
-        {
-            return new LeaderboardRowData(Characters.Characters.GetCollectionName(row.CollectionIdHash), row.Wins,
-                row.Losses, row.Eliminations);
         }
     }
 }
